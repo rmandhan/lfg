@@ -19,7 +19,7 @@ extension Post {
     @NSManaged var console: String
     @NSManaged var desc: String
     @NSManaged var gameType: String
-    @NSManaged var mic: NSNumber
+    @NSManaged var mic: Bool
     @NSManaged var playerId: String
     @NSManaged var primaryLevel: NSNumber
     @NSManaged var secondaryLevel: NSNumber

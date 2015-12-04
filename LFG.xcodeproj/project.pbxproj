@@ -37,6 +37,9 @@
 		141656B51C10C2F500D07664 /* ObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141656B41C10C2F500D07664 /* ObjectManager.swift */; settings = {ASSET_TAGS = (); }; };
 		141656B61C10C2F500D07664 /* ObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141656B41C10C2F500D07664 /* ObjectManager.swift */; settings = {ASSET_TAGS = (); }; };
 		141656B71C10C2F500D07664 /* ObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141656B41C10C2F500D07664 /* ObjectManager.swift */; settings = {ASSET_TAGS = (); }; };
+		141656B91C10EC5E00D07664 /* GameType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141656B81C10EC5E00D07664 /* GameType+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
+		141656BA1C10EC5E00D07664 /* GameType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141656B81C10EC5E00D07664 /* GameType+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
+		141656BB1C10EC5E00D07664 /* GameType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141656B81C10EC5E00D07664 /* GameType+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
 		146EC6771C0FC97D003BAAD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EC6761C0FC97D003BAAD0 /* AppDelegate.swift */; };
 		146EC6791C0FC97D003BAAD0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EC6781C0FC97D003BAAD0 /* ViewController.swift */; };
 		146EC67C1C0FC97D003BAAD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 146EC67A1C0FC97D003BAAD0 /* Main.storyboard */; };
@@ -77,6 +80,7 @@
 		141656811C1096BB00D07664 /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Character.swift; path = CoreData/Character.swift; sourceTree = "<group>"; };
 		141656A41C109AF800D07664 /* Game+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Game+CoreDataProperties.swift"; path = "CoreData/Game+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		141656B41C10C2F500D07664 /* ObjectManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObjectManager.swift; path = CoreData/ObjectManager.swift; sourceTree = "<group>"; };
+		141656B81C10EC5E00D07664 /* GameType+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "GameType+CoreDataProperties.swift"; path = "CoreData/GameType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		146EC6731C0FC97D003BAAD0 /* LFG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LFG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146EC6761C0FC97D003BAAD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		146EC6781C0FC97D003BAAD0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 		141656771C10969D00D07664 /* CoreData+Parse */ = {
 			isa = PBXGroup;
 			children = (
+				141656B81C10EC5E00D07664 /* GameType+CoreDataProperties.swift */,
 				141656811C1096BB00D07664 /* Character.swift */,
 				141656801C1096BB00D07664 /* Character+CoreDataProperties.swift */,
 				141656791C1096BB00D07664 /* Game.swift */,
@@ -404,6 +409,7 @@
 				1416569A1C1096BB00D07664 /* Character+CoreDataProperties.swift in Sources */,
 				141656881C1096BB00D07664 /* Platform+CoreDataProperties.swift in Sources */,
 				146EC6791C0FC97D003BAAD0 /* ViewController.swift in Sources */,
+				141656B91C10EC5E00D07664 /* GameType+CoreDataProperties.swift in Sources */,
 				141656B51C10C2F500D07664 /* ObjectManager.swift in Sources */,
 				141656851C1096BB00D07664 /* Game.swift in Sources */,
 				146EC67F1C0FC97D003BAAD0 /* LFG.xcdatamodeld in Sources */,
@@ -420,6 +426,7 @@
 				1416569E1C1096BB00D07664 /* Character.swift in Sources */,
 				141656891C1096BB00D07664 /* Platform+CoreDataProperties.swift in Sources */,
 				141656921C1096BB00D07664 /* GameType.swift in Sources */,
+				141656BA1C10EC5E00D07664 /* GameType+CoreDataProperties.swift in Sources */,
 				146EC68F1C0FC97D003BAAD0 /* LFGTests.swift in Sources */,
 				141656861C1096BB00D07664 /* Game.swift in Sources */,
 				141656B61C10C2F500D07664 /* ObjectManager.swift in Sources */,
@@ -438,6 +445,7 @@
 				1416569F1C1096BB00D07664 /* Character.swift in Sources */,
 				1416568A1C1096BB00D07664 /* Platform+CoreDataProperties.swift in Sources */,
 				141656931C1096BB00D07664 /* GameType.swift in Sources */,
+				141656BB1C10EC5E00D07664 /* GameType+CoreDataProperties.swift in Sources */,
 				146EC69A1C0FC97D003BAAD0 /* LFGUITests.swift in Sources */,
 				141656871C1096BB00D07664 /* Game.swift in Sources */,
 				141656B71C10C2F500D07664 /* ObjectManager.swift in Sources */,
