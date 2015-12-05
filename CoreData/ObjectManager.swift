@@ -103,78 +103,156 @@ class ObjectManager {
     
     // MARK: Parse
     
-    // Downloads Game data from Parse
-    func downloadGames(withPredicate predicate: NSPredicate?, completionHandler: (success: Bool) -> Void?) {
+    // Downloads/Updates Game data from Parse
+    func downloadGames(withPredicate predicate: NSPredicate?, completionHandler: ((success: Bool) -> Void)?) {
         
-        // NOTE: Only update games, never delete them - to preserve the relationship with posts, therefore, no relationships are set here. EZPZ
+        let gamesWithObjectId = self.getGameWithObjectIds(withPredicate: predicate)
         
         var query = PFQuery(className:"Game", predicate: predicate)
         
         query.findObjectsInBackgroundWithBlock() {
             (objects: [PFObject]?, error: NSError?) -> Void in
+            
             if let gameObjects = objects where error == nil {
+                
                 print("Game found: \(objects!.count)")
                 
                 for gameObject in gameObjects {
-                    let entity = NSEntityDescription.entityForName("Game", inManagedObjectContext: self.managedContext)
-                    let game = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: self.managedContext) as! Game
                     
-                    game.fullName = gameObject["fullName"] as! String
-                    game.shortName = gameObject["shortName"] as! String
-                    game.primaryLevelMax = gameObject["primaryLevelMax"] as! NSNumber
-                    game.primaryLevelMin = gameObject["primaryLevelMin"] as! NSNumber
-                    game.secondaryLevelMin = gameObject["secondaryLevelMin"] as! NSNumber
-                    game.secondaryLevelMax = gameObject["secondaryLevelMax"] as! NSNumber
+                    if let objectId = gameObject.objectId {
+                        
+                        var game: Game
+                        
+                        if let gameFound = gamesWithObjectId[objectId] {
+                            game = gameFound
+                            game.platforms = NSSet()
+                            game.characters = NSSet()
+                            game.gameTypes = NSSet()
+                        } else {
+                            game = NSEntityDescription.insertNewObjectForEntityForName("Game", inManagedObjectContext: self.managedContext) as! Game
+                        }
+                        
+                        game.objectId = objectId
+                        game.fullName = gameObject["fullName"] as! String
+                        game.shortName = gameObject["shortName"] as! String
+                        game.primaryLevelMax = gameObject["primaryLevelMax"] as! NSNumber
+                        game.primaryLevelMin = gameObject["primaryLevelMin"] as! NSNumber
+                        game.secondaryLevelMin = gameObject["secondaryLevelMin"] as! NSNumber
+                        game.secondaryLevelMax = gameObject["secondaryLevelMax"] as! NSNumber
+                        
+                        if let platformsArray = gameObject["platforms"] as? [String],
+                            charactersArray = gameObject["characters"] as? [String],
+                            playlistArray = gameObject["playlist"] as? [String] {
+                                
+                                if platformsArray.count > 0 && charactersArray.count > 0 && playlistArray.count > 0 {
+                                    
+                                    for platformName in platformsArray {
+                                        let platform = NSEntityDescription.insertNewObjectForEntityForName("Platform", inManagedObjectContext: self.managedContext) as! Platform
+                                        platform.name = platformName
+                                        platform.game = game
+                                    }
+                                    
+                                    for characterName in charactersArray {
+                                        let character = NSEntityDescription.insertNewObjectForEntityForName("Character", inManagedObjectContext: self.managedContext) as! Character
+                                        character.name = characterName
+                                        character.game = game
+                                    }
+                                    
+                                    for gameTypeName in playlistArray {
+                                        let gameType = NSEntityDescription.insertNewObjectForEntityForName("GameType", inManagedObjectContext: self.managedContext) as! GameType
+                                        gameType.name = gameTypeName
+                                        gameType.game = game
+                                    }
+                                }
+                        }
+                    }
                     
-                    if let platformsArray = gameObject["platforms"] as? [String],
-                        charactersArray = gameObject["characters"] as? [String],
-                        playlistArray = gameObject["playlist"] as? [String] {
-                            
-                            if platformsArray.count > 0 {
-                                for platformName in playlistArray {
-                                    let platform = Platform()
-                                    platform.name = platformName
-                                    platform.game = game
+                }
+                
+                do {
+                    try self.managedContext.save()
+                    print("Game object(s) saved")
+                } catch let error as NSError {
+                    print("Could not save downloaded game \(error), \(error.userInfo)")
+                }
+                
+                if let handler = completionHandler {
+                    handler(success: true)
+                }
+            }
+            else {
+                print("Could not download \(error!), \(error!.userInfo)")
+                
+                if let handler = completionHandler {
+                    handler(success: false)
+                }
+            }
+        }
+    }
+    
+    // Downloads/Updates Post data from Parse
+    func downloadPosts(withPredicate predicate: NSPredicate?, completionHandler: ((success: Bool) -> Void)?) {
+        
+        let gamesWithObjectId = self.getGameWithObjectIds(withPredicate: nil)
+        let postsWithObjectId = self.getPostsWithObjectIds(withPredicate: predicate)
+        
+        var query = PFQuery(className: "Post", predicate: predicate)
+        
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if let postObjects = objects where error == nil {
+                
+                print("Posts Count: \(postObjects.count)")
+                
+                for postObject in postObjects {
+                    
+                    if let objectId = postObject.objectId,
+                        gameId = postObject["gameId"] as? String {
+                        
+                            if let gameFound = gamesWithObjectId[gameId] {
+                                
+                                var post: Post
+                                
+                                if let postFound = postsWithObjectId[objectId] {
+                                    post = postFound
+                                } else {
+                                    post = NSEntityDescription.insertNewObjectForEntityForName("Post", inManagedObjectContext: self.managedContext) as! Post
                                 }
-                            }
-                            
-                            if charactersArray.count > 0 {
-                                for characterName in charactersArray {
-                                    let character = Character()
-                                    character.name = characterName
-                                    character.game = game
-                                }
-                            }
-                            
-                            if playlistArray.count > 0 {
-                                for gameTypeName in playlistArray {
-                                    let gameType = GameType()
-                                    gameType.name = gameTypeName
-                                    gameType.game = game
-                                }
+                                
+                                post.objectId = objectId
+                                post.character = postObject["character"] as! String
+                                post.console = postObject["console"] as! String
+                                post.desc = postObject["description"] as! String
+                                post.gameType = postObject["gameType"] as! String
+                                post.mic = postObject["mic"] as! Bool
+                                post.playerId = postObject["playerId"] as! String
+                                post.primaryLevel = postObject["primaryLevel"] as! NSNumber
+                                post.secondaryLevel = postObject["secondaryLevel"] as! NSNumber
+                                post.game = gameFound
                             }
                     }
                 }
                 
                 do {
                     try self.managedContext.save()
-                    print("Game object saved")
+                    print("Post object(s) saved")
                 } catch let error as NSError {
-                    print("Could not save downloaded game \(error), \(error.userInfo)")
+                    print("Could not save downloaded posts \(error), \(error.userInfo)")
                 }
                 
-                completionHandler(success: true)
+                if let handler = completionHandler {
+                    handler(success: true)
+                }
             }
             else {
-                completionHandler(success: false)
                 print("Could not download \(error!), \(error!.userInfo)")
+                
+                if let handler = completionHandler {
+                    handler(success: false)
+                }
             }
-        }
-    }
-    
-    // Downloads Post data from Parse
-    func downloadPosts(withPredicate predicate: NSPredicate?, completionHandler: (success: Bool) -> Void?) {
-        // NOTE: Set relationship with the game the post belongs to
+        })
     }
     
     // Uploads Post data to Parse
@@ -209,8 +287,66 @@ class ObjectManager {
     // MARK: Core Data + Parse
     
     // Deletes the Post objects from Parse and Core Data
-    func deletePosts(withPredicate predicate: NSPredicate?, completionHandler: (success: Bool) -> Void?) {
+    func deletePosts(withPredicate predicate: NSPredicate?, completionHandler: ((success: Bool) -> Void)?) {
         
+        let postsToDelete = self.getPostsWithObjectIds(withPredicate: predicate)
+        let postObjectIds = postsToDelete.keys
+        
+        for (objectId, post) in postsToDelete {
+            self.managedContext.deleteObject(post)
+        }
+        var success: Bool = false
+        
+        do {
+            try self.managedContext.save()
+            print("Post object(s) deleted from core data")
+            success = true
+            
+            for objectId in postObjectIds {
+                let postObject = PFObject(withoutDataWithClassName: "Post", objectId: objectId)
+                postObject.deleteInBackgroundWithBlock({
+                    (success: Bool, error: NSError?) -> Void in
+                    if success && error == nil {
+                        print("Post object deleted from Parse")
+                    } else {
+                        print("Failed to delete object from the cloud (and core data)")
+                    }
+                })
+            }
+            
+        } catch let error as NSError {
+            print("Could not deleted posts \(error), \(error.userInfo)")
+            success = false
+        }
+        
+        if let handler = completionHandler {
+            handler(success: success)
+        }
     }
     
+    // MARK: Helper Methods
+    
+    func getGameWithObjectIds(withPredicate predicate: NSPredicate?) -> [String: Game] {
+        
+        let allExistingGames = self.retrieveGames(withPredicate: nil)
+        var gamesWithObjectId = [String: Game]()
+        
+        for game in allExistingGames {
+            gamesWithObjectId[game.objectId] = game
+        }
+        
+        return gamesWithObjectId
+    }
+    
+    func getPostsWithObjectIds(withPredicate predicate: NSPredicate?) -> [String: Post] {
+        
+        let allExistingPosts = self.retrievePosts(withPredicate: predicate)
+        var postsWithObjectId = [String: Post]()
+        
+        for post in allExistingPosts {
+            postsWithObjectId[post.objectId] = post
+        }
+        
+        return postsWithObjectId
+    }
 }

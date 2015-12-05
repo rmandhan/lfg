@@ -12,10 +12,10 @@
         <attribute name="secondaryLevelMax" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="secondaryLevelMin" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="shortName" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="characters" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Character" inverseName="game" inverseEntity="Character" syncable="YES"/>
-        <relationship name="gameTypes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameType" inverseName="game" inverseEntity="GameType" syncable="YES"/>
-        <relationship name="platforms" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Platform" inverseName="game" inverseEntity="Platform" syncable="YES"/>
-        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="game" inverseEntity="Post" syncable="YES"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Character" inverseName="game" inverseEntity="Character" syncable="YES"/>
+        <relationship name="gameTypes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GameType" inverseName="game" inverseEntity="GameType" syncable="YES"/>
+        <relationship name="platforms" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Platform" inverseName="game" inverseEntity="Platform" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Post" inverseName="game" inverseEntity="Post" syncable="YES"/>
     </entity>
     <entity name="GameType" representedClassName=".GameType" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -39,7 +39,7 @@
     </entity>
     <elements>
         <element name="Character" positionX="-245" positionY="18" width="128" height="73"/>
-        <element name="Game" positionX="-63" positionY="-27" width="128" height="208"/>
+        <element name="Game" positionX="-63" positionY="-27" width="128" height="210"/>
         <element name="GameType" positionX="-243" positionY="108" width="128" height="73"/>
         <element name="Platform" positionX="-218" positionY="198" width="128" height="73"/>
         <element name="Post" positionX="115" positionY="90" width="128" height="193"/>

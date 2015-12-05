@@ -21,9 +21,9 @@ extension Game {
     @NSManaged var secondaryLevelMax: NSNumber
     @NSManaged var secondaryLevelMin: NSNumber
     @NSManaged var shortName: String
-    @NSManaged var characters: Character
-    @NSManaged var gameTypes: GameType
-    @NSManaged var platforms: Platform
+    @NSManaged var characters: NSSet
+    @NSManaged var gameTypes: NSSet
+    @NSManaged var platforms: NSSet
     @NSManaged var posts: NSSet?
 
 }
