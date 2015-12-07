@@ -274,9 +274,9 @@ class ObjectManager {
         
         postObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
             if success && error == nil {
-                print("postObject has been uploaded.")
+                print("Post has been uploaded.")
             } else {
-                print("postObject failed to upload. \(error!), \(error!.userInfo)")
+                print("Post failed to upload. \(error!), \(error!.userInfo)")
             }
             if let handler = completionHandler {
                 handler(success: success)
@@ -300,6 +300,7 @@ class ObjectManager {
         do {
             try self.managedContext.save()
             print("Post object(s) deleted from core data")
+            
             success = true
             
             for objectId in postObjectIds {
