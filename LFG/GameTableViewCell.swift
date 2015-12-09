@@ -18,9 +18,9 @@ class GameTableViewCell: UITableViewCell {
     func render() {
         if let name = gameName.text {
             switch(name) {
-            case "Call of Duty Black Ops III":
+            case BLACK_OPS_3:
                 renderBlackOps()
-            case "Destiny":
+            case DESTINY:
                 renderDestiny()
             default:
                 renderDefault()

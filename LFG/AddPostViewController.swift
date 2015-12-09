@@ -17,30 +17,78 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     var game: Game!
     
-    var numberOfRows = 8
+    var rowContent = [String]()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        
         self.title = "Submit a Post"
         self.tableView.tableFooterView = UIView()
         
-        if game.primaryLevelMax == 0 { self.numberOfRows-- }
-        if game.secondaryLevelMax == 0 { self.numberOfRows-- }
+        // Append post requirements in order
+        self.rowContent.append("Console")
+        self.rowContent.append("Player Id")
+        self.rowContent.append("Game Type")
+        self.rowContent.append("Character")
+        self.rowContent.append("Mic")
+        
+        if game.primaryLevelMax.intValue > 0 { self.rowContent.append("Primary Level") }
+        if game.secondaryLevelMax.intValue > 0 { self.rowContent.append("Secondary Level") }
+        
+        self.rowContent.append("Description")
     }
     
     // MARK: UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return numberOfRows
+        return rowContent.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")
-        return cell!
+        
+        let content = rowContent[indexPath.row]
+        
+        var cell = UITableViewCell()
+        
+        let dequedCell = tableView.dequeueReusableCellWithIdentifier(content)
+        
+        if dequedCell != nil {
+            cell = dequedCell!
+        } else {
+            if content == "Console" {
+                cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: content)
+            } else if content == "Player Id" {
+                
+            } else if content == "Game Type" {
+                cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: content)
+            } else if content == "Character" {
+                cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: content)
+            } else if content == "Mic" {
+                
+            } else if content == "Primary Level" {
+                let accessoryButton = UITextField()
+                var theTextField = UITextField(frame: CGRectMake(0, 0, 100, 35))
+                theTextField.backgroundColor = UIColor.whiteColor()
+                theTextField.placeholder = "Please type here...."
+                theTextField.textColor = UIColor.blackColor()
+                theTextField.layer.cornerRadius = 10.0
+               // theTextField.delegate = self
+                cell.accessoryView = theTextField
+             //   cell.accessoryView?.hidden = true
+            } else if content == "Secondary Level" {
+                
+            } else if content == "Desecription" {
+                
+            }
+        }
+        
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        
+        cell.textLabel?.text = cellTitleFor(rowContent[indexPath.row])
+        cell.detailTextLabel?.text = "Sample"
+        
+        return cell
     }
     
     // MARK: Actions
@@ -51,5 +99,52 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     @IBAction func postButtonTapped(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: Helper Methods
+    
+    func cellTitleFor(content: String) -> String? {
+        
+        var title = String?()
+        
+        switch(content) {
+            
+        case "Console":
+            title = "Console"
+            
+        case "Player Id":
+            title = "Player Id"
+            
+        case "Game Type":
+            title = "Game Type"
+            
+        case "Character":
+            title = "Character"
+            
+        case "Mic":
+            title = "Mic"
+            
+        case "Primary Level":
+            if game.isBlackOps3 {
+                title = "Prestige"
+            } else if game.isDestiny {
+                title = "Level"
+            }
+            
+        case "Secondary Level":
+            if game.isBlackOps3 {
+                title = "Level"
+            } else if game.isDestiny {
+                title = "Light Level"
+            }
+            
+        case "Description":
+            title = "Description"
+            
+        default:
+            title = nil
+        }
+        
+        return title
     }
 }
