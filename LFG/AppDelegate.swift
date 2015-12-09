@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        print(paths[0])
+        print("Databse Location: \(paths[0]) \n")
         
         // TODO: Delete all outdated posts
         

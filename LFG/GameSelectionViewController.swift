@@ -27,7 +27,18 @@ class GameSelectionViewController: ViewController, UITableViewDelegate, UITableV
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorColor = UIColor.clearColor()
         
+        // TEMPORARY: REMOVE AFTER TESTING
         self.gamesList = ObjectManager.sharedInstance.retrieveGames(withPredicate: nil)
+        if self.gamesList.count == 0 {
+            ObjectManager.sharedInstance.downloadGames(withPredicate: nil, completionHandler: {
+                (success: Bool) -> Void in
+                if success {
+                    self.gamesList = ObjectManager.sharedInstance.retrieveGames(withPredicate: nil)
+                    ObjectManager.sharedInstance.downloadPosts(withPredicate: nil, completionHandler: nil)
+                    self.tableView.reloadData()
+                }
+            })
+        }
     }
     
     // MARK: UITableViewDelegate
