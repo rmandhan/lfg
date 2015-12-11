@@ -9,6 +9,8 @@
 import Foundation
 
 let GAME_ID_KEY = "gameId"
+let LAST_UPDATED_POSTS_DATE_KEY = "LastUpdatedPostsDate"
+let LAST_POST_FOR_GAMES = "LastPostForGames"
 
 class UserDefaultsManager {
     
@@ -26,5 +28,13 @@ class UserDefaultsManager {
     
     func setCurrentGameId(id: String) {
         userDefaults.setValue(id, forKey: GAME_ID_KEY)
+    }
+    
+    func getLastUpdatedPostsDate() -> NSDate {
+        return userDefaults.valueForKey(LAST_UPDATED_POSTS_DATE_KEY) as! NSDate
+    }
+    
+    func setLastUpdatedPostsDate(date: NSDate) {
+        userDefaults.setObject(date, forKey: LAST_UPDATED_POSTS_DATE_KEY)
     }
 }

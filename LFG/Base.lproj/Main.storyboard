@@ -26,17 +26,23 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="X7w-hK-Y3Y"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="MwV-VO-Ig9">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="QgO-Mx-eUS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="0Sg-wb-AoN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QgO-Mx-eUS" secondAttribute="trailing" constant="-20" id="DaX-3Z-CpZ"/>
                             <constraint firstItem="QgO-Mx-eUS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-64" id="gBD-XM-4Zf"/>
+                            <constraint firstItem="MwV-VO-Ig9" firstAttribute="centerX" secondItem="QgO-Mx-eUS" secondAttribute="centerX" id="hwz-Gn-IIW"/>
+                            <constraint firstItem="MwV-VO-Ig9" firstAttribute="centerY" secondItem="QgO-Mx-eUS" secondAttribute="centerY" id="nru-Yp-2qv"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="QgO-Mx-eUS" secondAttribute="bottom" id="tgc-GK-tew"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lSb-SA-x6N"/>
                     <connections>
+                        <outlet property="loadingIndicator" destination="MwV-VO-Ig9" id="FaW-Jr-b7l"/>
                         <outlet property="tableView" destination="QgO-Mx-eUS" id="7b5-mB-u13"/>
                         <segue destination="nCf-QL-sh3" kind="show" identifier="goToPostsViewController" id="dzn-Au-fdy"/>
                     </connections>
@@ -65,6 +71,9 @@
                                     <outlet property="delegate" destination="nCf-QL-sh3" id="kkn-2j-m42"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lUl-SN-Mzl">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -72,6 +81,8 @@
                             <constraint firstAttribute="trailingMargin" secondItem="JUz-Kk-yMy" secondAttribute="trailing" constant="-20" id="K8R-7x-LV9"/>
                             <constraint firstItem="JUz-Kk-yMy" firstAttribute="leading" secondItem="kSJ-AH-cpu" secondAttribute="leadingMargin" constant="-20" id="Spn-DZ-GGY"/>
                             <constraint firstItem="JUz-Kk-yMy" firstAttribute="top" secondItem="1aU-Tb-tqU" secondAttribute="bottom" constant="-64" id="TUp-hg-tOq"/>
+                            <constraint firstItem="lUl-SN-Mzl" firstAttribute="centerX" secondItem="JUz-Kk-yMy" secondAttribute="centerX" id="WFN-Mt-O4P"/>
+                            <constraint firstItem="lUl-SN-Mzl" firstAttribute="centerY" secondItem="JUz-Kk-yMy" secondAttribute="centerY" id="WFg-Rn-hFc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ItB-Z6-tuJ">
@@ -89,6 +100,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addBarButton" destination="Fus-XG-us1" id="PMn-ZA-lm5"/>
+                        <outlet property="loadingIndicator" destination="lUl-SN-Mzl" id="uFg-Qe-MvJ"/>
                         <outlet property="tableView" destination="JUz-Kk-yMy" id="U4l-P2-5kH"/>
                     </connections>
                 </viewController>

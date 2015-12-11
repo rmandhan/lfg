@@ -196,7 +196,12 @@ class ObjectManager {
         let gamesWithObjectId = self.getGameWithObjectIds(withPredicate: nil)
         let postsWithObjectId = self.getPostsWithObjectIds(withPredicate: predicate)
         
+        let downloadDate = NSDate()
+        // Always get posts that are at max 2 hours old
+        let twoHoursAgo = NSDate(timeIntervalSinceNow: -7200)
+        
         var query = PFQuery(className: "Post", predicate: predicate)
+        query.whereKey("updatedAt", greaterThanOrEqualTo: twoHoursAgo)
         
         query.findObjectsInBackgroundWithBlock({
             (objects: [PFObject]?, error: NSError?) -> Void in
@@ -237,6 +242,7 @@ class ObjectManager {
                 do {
                     try self.managedContext.save()
                     print("Post object(s) saved")
+                    UserDefaultsManager.sharedInstance.setLastUpdatedPostsDate(downloadDate)
                 } catch let error as NSError {
                     print("Could not save downloaded posts \(error), \(error.userInfo)")
                 }

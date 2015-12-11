@@ -11,6 +11,7 @@ import UIKit
 class GameSelectionViewController: ViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     var gamesList = [Game]()
     var selectedPath = NSIndexPath()

@@ -11,7 +11,7 @@ import UIKit
 class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
     var game: Game?
