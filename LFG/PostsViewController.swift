@@ -75,6 +75,14 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         cell.cellSelected()
     }
     
+    // MARK: Actions
+    
+    // TEMP: Takes user back to the Games list
+    @IBAction func sideBarButtonTapped(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    
     // MARK: Segue
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

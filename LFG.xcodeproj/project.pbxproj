@@ -35,6 +35,8 @@
 		146EC68F1C0FC97D003BAAD0 /* LFGTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EC68E1C0FC97D003BAAD0 /* LFGTests.swift */; };
 		146EC69A1C0FC97D003BAAD0 /* LFGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EC6991C0FC97D003BAAD0 /* LFGUITests.swift */; };
 		1486E7091C160A550046957E /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1486E7081C160A550046957E /* OptionsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		14E87B121C18E76500FE1738 /* PostDescTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14E87B111C18E76500FE1738 /* PostDescTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		14E87B141C18EB3E00FE1738 /* PostDescTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E87B131C18EB3E00FE1738 /* PostDescTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		D491023C277E97248EA036C1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42220C7FE9B83F608BCD988 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +93,8 @@
 		146EC6991C0FC97D003BAAD0 /* LFGUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LFGUITests.swift; sourceTree = "<group>"; };
 		146EC69B1C0FC97D003BAAD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1486E7081C160A550046957E /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
+		14E87B111C18E76500FE1738 /* PostDescTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDescTableViewCell.xib; sourceTree = "<group>"; };
+		14E87B131C18EB3E00FE1738 /* PostDescTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDescTableViewCell.swift; sourceTree = "<group>"; };
 		61BA809DBFF49959F8DC30D2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D42220C7FE9B83F608BCD988 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -149,6 +153,8 @@
 				1416A5571C12A8D100CD7985 /* GameTableViewCell.xib */,
 				1416A57A1C14113F00CD7985 /* PostTableViewCell.swift */,
 				1416A57C1C14115000CD7985 /* PostTableViewCell.xib */,
+				14E87B111C18E76500FE1738 /* PostDescTableViewCell.xib */,
+				14E87B131C18EB3E00FE1738 /* PostDescTableViewCell.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -199,6 +205,7 @@
 		146EC6751C0FC97D003BAAD0 /* LFG */ = {
 			isa = PBXGroup;
 			children = (
+				14E87B151C18F5D300FE1738 /* Extensions */,
 				146EC6851C0FC97D003BAAD0 /* Info.plist */,
 				146EC6761C0FC97D003BAAD0 /* AppDelegate.swift */,
 				146EC6801C0FC97D003BAAD0 /* Assets.xcassets */,
@@ -226,6 +233,13 @@
 				146EC69B1C0FC97D003BAAD0 /* Info.plist */,
 			);
 			path = LFGUITests;
+			sourceTree = "<group>";
+		};
+		14E87B151C18F5D300FE1738 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		2F275435825BEE47C4FFE88F /* Frameworks */ = {
@@ -358,6 +372,7 @@
 				1416A57D1C14115000CD7985 /* PostTableViewCell.xib in Resources */,
 				146EC6811C0FC97D003BAAD0 /* Assets.xcassets in Resources */,
 				146EC67C1C0FC97D003BAAD0 /* Main.storyboard in Resources */,
+				14E87B121C18E76500FE1738 /* PostDescTableViewCell.xib in Resources */,
 				1416A5581C12A8D100CD7985 /* GameTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,6 +458,7 @@
 				1416A56C1C1371CA00CD7985 /* Game+CoreDataProperties.swift in Sources */,
 				1416A56D1C1371CA00CD7985 /* GameType.swift in Sources */,
 				1416A56E1C1371CA00CD7985 /* GameType+CoreDataProperties.swift in Sources */,
+				14E87B141C18EB3E00FE1738 /* PostDescTableViewCell.swift in Sources */,
 				146EC67F1C0FC97D003BAAD0 /* LFG.xcdatamodeld in Sources */,
 				1416A5741C1371CA00CD7985 /* UserDefaultsManager.swift in Sources */,
 				1416A5761C13F8CF00CD7985 /* PostsViewController.swift in Sources */,

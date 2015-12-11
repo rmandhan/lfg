@@ -16,7 +16,7 @@ extension Post {
 
     @NSManaged var objectId: String
     @NSManaged var character: String
-    @NSManaged var console: String
+    @NSManaged var platform: String
     @NSManaged var desc: String
     @NSManaged var gameType: String
     @NSManaged var mic: Bool

@@ -18,7 +18,7 @@ class PostTableViewCell: UITableViewCell {
         if let postObject = post {
             faltooLabel.text = "Object Id: \(postObject.objectId) \n" +
                 "Character: \(postObject.character) \n" +
-                "Console: \(postObject.console) \n" +
+                "Platform: \(postObject.platform) \n" +
                 "Description: \(postObject.desc) \n" +
                 "Game Type: \(postObject.gameType) \n" +
                 "Mic: \(postObject.mic) \n" +

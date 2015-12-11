@@ -13,7 +13,7 @@ import Parse
 struct PseudoPost {
     
     var character: String
-    var console: String
+    var platform: String
     var desc: String
     var gameType: String
     var mic: Bool
@@ -22,9 +22,9 @@ struct PseudoPost {
     var secondaryLevel: NSNumber
     var gameId: String
     
-    init (character: String, console: String, desc: String, gameType: String, mic: Bool, playerId: String, primaryLevel: NSNumber, secondaryLevel: NSNumber, gameId: String) {
+    init (character: String, platform: String, desc: String, gameType: String, mic: Bool, playerId: String, primaryLevel: NSNumber, secondaryLevel: NSNumber, gameId: String) {
         self.character = character
-        self.console = console
+        self.platform = platform
         self.desc = desc
         self.gameType = gameType
         self.mic = mic
@@ -222,7 +222,7 @@ class ObjectManager {
                                 
                                 post.objectId = objectId
                                 post.character = postObject["character"] as! String
-                                post.console = postObject["console"] as! String
+                                post.platform = postObject["platform"] as! String
                                 post.desc = postObject["description"] as! String
                                 post.gameType = postObject["gameType"] as! String
                                 post.mic = postObject["mic"] as! Bool
@@ -261,7 +261,7 @@ class ObjectManager {
         let gameObject = PFObject(withoutDataWithClassName: "Game", objectId: post.gameId)
         let postObject = PFObject(className: "Post")
         
-        postObject["console"] = post.console
+        postObject["platform"] = post.platform
         postObject["mic"] = post.mic
         postObject["playerId"] = post.playerId
         postObject["character"] = post.character

@@ -27,11 +27,11 @@
     </entity>
     <entity name="Post" representedClassName=".Post" syncable="YES">
         <attribute name="character" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="console" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gameType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mic" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="platform" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="playerId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="primaryLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="secondaryLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -42,6 +42,6 @@
         <element name="Game" positionX="-63" positionY="-27" width="128" height="210"/>
         <element name="GameType" positionX="-243" positionY="108" width="128" height="73"/>
         <element name="Platform" positionX="-218" positionY="198" width="128" height="73"/>
-        <element name="Post" positionX="115" positionY="90" width="128" height="193"/>
+        <element name="Post" positionX="115" positionY="90" width="128" height="195"/>
     </elements>
 </model>

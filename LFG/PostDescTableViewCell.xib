@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostDescTableViewCell" id="bLd-gl-FxW" customClass="PostDescTableViewCell" customModule="LFG" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="323" height="160"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bLd-gl-FxW" id="lJ4-Eo-q04">
+                <rect key="frame" x="0.0" y="0.0" width="323" height="159.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pzC-SR-Vco" userLabel="Title">
+                        <rect key="frame" x="15" y="8" width="300" height="15"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NLc-WF-j4o" userLabel="Description">
+                        <rect key="frame" x="16" y="28" width="291" height="123"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="123" id="f7P-8u-Fee"/>
+                        </constraints>
+                        <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="NLc-WF-j4o" firstAttribute="top" secondItem="pzC-SR-Vco" secondAttribute="bottom" constant="5" id="AcQ-2x-XmD"/>
+                    <constraint firstItem="NLc-WF-j4o" firstAttribute="leading" secondItem="lJ4-Eo-q04" secondAttribute="leadingMargin" constant="8" id="Dr0-7s-pez"/>
+                    <constraint firstItem="pzC-SR-Vco" firstAttribute="leading" secondItem="lJ4-Eo-q04" secondAttribute="leadingMargin" constant="7" id="KuM-Ew-EAT"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="pzC-SR-Vco" secondAttribute="trailing" id="NEV-yy-fnf"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="NLc-WF-j4o" secondAttribute="leading" constant="2222" id="j7J-sZ-n3B"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="NLc-WF-j4o" secondAttribute="trailing" constant="8" id="jQH-ng-hdF"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="NLc-WF-j4o" secondAttribute="bottom" id="vA2-FY-uld"/>
+                    <constraint firstItem="pzC-SR-Vco" firstAttribute="top" secondItem="lJ4-Eo-q04" secondAttribute="topMargin" id="vBX-rl-Ob2"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="j7J-sZ-n3B"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="descriptionTextView" destination="NLc-WF-j4o" id="gO0-AT-ReI"/>
+                <outlet property="titleLabel" destination="pzC-SR-Vco" id="mMD-ey-318"/>
+            </connections>
+            <point key="canvasLocation" x="347.5" y="286"/>
+        </tableViewCell>
+    </objects>
+</document>

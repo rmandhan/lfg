@@ -42,4 +42,94 @@ extension Game {
         }
         return false
     }
+    
+    var hasOnlyOneCharacter: Bool {
+        if self.characters.count == 1 {
+            return true
+        }
+        return false
+    }
+    
+    var hasOnlyOneGameType: Bool {
+        if self.gameTypes.count == 1 {
+            return true
+        }
+        return false
+    }
+    
+    var hasOnlyOnePlatform: Bool {
+        if self.platforms.count == 1 {
+            return true
+        }
+        return false
+    }
+    
+    func firstCharacter() -> String {
+        
+        var result = ""
+        
+        if self.characters.count > 0 {
+            let characters = self.characters.allObjects as! [Character]
+            result = characters[0].name
+        }
+        
+        return result
+    }
+    
+    func firstGameType() -> String {
+        
+        var result = ""
+        
+        if self.gameTypes.count > 0 {
+            let gameTypes = self.gameTypes.allObjects as! [GameType]
+            result = gameTypes[0].name
+        }
+        
+        return result
+    }
+    
+    func firstPlatform() -> String {
+        
+        var result = ""
+        
+        if self.platforms.count > 0 {
+            let platforms = self.platforms.allObjects as! [Platform]
+            result = platforms[0].name
+        }
+        
+        return result
+    }
+    
+    func charactersAsStrings() -> [String] {
+        
+        var strings = [String]()
+        
+        for character in (self.characters.allObjects as! [Character]) {
+            strings.append(character.name)
+        }
+        
+        return strings
+    }
+    
+    func gameTypesAsStrings() -> [String] {
+        
+        var strings = [String]()
+        
+        for gametype in (self.gameTypes.allObjects as! [GameType]) {
+            strings.append(gametype.name)
+        }
+        
+        return strings
+    }
+    
+    func platformsAsStrings() -> [String] {
+        
+        var strings = [String]()
+        
+        for platform in (self.platforms.allObjects as! [Platform]) {
+            strings.append(platform.name)
+        }
+        
+        return strings
+    }
 }

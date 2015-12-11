@@ -81,7 +81,11 @@
                                 <segue destination="CBW-qF-HLB" kind="show" identifier="goToAddPostViewController" id="hlg-MN-Apv"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="List" id="EU9-1A-mGv"/>
+                        <barButtonItem key="rightBarButtonItem" title="List" id="EU9-1A-mGv">
+                            <connections>
+                                <action selector="sideBarButtonTapped:" destination="nCf-QL-sh3" id="7Ip-Zg-D6n"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addBarButton" destination="Fus-XG-us1" id="PMn-ZA-lm5"/>

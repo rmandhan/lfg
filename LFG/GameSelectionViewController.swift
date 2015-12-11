@@ -26,19 +26,20 @@ class GameSelectionViewController: ViewController, UITableViewDelegate, UITableV
         self.tableView.registerNib(nib, forCellReuseIdentifier: "GameTableViewCell")
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorColor = UIColor.clearColor()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
         
-        // TEMPORARY: REMOVE AFTER TESTING
-        self.gamesList = ObjectManager.sharedInstance.retrieveGames(withPredicate: nil)
-        if self.gamesList.count == 0 {
-            ObjectManager.sharedInstance.downloadGames(withPredicate: nil, completionHandler: {
-                (success: Bool) -> Void in
-                if success {
-                    self.gamesList = ObjectManager.sharedInstance.retrieveGames(withPredicate: nil)
-                    ObjectManager.sharedInstance.downloadPosts(withPredicate: nil, completionHandler: nil)
-                    self.tableView.reloadData()
-                }
-            })
-        }
+        // TEMPORARY: CHANGE AFTER TESTING
+        ObjectManager.sharedInstance.downloadGames(withPredicate: nil, completionHandler: {
+            (success: Bool) -> Void in
+            if success {
+                self.gamesList = ObjectManager.sharedInstance.retrieveGames(withPredicate: nil)
+                ObjectManager.sharedInstance.downloadPosts(withPredicate: nil, completionHandler: nil)
+                self.tableView.reloadData()
+            }
+        })
     }
     
     // MARK: UITableViewDelegate
@@ -49,18 +50,18 @@ class GameSelectionViewController: ViewController, UITableViewDelegate, UITableV
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-//        cell.contentView.backgroundColor = UIColor.clearColor()
-//        
-//        let whiteRoundedView : UIView = UIView(frame: CGRectMake(0, 10, self.view.frame.size.width, 70))
-//        
-//        whiteRoundedView.layer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 1.0, 1.0, 1.0])
-//        whiteRoundedView.layer.masksToBounds = false
-//        whiteRoundedView.layer.cornerRadius = 2.0
-//        whiteRoundedView.layer.shadowOffset = CGSizeMake(-1, 1)
-//        whiteRoundedView.layer.shadowOpacity = 0
-//        
-//        cell.contentView.addSubview(whiteRoundedView)
-//        cell.contentView.sendSubviewToBack(whiteRoundedView)
+        //        cell.contentView.backgroundColor = UIColor.clearColor()
+        //
+        //        let whiteRoundedView : UIView = UIView(frame: CGRectMake(0, 10, self.view.frame.size.width, 70))
+        //
+        //        whiteRoundedView.layer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 1.0, 1.0, 1.0])
+        //        whiteRoundedView.layer.masksToBounds = false
+        //        whiteRoundedView.layer.cornerRadius = 2.0
+        //        whiteRoundedView.layer.shadowOffset = CGSizeMake(-1, 1)
+        //        whiteRoundedView.layer.shadowOpacity = 0
+        //
+        //        cell.contentView.addSubview(whiteRoundedView)
+        //        cell.contentView.sendSubviewToBack(whiteRoundedView)
     }
     
     // MARK: UITableViewDataSource
