@@ -15,6 +15,7 @@ import CoreData
 extension Post {
 
     @NSManaged var objectId: String
+    @NSManaged var gameId: String
     @NSManaged var character: String
     @NSManaged var platform: String
     @NSManaged var desc: String

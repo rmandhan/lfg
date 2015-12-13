@@ -14,6 +14,8 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
+    var refreshControl: UIRefreshControl!
+    
     var game: Game?
     var allPosts = [Post]()
     
@@ -23,30 +25,52 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         self.title = "Posts"
         self.navigationItem.setHidesBackButton(true, animated: true)
         
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: "refreshPosts:", forControlEvents: UIControlEvents.ValueChanged)
+        
         let nib = UINib(nibName: "PostTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "PostTableViewCell")
         self.tableView.tableFooterView = UIView()
         self.tableView.separatorColor = UIColor.clearColor()
+        self.tableView.addSubview(refreshControl)
         
         loadPosts()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
+        self.loadingIndicator.stopAnimating()
     }
     
     func loadPosts() {
         
-        if game == nil {
+        if self.game == nil {
             let gameId = UserDefaultsManager.sharedInstance.getCurrentGameId()
             let gamePredicate = NSPredicate(format: "objectId == %@", gameId)
             let gamesFound = ObjectManager.sharedInstance.retrieveGames(withPredicate: gamePredicate)
-            if gamesFound.count > 0 { game = gamesFound[0] }
+            if gamesFound.count > 0 { self.game = gamesFound[0] }
         }
         
-        if let currentGame = game {
+        if let currentGame = self.game {
             let predicate = NSPredicate(format: "game == %@", currentGame)
-            allPosts = ObjectManager.sharedInstance.retrievePosts(withPredicate: predicate)
+            self.allPosts = ObjectManager.sharedInstance.retrievePosts(withPredicate: predicate)
+        }
+    }
+    
+    func refreshPosts(sender: AnyObject) {
+        if let currentGame = self.game {
+            let predicate = NSPredicate(format: "gameId == %@", currentGame.objectId)
+            ObjectManager.sharedInstance.downloadPosts(withPredicate: predicate, completionHandler: {
+                (success: Bool) -> Void in
+                // TODO: Error Checking
+                let predicate = NSPredicate(format: "game == %@", currentGame)
+                self.allPosts = ObjectManager.sharedInstance.retrievePosts(withPredicate: predicate)
+                self.tableView.reloadData()
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.refreshControl.endRefreshing()
+                })
+            })
         }
     }
     

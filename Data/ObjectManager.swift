@@ -201,7 +201,7 @@ class ObjectManager {
         let twoHoursAgo = NSDate(timeIntervalSinceNow: -7200)
         
         var query = PFQuery(className: "Post", predicate: predicate)
-        query.whereKey("updatedAt", greaterThanOrEqualTo: twoHoursAgo)
+//        query.whereKey("updatedAt", greaterThanOrEqualTo: twoHoursAgo)
         
         query.findObjectsInBackgroundWithBlock({
             (objects: [PFObject]?, error: NSError?) -> Void in
@@ -226,6 +226,7 @@ class ObjectManager {
                                 }
                                 
                                 post.objectId = objectId
+                                post.gameId = postObject["gameId"] as! String
                                 post.character = postObject["character"] as! String
                                 post.platform = postObject["platform"] as! String
                                 post.desc = postObject["description"] as! String
