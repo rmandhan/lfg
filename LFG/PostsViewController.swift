@@ -14,7 +14,7 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
-    var refreshControl: UIRefreshControl!
+    lazy var refreshControl = UIRefreshControl()
     
     var game: Game?
     var allPosts = [Post]()
@@ -25,22 +25,29 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         self.title = "Posts"
         self.navigationItem.setHidesBackButton(true, animated: true)
         
-        self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: "refreshPosts:", forControlEvents: UIControlEvents.ValueChanged)
         
         let nib = UINib(nibName: "PostTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "PostTableViewCell")
         self.tableView.tableFooterView = UIView()
-        self.tableView.separatorColor = UIColor.clearColor()
-        self.tableView.addSubview(refreshControl)
+//        self.tableView.separatorColor = UIColor.clearColor()
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 63
+        self.tableView.addSubview(self.refreshControl)
         
         loadPosts()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.loadingIndicator.stopAnimating()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // Due to iOS bug
+        self.refreshControl.superview?.sendSubviewToBack(self.refreshControl)
     }
     
     func loadPosts() {
@@ -74,21 +81,16 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    // MARK: UITableViewDelegate
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 170
-    }
-    
     // MARK: UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allPosts.count
+        return self.allPosts.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell") as! PostTableViewCell
-        cell.post = allPosts[indexPath.row]
+        cell.game = self.game
+        cell.post = self.allPosts[indexPath.row]
         cell.render()
         return cell
     }

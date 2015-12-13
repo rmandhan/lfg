@@ -213,6 +213,11 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         return true
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     // MARK: UITextViewDelegate
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
@@ -351,18 +356,10 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
             title = "Mic"
             
         case "Primary Level":
-            if self.game.isBlackOps3 {
-                title = "Prestige"
-            } else if self.game.isDestiny {
-                title = "Level"
-            }
+            title = self.game.primaryLevelName
             
         case "Secondary Level":
-            if self.game.isBlackOps3 {
-                title = "Level"
-            } else if self.game.isDestiny {
-                title = "Light Level"
-            }
+            title = self.game.secondaryLevelName
             
         case "Description":
             title = "Description"

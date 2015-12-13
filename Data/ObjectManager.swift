@@ -135,10 +135,19 @@ class ObjectManager {
                         game.objectId = objectId
                         game.fullName = gameObject["fullName"] as! String
                         game.shortName = gameObject["shortName"] as! String
+                        
                         game.primaryLevelMax = gameObject["primaryLevelMax"] as! NSNumber
                         game.primaryLevelMin = gameObject["primaryLevelMin"] as! NSNumber
                         game.secondaryLevelMin = gameObject["secondaryLevelMin"] as! NSNumber
                         game.secondaryLevelMax = gameObject["secondaryLevelMax"] as! NSNumber
+                        
+                        if game.primaryLevelMax.integerValue != 0 {
+                            game.primaryLevelName = gameObject["primaryLevelName"] as! String
+                        }
+                        
+                        if game.secondaryLevelMax.integerValue != 0 {
+                            game.secondaryLevelName = gameObject["secondaryLevelName"] as! String
+                        }
                         
                         if let platformsArray = gameObject["platforms"] as? [String],
                             charactersArray = gameObject["characters"] as? [String],

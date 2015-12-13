@@ -19,6 +19,8 @@ extension Game {
 
     @NSManaged var objectId: String
     @NSManaged var fullName: String
+    @NSManaged var primaryLevelName: String
+    @NSManaged var secondaryLevelName: String
     @NSManaged var primaryLevelMax: NSNumber
     @NSManaged var primaryLevelMin: NSNumber
     @NSManaged var secondaryLevelMax: NSNumber
