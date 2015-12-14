@@ -199,8 +199,10 @@ class ObjectManager {
         }
     }
     
-    // Downloads/Updates Post data from Parse
-    func downloadPosts(withPredicate predicate: NSPredicate?, completionHandler: ((success: Bool) -> Void)?) {
+    // TODO: Refactor the two methods below
+    
+    // Downloads/Updates all Post data from Parse
+    func downloadAllPosts(withPredicate predicate: NSPredicate?, completionHandler: ((success: Bool) -> Void)?) {
         
         let gamesWithObjectId = self.getGameWithObjectIds(withPredicate: nil)
         let postsWithObjectId = self.getPostsWithObjectIds(withPredicate: predicate)
@@ -252,7 +254,86 @@ class ObjectManager {
                 do {
                     try self.managedContext.save()
                     print("Post object(s) saved")
-                    UserDefaultsManager.sharedInstance.setLastUpdatedPostsDate(downloadDate)
+                    
+                    for key in gamesWithObjectId.keys {
+                        UserDefaultsManager.sharedInstance.setLastUpdatedPostsDate(downloadDate, gameId: key)
+                    }
+                    
+                } catch let error as NSError {
+                    print("Could not save downloaded posts \(error), \(error.userInfo)")
+                }
+                
+                if let handler = completionHandler {
+                    handler(success: true)
+                }
+            }
+            else {
+                print("Could not download \(error!), \(error!.userInfo)")
+                
+                if let handler = completionHandler {
+                    handler(success: false)
+                }
+            }
+        })
+    }
+    
+    // Downloads/Updates Post data from Parse specified by a game Id (more flexibility here)
+    func downloadPosts(withPredicate predicate: NSPredicate?, gameId: String, completionHandler: ((success: Bool) -> Void)?) {
+        
+        let gamesWithObjectId = self.getGameWithObjectIds(withPredicate: nil)
+        
+        // Maybe improve this in the future
+        let gamePredicate = NSPredicate(format: "gameId == %@", gameId)
+        let postsWithObjectId = self.getPostsWithObjectIds(withPredicate: gamePredicate)
+        
+        let downloadDate = NSDate()
+        // Always get posts that are at max 2 hours old
+        let twoHoursAgo = NSDate(timeIntervalSinceNow: -7200)
+        
+        var query = PFQuery(className: "Post", predicate: predicate)
+        query.whereKey("gameId", equalTo: gameId)
+        //        query.whereKey("updatedAt", greaterThanOrEqualTo: twoHoursAgo)
+        
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if let postObjects = objects where error == nil {
+                
+                print("Posts Count: \(postObjects.count)")
+                
+                for postObject in postObjects {
+                    
+                    if let objectId = postObject.objectId {
+                            
+                            if let gameFound = gamesWithObjectId[gameId] {
+                                
+                                var post: Post
+                                
+                                if let postFound = postsWithObjectId[objectId] {
+                                    post = postFound
+                                } else {
+                                    post = NSEntityDescription.insertNewObjectForEntityForName("Post", inManagedObjectContext: self.managedContext) as! Post
+                                }
+                                
+                                post.objectId = objectId
+                                post.gameId = postObject["gameId"] as! String
+                                post.character = postObject["character"] as! String
+                                post.platform = postObject["platform"] as! String
+                                post.desc = postObject["description"] as! String
+                                post.gameType = postObject["gameType"] as! String
+                                post.mic = postObject["mic"] as! Bool
+                                post.playerId = postObject["playerId"] as! String
+                                post.primaryLevel = postObject["primaryLevel"] as! NSNumber
+                                post.secondaryLevel = postObject["secondaryLevel"] as! NSNumber
+                                post.game = gameFound
+                            }
+                    }
+                }
+                
+                do {
+                    try self.managedContext.save()
+                    print("Post object(s) saved")
+                    UserDefaultsManager.sharedInstance.setLastUpdatedPostsDate(downloadDate, gameId: gameId)
                 } catch let error as NSError {
                     print("Could not save downloaded posts \(error), \(error.userInfo)")
                 }

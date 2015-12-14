@@ -32,7 +32,9 @@ class GameSelectionViewController: ViewController, UITableViewDelegate, UITableV
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        self.loadingIndicator.startAnimating()
+        if self.gamesList.count == 0 {
+            self.loadingIndicator.startAnimating()
+        }
         
         // TEMPORARY: CHANGE AFTER TESTING
         ObjectManager.sharedInstance.downloadGames(withPredicate: nil, completionHandler: {
@@ -40,7 +42,6 @@ class GameSelectionViewController: ViewController, UITableViewDelegate, UITableV
             if success {
                 
                 self.gamesList = ObjectManager.sharedInstance.retrieveGames(withPredicate: nil)
-                ObjectManager.sharedInstance.downloadPosts(withPredicate: nil, completionHandler: nil)
                 self.tableView.reloadData()
                 
                 dispatch_async(dispatch_get_main_queue(), {

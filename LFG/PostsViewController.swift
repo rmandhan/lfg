@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataSource {
+class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataSource, AddPostDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
@@ -26,12 +26,11 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         self.navigationItem.setHidesBackButton(true, animated: true)
         
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl.addTarget(self, action: "refreshPosts:", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.addTarget(self, action: "refreshPosts", forControlEvents: UIControlEvents.ValueChanged)
         
         let nib = UINib(nibName: "PostTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "PostTableViewCell")
         self.tableView.tableFooterView = UIView()
-//        self.tableView.separatorColor = UIColor.clearColor()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 63
         self.tableView.addSubview(self.refreshControl)
@@ -41,7 +40,12 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.loadingIndicator.stopAnimating()
+        
+        if self.allPosts.count == 0 {
+            self.loadingIndicator.startAnimating()
+        }
+        
+        refreshPosts()
     }
     
     override func viewWillLayoutSubviews() {
@@ -65,20 +69,18 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    func refreshPosts(sender: AnyObject) {
-        if let currentGame = self.game {
-            let predicate = NSPredicate(format: "gameId == %@", currentGame.objectId)
-            ObjectManager.sharedInstance.downloadPosts(withPredicate: predicate, completionHandler: {
-                (success: Bool) -> Void in
-                // TODO: Error Checking
-                let predicate = NSPredicate(format: "game == %@", currentGame)
-                self.allPosts = ObjectManager.sharedInstance.retrievePosts(withPredicate: predicate)
-                self.tableView.reloadData()
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.refreshControl.endRefreshing()
-                })
-            })
+    func refreshPosts() {
+        
+        let downloadPostsDate = UserDefaultsManager.sharedInstance.getLastUpdatedPostsDate(forGame: self.game!.objectId)
+        let timeElapsed = NSDate().timeIntervalSinceDate(downloadPostsDate)
+        
+        if timeElapsed > 120 {
+            self.fetchNewPosts()
         }
+
+        dispatch_async(dispatch_get_main_queue(), {
+            self.refreshControl.endRefreshing()
+        })
     }
     
     // MARK: UITableViewDataSource
@@ -101,7 +103,17 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         cell.cellSelected()
     }
     
+    // MARK: AddPostDelegate
+    
+    func userSubmittedPost() {
+        self.fetchNewPosts()
+    }
+
     // MARK: Actions
+    
+    @IBAction func addBarButtonTapped(sender: AnyObject) {
+        
+    }
     
     // TEMP: Takes user back to the Games list
     @IBAction func sideBarButtonTapped(sender: AnyObject) {
@@ -112,11 +124,32 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     // MARK: Segue
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         if segue.identifier == "goToAddPostViewController" {
             let nvc = segue.destinationViewController as! UINavigationController
             if let addPostViewConroller = nvc.topViewController as? AddPostViewController {
+                addPostViewConroller.delegate = self
                 addPostViewConroller.game = self.game
             }
+        }
+    }
+    
+    // MARK: Helper Methods
+    
+    func fetchNewPosts() {
+        if let currentGame = self.game {
+            ObjectManager.sharedInstance.downloadPosts(withPredicate: nil, gameId: currentGame.objectId, completionHandler: {
+                (success: Bool) -> Void in
+                
+                // TODO: Error Checking
+                let predicate = NSPredicate(format: "game == %@", currentGame)
+                self.allPosts = ObjectManager.sharedInstance.retrievePosts(withPredicate: predicate)
+                self.tableView.reloadData()
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.loadingIndicator.stopAnimating()
+                })
+            })
         }
     }
 }

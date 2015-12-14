@@ -10,7 +10,6 @@ import Foundation
 
 let GAME_ID_KEY = "gameId"
 let LAST_UPDATED_POSTS_DATE_KEY = "LastUpdatedPostsDate"
-let LAST_POST_FOR_GAMES = "LastPostForGames"
 
 class UserDefaultsManager {
     
@@ -30,11 +29,27 @@ class UserDefaultsManager {
         userDefaults.setValue(id, forKey: GAME_ID_KEY)
     }
     
-    func getLastUpdatedPostsDate() -> NSDate {
-        return userDefaults.valueForKey(LAST_UPDATED_POSTS_DATE_KEY) as! NSDate
+    func getLastUpdatedPostsDate(forGame gameId: String) -> NSDate {
+        var dateDictionary = self.getLastUpdatedPostsDateDictionary()
+        var result = dateDictionary[gameId]
+        if result == nil {
+            result = NSDate.init(timeIntervalSince1970: 1)
+        }
+        return result!
     }
     
-    func setLastUpdatedPostsDate(date: NSDate) {
-        userDefaults.setObject(date, forKey: LAST_UPDATED_POSTS_DATE_KEY)
+    func setLastUpdatedPostsDate(date: NSDate, gameId: String) {
+        var dateDictionary = self.getLastUpdatedPostsDateDictionary()
+        dateDictionary[gameId] = date
+        userDefaults.setObject(dateDictionary, forKey: LAST_UPDATED_POSTS_DATE_KEY)
+    }
+    
+    func getLastUpdatedPostsDateDictionary() -> [String: NSDate] {
+        var result = userDefaults.dictionaryForKey(LAST_UPDATED_POSTS_DATE_KEY) as? [String: NSDate]
+        if result == nil {
+            result = [String: NSDate]()
+        }
+        print(result)
+        return result!
     }
 }

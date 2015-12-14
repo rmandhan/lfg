@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol AddPostDelegate {
+    func userSubmittedPost()
+}
+
 class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, OptionSelectedDelegate {
     
     @IBOutlet weak var cancelBarButton: UIBarButtonItem!
     @IBOutlet weak var postBarButton: UIBarButtonItem!
     
     @IBOutlet weak var tableView: UITableView!
+    
+    var delegate: AddPostDelegate?
     
     var game: Game!
     var post: PseudoPost!
@@ -44,6 +50,18 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         self.rowContent.append("Description")
         
         post = PseudoPost(character: "", platform: "", desc: "", gameType: "", mic: false, playerId: "", primaryLevel: 0, secondaryLevel: 0, gameId: self.game.objectId)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name:UIKeyboardWillHideNotification, object: nil)
+
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+//        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
     // MARK: UITableViewDataSource
@@ -103,7 +121,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
             }
         }
         else if content == "Player Id" {
-            cell = self.createTextFieldCell(withIdentifier: content, withTag: 0, text: post.playerId, placeholder: "Id")
+            cell = self.createTextFieldCell(withIdentifier: content, withTag: 0, text: post.playerId, placeholder: "Id", keyboardType: UIKeyboardType.Default)
         }
         else if content == "Mic" {
             cell = self.createSwitchCell(withIdentifier: content, action: "switchValueChanged:", state: post.mic)
@@ -113,9 +131,9 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
             let placeholder = self.game.primaryLevelMin.stringValue + " - " + self.game.primaryLevelMax.stringValue
             
             if post.primaryLevel.integerValue != 0 {
-                cell = self.createTextFieldCell(withIdentifier: content, withTag: 1, text: post.primaryLevel.stringValue, placeholder: placeholder)
+                cell = self.createTextFieldCell(withIdentifier: content, withTag: 1, text: post.primaryLevel.stringValue, placeholder: placeholder, keyboardType: UIKeyboardType.NumbersAndPunctuation)
             } else {
-                cell = self.createTextFieldCell(withIdentifier: content, withTag: 1, text: "", placeholder: placeholder)
+                cell = self.createTextFieldCell(withIdentifier: content, withTag: 1, text: "", placeholder: placeholder, keyboardType: UIKeyboardType.NumbersAndPunctuation)
             }
         }
         else if content == "Secondary Level" {
@@ -123,9 +141,9 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
             let placeholder = self.game.secondaryLevelMin.stringValue + " - " + self.game.secondaryLevelMax.stringValue
             
             if post.secondaryLevel.integerValue != 0 {
-                cell = self.createTextFieldCell(withIdentifier: content, withTag: 2, text: post.secondaryLevel.stringValue, placeholder: placeholder)
+                cell = self.createTextFieldCell(withIdentifier: content, withTag: 2, text: post.secondaryLevel.stringValue, placeholder: placeholder, keyboardType: UIKeyboardType.NumbersAndPunctuation)
             } else {
-                cell = self.createTextFieldCell(withIdentifier: content, withTag: 2, text: "", placeholder: placeholder)
+                cell = self.createTextFieldCell(withIdentifier: content, withTag: 2, text: "", placeholder: placeholder, keyboardType: UIKeyboardType.NumbersAndPunctuation)
             }
         }
         // Custom Cell
@@ -220,7 +238,16 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     // MARK: UITextViewDelegate
     
+    func textViewDidBeginEditing(textView: UITextView) {
+        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 7, inSection: 0), atScrollPosition: .Top, animated: true)
+    }
+    
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
         
         var textAfterUpdate: String = ""
         
@@ -277,7 +304,9 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
             ObjectManager.sharedInstance.uploadPost(self.post, completionHandler: {
                 (success: Bool) -> Void in
                 if success {
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismissViewControllerAnimated(true, completion: {
+                        self.delegate?.userSubmittedPost()
+                    })
                 }
             })
         }
@@ -332,6 +361,21 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    // MARK: Notifications
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        var userInfo = notification.userInfo!
+        var keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        keyboardFrame = self.view.convertRect(keyboardFrame, fromView: nil)
+
+        self.tableView.contentInset.bottom = keyboardFrame.size.height
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        self.tableView.contentInset.bottom = 0
+    }
+    
     // MARK: Helper Methods
     
     func cellTitleFor(content: String) -> String? {
@@ -378,7 +422,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
     
-    func createTextFieldCell(withIdentifier identifier: String, withTag tag: Int, text: String, placeholder: String) -> UITableViewCell {
+    func createTextFieldCell(withIdentifier identifier: String, withTag tag: Int, text: String, placeholder: String, keyboardType: UIKeyboardType) -> UITableViewCell {
         
         let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: identifier)
         cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -386,6 +430,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         let theTextField = UITextField(frame: CGRectMake(0, 0, 160, 35))
         theTextField.tag = tag
         theTextField.text = text
+        theTextField.keyboardType = keyboardType
         theTextField.backgroundColor = UIColor.whiteColor()
         theTextField.textAlignment = NSTextAlignment.Right
         theTextField.placeholder = placeholder
