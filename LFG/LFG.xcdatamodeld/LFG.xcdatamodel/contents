@@ -7,6 +7,7 @@
     <entity name="Game" representedClassName=".Game" syncable="YES">
         <attribute name="fullName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postExpiryTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="primaryLevelMax" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="primaryLevelMin" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="primaryLevelName" optional="YES" attributeType="String" syncable="YES"/>
@@ -38,13 +39,14 @@
         <attribute name="playerId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="primaryLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="secondaryLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="posts" inverseEntity="Game" syncable="YES"/>
     </entity>
     <elements>
         <element name="Character" positionX="-245" positionY="18" width="128" height="73"/>
-        <element name="Game" positionX="-63" positionY="-27" width="128" height="240"/>
+        <element name="Game" positionX="-63" positionY="-27" width="128" height="253"/>
         <element name="GameType" positionX="-243" positionY="108" width="128" height="73"/>
         <element name="Platform" positionX="-218" positionY="198" width="128" height="73"/>
-        <element name="Post" positionX="115" positionY="90" width="128" height="210"/>
+        <element name="Post" positionX="115" positionY="90" width="128" height="225"/>
     </elements>
 </model>

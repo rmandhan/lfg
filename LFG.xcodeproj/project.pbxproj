@@ -26,6 +26,7 @@
 		1416A57B1C14113F00CD7985 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1416A57A1C14113F00CD7985 /* PostTableViewCell.swift */; };
 		1416A57D1C14115000CD7985 /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1416A57C1C14115000CD7985 /* PostTableViewCell.xib */; };
 		1416A57F1C14BC4700CD7985 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1416A57E1C14BC4700CD7985 /* AddPostViewController.swift */; };
+		144EE09A1C20713E002B16EC /* PseudoPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EE0991C20713E002B16EC /* PseudoPost.swift */; settings = {ASSET_TAGS = (); }; };
 		146EC6771C0FC97D003BAAD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EC6761C0FC97D003BAAD0 /* AppDelegate.swift */; };
 		146EC6791C0FC97D003BAAD0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EC6781C0FC97D003BAAD0 /* ViewController.swift */; };
 		146EC67C1C0FC97D003BAAD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 146EC67A1C0FC97D003BAAD0 /* Main.storyboard */; };
@@ -78,6 +79,7 @@
 		1416A57A1C14113F00CD7985 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		1416A57C1C14115000CD7985 /* PostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTableViewCell.xib; sourceTree = "<group>"; };
 		1416A57E1C14BC4700CD7985 /* AddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
+		144EE0991C20713E002B16EC /* PseudoPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PseudoPost.swift; sourceTree = "<group>"; };
 		146EC6731C0FC97D003BAAD0 /* LFG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LFG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146EC6761C0FC97D003BAAD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		146EC6781C0FC97D003BAAD0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				1416A5651C1371CA00CD7985 /* Platform+CoreDataProperties.swift */,
 				1416A5661C1371CA00CD7985 /* Post.swift */,
 				1416A5671C1371CA00CD7985 /* Post+CoreDataProperties.swift */,
+				144EE0991C20713E002B16EC /* PseudoPost.swift */,
 				1416A5681C1371CA00CD7985 /* UserDefaultsManager.swift */,
 				146EC67D1C0FC97D003BAAD0 /* LFG.xcdatamodeld */,
 			);
@@ -446,6 +449,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				144EE09A1C20713E002B16EC /* PseudoPost.swift in Sources */,
 				1416A56F1C1371CA00CD7985 /* ObjectManager.swift in Sources */,
 				1416A5701C1371CA00CD7985 /* Platform.swift in Sources */,
 				1416A5711C1371CA00CD7985 /* Platform+CoreDataProperties.swift in Sources */,

@@ -10,44 +10,23 @@ import Foundation
 import CoreData
 import Parse
 
-struct PseudoPost {
-    
-    var character: String
-    var platform: String
-    var desc: String
-    var gameType: String
-    var mic: Bool
-    var playerId: String
-    var primaryLevel: NSNumber
-    var secondaryLevel: NSNumber
-    var gameId: String
-    
-    init (character: String, platform: String, desc: String, gameType: String, mic: Bool, playerId: String, primaryLevel: NSNumber, secondaryLevel: NSNumber, gameId: String) {
-        self.character = character
-        self.platform = platform
-        self.desc = desc
-        self.gameType = gameType
-        self.mic = mic
-        self.playerId = playerId
-        self.primaryLevel = primaryLevel
-        self.secondaryLevel = secondaryLevel
-        self.gameId = gameId
-    }
-}
-
 class ObjectManager {
     
     static let sharedInstance = ObjectManager()
     
     var appDelegate: AppDelegate
-    var managedContext: NSManagedObjectContext
+    var masterContext: NSManagedObjectContext
+    var mainContext: NSManagedObjectContext
     
     private init() {
+        
         appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        managedContext = appDelegate.managedObjectContext
+        masterContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        mainContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        
+        masterContext.persistentStoreCoordinator = appDelegate.persistentStoreCoordinator
+        mainContext.parentContext = masterContext
     }
-    
-    // MARK: Core Data
     
     // Retrieves the Game objects from Core Data
     func retrieveGames(withPredicate predicate: NSPredicate?) -> [Game] {
@@ -75,12 +54,13 @@ class ObjectManager {
     }
     
     // Retrieves the Post objects from Core Data
-    func retrievePosts(withPredicate predicate: NSPredicate?) -> [Post] {
+    func retrievePosts(withGameId gameId: String?, predicate: NSPredicate?) -> [Post] {
         
         var posts = [Post]()
         
         let fetchRequest = NSFetchRequest(entityName: "Post")
         fetchRequest.predicate = predicate
+        fetchRequest.pred
         
         do {
             let results = try managedContext.executeFetchRequest(fetchRequest)
@@ -100,8 +80,6 @@ class ObjectManager {
         return posts
         
     }
-    
-    // MARK: Parse
     
     // Downloads/Updates Game data from Parse
     func downloadGames(withPredicate predicate: NSPredicate?, completionHandler: ((success: Bool) -> Void)?) {
@@ -380,8 +358,6 @@ class ObjectManager {
             }
         }
     }
-    
-    // MARK: Core Data + Parse
     
     // Deletes the Post objects from Parse and Core Data
     func deletePosts(withPredicate predicate: NSPredicate?, completionHandler: ((success: Bool) -> Void)?) {
