@@ -12,6 +12,10 @@
 import Foundation
 import CoreData
 
+// TODO: Define other constants
+let BLACK_OPS_3 = "Call of Duty Black Ops III"
+let DESTINY = "Destiny"
+
 extension Game {
 
     @NSManaged var objectId: String
@@ -27,7 +31,7 @@ extension Game {
     @NSManaged var characters: NSSet
     @NSManaged var gameTypes: NSSet
     @NSManaged var platforms: NSSet
-    @NSManaged var posts: NSSet?
+    @NSManaged var posts: NSSet
     
     var hasOnlyOneCharacter: Bool {
         if self.characters.count == 1 {
@@ -117,5 +121,23 @@ extension Game {
         }
         
         return strings
+    }
+    
+    func recentPostsSortedByDate() -> [Post] {
+        
+        let allPosts = self.posts.allObjects as! [Post]
+        var result = [Post]()
+        
+        if self.postExpiryTime.integerValue != -1 {
+            let xHoursAgo = NSDate(timeIntervalSinceNow: NSTimeInterval.init(self.postExpiryTime.integerValue*(-1)))
+            result = allPosts.filter({ return $0.updatedAt.compare(xHoursAgo) == NSComparisonResult.OrderedDescending })
+        }
+        else {
+            result = allPosts
+        }
+        
+        result.sortInPlace({ $0.updatedAt.compare($1.updatedAt) == .OrderedDescending })
+        
+        return result
     }
 }

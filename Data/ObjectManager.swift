@@ -29,14 +29,16 @@ class ObjectManager {
     }
     
     // Retrieves the Game objects from Core Data
-    func retrieveGames(withPredicate predicate: NSPredicate?) -> [Game] {
+    func retrieveGames() -> [Game] {
         
         var games = [Game]()
         
         let fetchRequest = NSFetchRequest(entityName: "Game")
+        let sortDescriptor = NSSortDescriptor(key: "fullName", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {
-            let results = try managedContext.executeFetchRequest(fetchRequest)
+            let results = try mainContext.executeFetchRequest(fetchRequest)
             
             for result in results {
                 if let game = result as? Game {
@@ -45,25 +47,47 @@ class ObjectManager {
                     print("One of results could not be casted as a Game")
                 }
             }
-            
-        } catch let error as NSError {
+        }
+        catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
         
         return games
     }
     
-    // Retrieves the Post objects from Core Data
-    func retrievePosts(withGameId gameId: String?, predicate: NSPredicate?) -> [Post] {
+    func retrieveGame(withId id: String) -> Game? {
+        
+        var game: Game!
+        
+        let fetchRequest = NSFetchRequest(entityName: "Game")
+        fetchRequest.predicate = NSPredicate(format: "objectId == %@", id)
+        
+        do {
+            let results = try mainContext.executeFetchRequest(fetchRequest)
+            
+            if results.count > 0 {
+                if let gameFound = results[0] as? Game {
+                    game = gameFound
+                }
+            }
+        }
+        catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        
+        return game
+    }
+
+    // Retrieves the Post objects from Core Data sorted by date (most recent first)
+    func retrievePosts(withGameId gameId: String) -> [Post] {
         
         var posts = [Post]()
         
         let fetchRequest = NSFetchRequest(entityName: "Post")
-        fetchRequest.predicate = predicate
-        fetchRequest.pred
+        fetchRequest.predicate = NSPredicate(format: "gameId == %@", gameId)
         
         do {
-            let results = try managedContext.executeFetchRequest(fetchRequest)
+            let results = try mainContext.executeFetchRequest(fetchRequest)
             
             for result in results {
                 if let post = result as? Post {
@@ -72,13 +96,66 @@ class ObjectManager {
                     print("One of results could not be casted as a Post")
                 }
             }
-            
-        } catch let error as NSError {
+        }
+        catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
         
         return posts
         
+    }
+    
+    // Retrieves the Post objects from Core Data
+    func retrievePosts(withPredicate predicate: NSPredicate?) -> [Post] {
+        
+        var posts = [Post]()
+        
+        let fetchRequest = NSFetchRequest(entityName: "Post")
+        fetchRequest.predicate = predicate
+        
+        do {
+            let results = try mainContext.executeFetchRequest(fetchRequest)
+            
+            for result in results {
+                if let post = result as? Post {
+                    posts.append(post)
+                } else {
+                    print("One of results could not be casted as a Post")
+                }
+            }
+        }
+        catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        
+        return posts
+        
+    }
+    
+    // Deletes expired posts locally - NOTE: Does not save on master context
+    @available(iOS 9.0, *)
+    func deleteExpiredPosts() {
+        
+        let allGames = self.getGameWithObjectIds(withPredicate: nil)
+        let fetchRequest = NSFetchRequest(entityName: "Post")
+        
+        for (gameId, game) in allGames {
+            if game.postExpiryTime.integerValue != -1 {
+                // Delete posts that are older than X hours
+                let xHoursAgo = NSDate(timeIntervalSinceNow: NSTimeInterval.init(game.postExpiryTime.intValue*(-1)))
+                let predicate = NSPredicate(format: "gameId == %@ AND updatedAt < %@", gameId, xHoursAgo)
+                fetchRequest.predicate = predicate
+                
+                do {
+                    try self.masterContext.executeRequest(NSBatchDeleteRequest(fetchRequest: fetchRequest))
+                    try self.masterContext.save()
+                    print("Successfully deleted expired posts for game(\(game.fullName))")
+                }
+                catch let error as NSError {
+                    print("Failed to delete posts for game(\(game.fullName)) \(error), \(error.userInfo)")
+                }
+            }
+        }
     }
     
     // Downloads/Updates Game data from Parse
@@ -107,7 +184,7 @@ class ObjectManager {
                             game.characters = NSSet()
                             game.gameTypes = NSSet()
                         } else {
-                            game = NSEntityDescription.insertNewObjectForEntityForName("Game", inManagedObjectContext: self.managedContext) as! Game
+                            game = NSEntityDescription.insertNewObjectForEntityForName("Game", inManagedObjectContext: self.mainContext) as! Game
                         }
                         
                         game.objectId = objectId
@@ -118,6 +195,7 @@ class ObjectManager {
                         game.primaryLevelMin = gameObject["primaryLevelMin"] as! NSNumber
                         game.secondaryLevelMin = gameObject["secondaryLevelMin"] as! NSNumber
                         game.secondaryLevelMax = gameObject["secondaryLevelMax"] as! NSNumber
+                        game.postExpiryTime = gameObject["postExpiryTime"] as! NSNumber
                         
                         if game.primaryLevelMax.integerValue != 0 {
                             game.primaryLevelName = gameObject["primaryLevelName"] as! String
@@ -134,19 +212,19 @@ class ObjectManager {
                                 if platformsArray.count > 0 && charactersArray.count > 0 && playlistArray.count > 0 {
                                     
                                     for platformName in platformsArray {
-                                        let platform = NSEntityDescription.insertNewObjectForEntityForName("Platform", inManagedObjectContext: self.managedContext) as! Platform
+                                        let platform = NSEntityDescription.insertNewObjectForEntityForName("Platform", inManagedObjectContext: self.mainContext) as! Platform
                                         platform.name = platformName
                                         platform.game = game
                                     }
                                     
                                     for characterName in charactersArray {
-                                        let character = NSEntityDescription.insertNewObjectForEntityForName("Character", inManagedObjectContext: self.managedContext) as! Character
+                                        let character = NSEntityDescription.insertNewObjectForEntityForName("Character", inManagedObjectContext: self.mainContext) as! Character
                                         character.name = characterName
                                         character.game = game
                                     }
                                     
                                     for gameTypeName in playlistArray {
-                                        let gameType = NSEntityDescription.insertNewObjectForEntityForName("GameType", inManagedObjectContext: self.managedContext) as! GameType
+                                        let gameType = NSEntityDescription.insertNewObjectForEntityForName("GameType", inManagedObjectContext: self.mainContext) as! GameType
                                         gameType.name = gameTypeName
                                         gameType.game = game
                                     }
@@ -157,9 +235,19 @@ class ObjectManager {
                 }
                 
                 do {
-                    try self.managedContext.save()
-                    print("Game object(s) saved")
-                } catch let error as NSError {
+                    try self.mainContext.save()
+                    
+                    self.masterContext.performBlock({
+                        do {
+                            try self.masterContext.save()
+                            print("Games saved successfully")
+                        }
+                        catch let error as NSError {
+                            print("Could not save downloaded game \(error), \(error.userInfo)")
+                        }
+                    })
+                }
+                catch let error as NSError {
                     print("Could not save downloaded game \(error), \(error.userInfo)")
                 }
                 
@@ -177,20 +265,26 @@ class ObjectManager {
         }
     }
     
-    // TODO: Refactor the two methods below
-    
-    // Downloads/Updates all Post data from Parse
-    func downloadAllPosts(withPredicate predicate: NSPredicate?, completionHandler: ((success: Bool) -> Void)?) {
+    // Downloads/Updates Post data from Parse specified by a game Id (more flexibility here)
+    func downloadPosts(gameId: String, withPredicate predicate: NSPredicate?, completionHandler: ((success: Bool) -> Void)?) {
         
         let gamesWithObjectId = self.getGameWithObjectIds(withPredicate: nil)
-        let postsWithObjectId = self.getPostsWithObjectIds(withPredicate: predicate)
+        guard let game = gamesWithObjectId[gameId] else { return }
+        
+        // Maybe improve this in the future
+        let gamePredicate = NSPredicate(format: "gameId == %@", gameId)
+        let postsWithObjectId = self.getPostsWithObjectIds(withPredicate: gamePredicate)
         
         let downloadDate = NSDate()
-        // Always get posts that are at max 2 hours old
-        let twoHoursAgo = NSDate(timeIntervalSinceNow: -7200)
         
-        var query = PFQuery(className: "Post", predicate: predicate)
-//        query.whereKey("updatedAt", greaterThanOrEqualTo: twoHoursAgo)
+        let query = PFQuery(className: "Post", predicate: predicate)
+        query.whereKey("gameId", equalTo: gameId)
+        
+        if game.postExpiryTime.integerValue != -1 {
+            // Always get posts that are at max X hours old
+            let xHoursAgo = NSDate(timeIntervalSinceNow: NSTimeInterval.init(game.postExpiryTime.intValue*(-1)))
+            query.whereKey("updatedAt", greaterThanOrEqualTo: xHoursAgo)
+        }
         
         query.findObjectsInBackgroundWithBlock({
             (objects: [PFObject]?, error: NSError?) -> Void in
@@ -201,8 +295,7 @@ class ObjectManager {
                 
                 for postObject in postObjects {
                     
-                    if let objectId = postObject.objectId,
-                        gameId = postObject["gameId"] as? String {
+                    if let objectId = postObject.objectId, updateAt = postObject.updatedAt {
                         
                             if let gameFound = gamesWithObjectId[gameId] {
                                 
@@ -211,10 +304,12 @@ class ObjectManager {
                                 if let postFound = postsWithObjectId[objectId] {
                                     post = postFound
                                 } else {
-                                    post = NSEntityDescription.insertNewObjectForEntityForName("Post", inManagedObjectContext: self.managedContext) as! Post
+                                    post = NSEntityDescription.insertNewObjectForEntityForName("Post", inManagedObjectContext: self.mainContext) as! Post
                                 }
                                 
                                 post.objectId = objectId
+                                post.updatedAt = updateAt
+                                post.game = gameFound
                                 post.gameId = postObject["gameId"] as! String
                                 post.character = postObject["character"] as! String
                                 post.platform = postObject["platform"] as! String
@@ -224,95 +319,26 @@ class ObjectManager {
                                 post.playerId = postObject["playerId"] as! String
                                 post.primaryLevel = postObject["primaryLevel"] as! NSNumber
                                 post.secondaryLevel = postObject["secondaryLevel"] as! NSNumber
-                                post.game = gameFound
                             }
                     }
                 }
                 
                 do {
-                    try self.managedContext.save()
-                    print("Post object(s) saved")
-                    
-                    for key in gamesWithObjectId.keys {
-                        UserDefaultsManager.sharedInstance.setLastUpdatedPostsDate(downloadDate, gameId: key)
-                    }
-                    
-                } catch let error as NSError {
-                    print("Could not save downloaded posts \(error), \(error.userInfo)")
-                }
-                
-                if let handler = completionHandler {
-                    handler(success: true)
-                }
-            }
-            else {
-                print("Could not download \(error!), \(error!.userInfo)")
-                
-                if let handler = completionHandler {
-                    handler(success: false)
-                }
-            }
-        })
-    }
-    
-    // Downloads/Updates Post data from Parse specified by a game Id (more flexibility here)
-    func downloadPosts(withPredicate predicate: NSPredicate?, gameId: String, completionHandler: ((success: Bool) -> Void)?) {
-        
-        let gamesWithObjectId = self.getGameWithObjectIds(withPredicate: nil)
-        
-        // Maybe improve this in the future
-        let gamePredicate = NSPredicate(format: "gameId == %@", gameId)
-        let postsWithObjectId = self.getPostsWithObjectIds(withPredicate: gamePredicate)
-        
-        let downloadDate = NSDate()
-        // Always get posts that are at max 2 hours old
-        let twoHoursAgo = NSDate(timeIntervalSinceNow: -7200)
-        
-        var query = PFQuery(className: "Post", predicate: predicate)
-        query.whereKey("gameId", equalTo: gameId)
-        //        query.whereKey("updatedAt", greaterThanOrEqualTo: twoHoursAgo)
-        
-        query.findObjectsInBackgroundWithBlock({
-            (objects: [PFObject]?, error: NSError?) -> Void in
-            
-            if let postObjects = objects where error == nil {
-                
-                print("Posts Count: \(postObjects.count)")
-                
-                for postObject in postObjects {
-                    
-                    if let objectId = postObject.objectId {
-                            
-                            if let gameFound = gamesWithObjectId[gameId] {
-                                
-                                var post: Post
-                                
-                                if let postFound = postsWithObjectId[objectId] {
-                                    post = postFound
-                                } else {
-                                    post = NSEntityDescription.insertNewObjectForEntityForName("Post", inManagedObjectContext: self.managedContext) as! Post
-                                }
-                                
-                                post.objectId = objectId
-                                post.gameId = postObject["gameId"] as! String
-                                post.character = postObject["character"] as! String
-                                post.platform = postObject["platform"] as! String
-                                post.desc = postObject["description"] as! String
-                                post.gameType = postObject["gameType"] as! String
-                                post.mic = postObject["mic"] as! Bool
-                                post.playerId = postObject["playerId"] as! String
-                                post.primaryLevel = postObject["primaryLevel"] as! NSNumber
-                                post.secondaryLevel = postObject["secondaryLevel"] as! NSNumber
-                                post.game = gameFound
-                            }
-                    }
-                }
-                
-                do {
-                    try self.managedContext.save()
-                    print("Post object(s) saved")
+                    // NOTE: Currently only supporting iOS 9.0 and above
+                    try self.mainContext.save()
                     UserDefaultsManager.sharedInstance.setLastUpdatedPostsDate(downloadDate, gameId: gameId)
-                } catch let error as NSError {
+                    
+                    self.masterContext.performBlock({
+                        do {
+                            try self.masterContext.save()
+                            print("Post(s) saved successfully")
+                        }
+                        catch let error as NSError {
+                            print("Could not save downloaded game \(error), \(error.userInfo)")
+                        }
+                    })
+                }
+                catch let error as NSError {
                     print("Could not save downloaded posts \(error), \(error.userInfo)")
                 }
                 
@@ -359,50 +385,11 @@ class ObjectManager {
         }
     }
     
-    // Deletes the Post objects from Parse and Core Data
-    func deletePosts(withPredicate predicate: NSPredicate?, completionHandler: ((success: Bool) -> Void)?) {
-        
-        let postsToDelete = self.getPostsWithObjectIds(withPredicate: predicate)
-        let postObjectIds = postsToDelete.keys
-        
-        for (objectId, post) in postsToDelete {
-            self.managedContext.deleteObject(post)
-        }
-        var success: Bool = false
-        
-        do {
-            try self.managedContext.save()
-            print("Post object(s) deleted from core data")
-            
-            success = true
-            
-            for objectId in postObjectIds {
-                let postObject = PFObject(withoutDataWithClassName: "Post", objectId: objectId)
-                postObject.deleteInBackgroundWithBlock({
-                    (success: Bool, error: NSError?) -> Void in
-                    if success && error == nil {
-                        print("Post object deleted from Parse")
-                    } else {
-                        print("Failed to delete object from the cloud (and core data)")
-                    }
-                })
-            }
-            
-        } catch let error as NSError {
-            print("Could not deleted posts \(error), \(error.userInfo)")
-            success = false
-        }
-        
-        if let handler = completionHandler {
-            handler(success: success)
-        }
-    }
-    
     // MARK: Helper Methods
     
     func getGameWithObjectIds(withPredicate predicate: NSPredicate?) -> [String: Game] {
         
-        let allExistingGames = self.retrieveGames(withPredicate: nil)
+        let allExistingGames = self.retrieveGames()
         var gamesWithObjectId = [String: Game]()
         
         for game in allExistingGames {

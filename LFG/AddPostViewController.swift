@@ -238,10 +238,6 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     // MARK: UITextViewDelegate
     
-    func textViewDidBeginEditing(textView: UITextView) {
-        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 7, inSection: 0), atScrollPosition: .Top, animated: true)
-    }
-    
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         
         if text == "\n" {
@@ -280,7 +276,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         
         var incompletePost: Bool = false
         
-        if self.post.character.isEmpty || self.post.platform.isEmpty || self.post.desc.isEmpty ||
+        if self.post.character.isEmpty || self.post.platform.isEmpty ||
             self.post.gameType.isEmpty || self.post.playerId.isEmpty {
             incompletePost = true
         }

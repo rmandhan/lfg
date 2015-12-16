@@ -56,6 +56,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
+        
+        // TODO: Delete at a more efficient time?
+        if #available(iOS 9.0, *) {
+            ObjectManager.sharedInstance.deleteExpiredPosts()
+        } else {
+            // Fallback on earlier versions
+        }
         self.saveContext()
     }
 

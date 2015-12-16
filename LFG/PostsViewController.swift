@@ -55,17 +55,8 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func loadPosts() {
-        
-        if self.game == nil {
-            let gameId = UserDefaultsManager.sharedInstance.getCurrentGameId()
-            let gamePredicate = NSPredicate(format: "objectId == %@", gameId)
-            let gamesFound = ObjectManager.sharedInstance.retrieveGames(withPredicate: gamePredicate)
-            if gamesFound.count > 0 { self.game = gamesFound[0] }
-        }
-        
         if let currentGame = self.game {
-            let predicate = NSPredicate(format: "game == %@", currentGame)
-            self.allPosts = ObjectManager.sharedInstance.retrievePosts(withPredicate: predicate)
+            self.allPosts = currentGame.recentPostsSortedByDate()
         }
     }
     
@@ -74,8 +65,10 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         let downloadPostsDate = UserDefaultsManager.sharedInstance.getLastUpdatedPostsDate(forGame: self.game!.objectId)
         let timeElapsed = NSDate().timeIntervalSinceDate(downloadPostsDate)
         
-        if timeElapsed > 120 {
+        if timeElapsed > 0 {
             self.fetchNewPosts()
+        } else {
+            self.loadingIndicator.stopAnimating()
         }
 
         dispatch_async(dispatch_get_main_queue(), {
@@ -138,12 +131,12 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     
     func fetchNewPosts() {
         if let currentGame = self.game {
-            ObjectManager.sharedInstance.downloadPosts(withPredicate: nil, gameId: currentGame.objectId, completionHandler: {
+            ObjectManager.sharedInstance.downloadPosts(currentGame.objectId, withPredicate: nil,  completionHandler: {
                 (success: Bool) -> Void in
                 
                 // TODO: Error Checking
-                let predicate = NSPredicate(format: "game == %@", currentGame)
-                self.allPosts = ObjectManager.sharedInstance.retrievePosts(withPredicate: predicate)
+//                self.allPosts = ObjectManager.sharedInstance.retrievePosts(withGameId: currentGame.objectId)
+                self.loadPosts()
                 self.tableView.reloadData()
                 
                 dispatch_async(dispatch_get_main_queue(), {

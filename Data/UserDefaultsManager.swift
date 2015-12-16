@@ -49,7 +49,6 @@ class UserDefaultsManager {
         if result == nil {
             result = [String: NSDate]()
         }
-        print(result)
         return result!
     }
 }

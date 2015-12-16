@@ -41,7 +41,7 @@ class GameSelectionViewController: ViewController, UITableViewDelegate, UITableV
             (success: Bool) -> Void in
             if success {
                 
-                self.gamesList = ObjectManager.sharedInstance.retrieveGames(withPredicate: nil)
+                self.gamesList = ObjectManager.sharedInstance.retrieveGames()
                 self.tableView.reloadData()
                 
                 dispatch_async(dispatch_get_main_queue(), {
