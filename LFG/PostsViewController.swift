@@ -20,13 +20,14 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     var allPosts = [Post]()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         self.title = "Posts"
         self.navigationItem.setHidesBackButton(true, animated: true)
         
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl.addTarget(self, action: "refreshPosts", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.addTarget(self, action: "refreshTriggered", forControlEvents: UIControlEvents.ValueChanged)
         
         let nib = UINib(nibName: "PostTableViewCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "PostTableViewCell")
@@ -45,7 +46,7 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
             self.loadingIndicator.startAnimating()
         }
         
-        refreshPosts()
+        fetchNewPosts(forceDownload: false)
     }
     
     override func viewWillLayoutSubviews() {
@@ -60,20 +61,35 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    func refreshPosts() {
+    func fetchNewPosts(forceDownload forceDownload: Bool) {
         
-        let downloadPostsDate = UserDefaultsManager.sharedInstance.getLastUpdatedPostsDate(forGame: self.game!.objectId)
-        let timeElapsed = NSDate().timeIntervalSinceDate(downloadPostsDate)
-        
-        if timeElapsed > 0 {
-            self.fetchNewPosts()
-        } else {
-            self.loadingIndicator.stopAnimating()
-        }
-
-        dispatch_async(dispatch_get_main_queue(), {
+        if let currentGame = self.game {
+            
+            let downloadPostsDate = UserDefaultsManager.sharedInstance.getLastUpdatedPostsDate(forGame: currentGame.objectId)
+            let timeElapsed = NSDate().timeIntervalSinceDate(downloadPostsDate)
+            
+            if forceDownload || timeElapsed > 15 {
+                
+                ObjectManager.sharedInstance.downloadPosts(currentGame.objectId, withPredicate: nil,  completionHandler: {
+                    (success: Bool) -> Void in
+                    
+                    // TODO: Error Checking
+                    if success {
+                        self.loadPosts()
+                        self.tableView.reloadData()
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.loadingIndicator.stopAnimating()
+                    })
+                })
+            }
+            else {
+                self.loadingIndicator.stopAnimating()
+            }
+            
             self.refreshControl.endRefreshing()
-        })
+        }
     }
     
     // MARK: UITableViewDataSource
@@ -99,7 +115,7 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     // MARK: AddPostDelegate
     
     func userSubmittedPost() {
-        self.fetchNewPosts()
+        self.fetchNewPosts(forceDownload: true)
     }
 
     // MARK: Actions
@@ -113,6 +129,10 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    // Called by UIRefreshControl
+    func refreshTriggered() {
+        self.fetchNewPosts(forceDownload: false)
+    }
     
     // MARK: Segue
     
@@ -127,22 +147,4 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    // MARK: Helper Methods
-    
-    func fetchNewPosts() {
-        if let currentGame = self.game {
-            ObjectManager.sharedInstance.downloadPosts(currentGame.objectId, withPredicate: nil,  completionHandler: {
-                (success: Bool) -> Void in
-                
-                // TODO: Error Checking
-//                self.allPosts = ObjectManager.sharedInstance.retrievePosts(withGameId: currentGame.objectId)
-                self.loadPosts()
-                self.tableView.reloadData()
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.loadingIndicator.stopAnimating()
-                })
-            })
-        }
-    }
 }

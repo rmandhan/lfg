@@ -8,7 +8,11 @@
 
 import Foundation
 
+// Used to keep track of the current game
 let GAME_ID_KEY = "gameId"
+// Used to know if games were downloaded this app. session
+let GAME_DOWNLOADED_STATE_KEY = "gamesDownloadedState"
+// Used to check how long it has been since the last "posts" download for a specific game
 let LAST_UPDATED_POSTS_DATE_KEY = "LastUpdatedPostsDate"
 
 class UserDefaultsManager {
@@ -27,6 +31,14 @@ class UserDefaultsManager {
     
     func setCurrentGameId(id: String) {
         userDefaults.setValue(id, forKey: GAME_ID_KEY)
+    }
+    
+    func getGamesDownloadedState() -> Bool {
+        return userDefaults.valueForKey(GAME_DOWNLOADED_STATE_KEY) as! Bool
+    }
+    
+    func setGamesDownloadedState(state: Bool) {
+        userDefaults.setBool(state, forKey: GAME_DOWNLOADED_STATE_KEY)
     }
     
     func getLastUpdatedPostsDate(forGame gameId: String) -> NSDate {

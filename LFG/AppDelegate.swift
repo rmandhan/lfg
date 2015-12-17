@@ -27,10 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
+        // Reset games downloaded status
+        UserDefaultsManager.sharedInstance.setGamesDownloadedState(false)
+        
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         print("Databse Location: \(paths[0]) \n")
-        
-        // TODO: Delete all outdated posts
         
         return true
     }

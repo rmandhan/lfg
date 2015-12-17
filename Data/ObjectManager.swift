@@ -161,7 +161,8 @@ class ObjectManager {
     // Downloads/Updates Game data from Parse
     func downloadGames(withPredicate predicate: NSPredicate?, completionHandler: ((success: Bool) -> Void)?) {
         
-        let gamesWithObjectId = self.getGameWithObjectIds(withPredicate: predicate)
+        var gamesWithObjectId = self.getGameWithObjectIds(withPredicate: predicate)
+        var downloadedGamesIds = [String]()
         
         var query = PFQuery(className:"Game", predicate: predicate)
         
@@ -170,7 +171,7 @@ class ObjectManager {
             
             if let gameObjects = objects where error == nil {
                 
-                print("Game found: \(objects!.count)")
+                print("Game download count: \(objects!.count)")
                 
                 for gameObject in gameObjects {
                     
@@ -230,12 +231,31 @@ class ObjectManager {
                                     }
                                 }
                         }
+                        
+                        downloadedGamesIds.append(objectId)
                     }
-                    
+                }
+                
+                // Keep device and cloud in sync by deleting games that were deleted in the cloud (if any)
+                
+                var gamesToDelete = [String]()
+                
+                for key in gamesWithObjectId.keys {
+                    if !downloadedGamesIds.contains(key) {
+                        gamesToDelete.append(key)
+                    }
+                }
+                
+                for gameId in gamesToDelete {
+                    if let game = gamesWithObjectId[gameId] {
+                        print("Deleting game(\(game.fullName))")
+                        self.mainContext.deleteObject(game)
+                    }
                 }
                 
                 do {
                     try self.mainContext.save()
+                    UserDefaultsManager.sharedInstance.setGamesDownloadedState(true)
                     
                     self.masterContext.performBlock({
                         do {
@@ -291,7 +311,7 @@ class ObjectManager {
             
             if let postObjects = objects where error == nil {
                 
-                print("Posts Count: \(postObjects.count)")
+                print("Posts download count: \(postObjects.count)")
                 
                 for postObject in postObjects {
                     
@@ -324,7 +344,6 @@ class ObjectManager {
                 }
                 
                 do {
-                    // NOTE: Currently only supporting iOS 9.0 and above
                     try self.mainContext.save()
                     UserDefaultsManager.sharedInstance.setLastUpdatedPostsDate(downloadDate, gameId: gameId)
                     

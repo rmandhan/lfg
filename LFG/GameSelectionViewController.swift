@@ -32,23 +32,26 @@ class GameSelectionViewController: ViewController, UITableViewDelegate, UITableV
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
+        let gamesWereDownloaded = UserDefaultsManager.sharedInstance.getGamesDownloadedState()
+        
         if self.gamesList.count == 0 {
             self.loadingIndicator.startAnimating()
         }
         
-        // TEMPORARY: CHANGE AFTER TESTING
-        ObjectManager.sharedInstance.downloadGames(withPredicate: nil, completionHandler: {
-            (success: Bool) -> Void in
-            if success {
-                
-                self.gamesList = ObjectManager.sharedInstance.retrieveGames()
-                self.tableView.reloadData()
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.loadingIndicator.stopAnimating()
-                })
-            }
-        })
+        if !gamesWereDownloaded || self.gamesList.count == 0  {
+            ObjectManager.sharedInstance.downloadGames(withPredicate: nil, completionHandler: {
+                (success: Bool) -> Void in
+                if success {
+                    
+                    self.gamesList = ObjectManager.sharedInstance.retrieveGames()
+                    self.tableView.reloadData()
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.loadingIndicator.stopAnimating()
+                    })
+                }
+            })
+        }
     }
     
     // MARK: UITableViewDelegate
