@@ -77,7 +77,7 @@ class ObjectManager {
         
         return game
     }
-
+    
     // Retrieves the Post objects from Core Data sorted by date (most recent first)
     func retrievePosts(withGameId gameId: String) -> [Post] {
         
@@ -175,64 +175,78 @@ class ObjectManager {
                 
                 for gameObject in gameObjects {
                     
-                    if let objectId = gameObject.objectId {
-                        
-                        var game: Game
-                        
-                        if let gameFound = gamesWithObjectId[objectId] {
-                            game = gameFound
-                            game.platforms = NSSet()
-                            game.characters = NSSet()
-                            game.gameTypes = NSSet()
-                        } else {
-                            game = NSEntityDescription.insertNewObjectForEntityForName("Game", inManagedObjectContext: self.mainContext) as! Game
-                        }
-                        
-                        game.objectId = objectId
-                        game.fullName = gameObject["fullName"] as! String
-                        game.shortName = gameObject["shortName"] as! String
-                        
-                        game.primaryLevelMax = gameObject["primaryLevelMax"] as! NSNumber
-                        game.primaryLevelMin = gameObject["primaryLevelMin"] as! NSNumber
-                        game.secondaryLevelMin = gameObject["secondaryLevelMin"] as! NSNumber
-                        game.secondaryLevelMax = gameObject["secondaryLevelMax"] as! NSNumber
-                        game.postExpiryTime = gameObject["postExpiryTime"] as! NSNumber
-                        
-                        if game.primaryLevelMax.integerValue != 0 {
-                            game.primaryLevelName = gameObject["primaryLevelName"] as! String
-                        }
-                        
-                        if game.secondaryLevelMax.integerValue != 0 {
-                            game.secondaryLevelName = gameObject["secondaryLevelName"] as! String
-                        }
-                        
-                        if let platformsArray = gameObject["platforms"] as? [String],
-                            charactersArray = gameObject["characters"] as? [String],
-                            playlistArray = gameObject["playlist"] as? [String] {
-                                
-                                if platformsArray.count > 0 && charactersArray.count > 0 && playlistArray.count > 0 {
-                                    
-                                    for platformName in platformsArray {
-                                        let platform = NSEntityDescription.insertNewObjectForEntityForName("Platform", inManagedObjectContext: self.mainContext) as! Platform
-                                        platform.name = platformName
-                                        platform.game = game
-                                    }
-                                    
-                                    for characterName in charactersArray {
-                                        let character = NSEntityDescription.insertNewObjectForEntityForName("Character", inManagedObjectContext: self.mainContext) as! Character
-                                        character.name = characterName
-                                        character.game = game
-                                    }
-                                    
-                                    for gameTypeName in playlistArray {
-                                        let gameType = NSEntityDescription.insertNewObjectForEntityForName("GameType", inManagedObjectContext: self.mainContext) as! GameType
-                                        gameType.name = gameTypeName
-                                        gameType.game = game
-                                    }
+                    if let objectId = gameObject.objectId,
+                        fullName = gameObject["fullName"] as? String,
+                        shortName = gameObject["shortName"] as? String,
+                        primaryLevelMin = gameObject["primaryLevelMin"] as? NSNumber,
+                        primaryLevelMax = gameObject["primaryLevelMax"] as? NSNumber,
+                        secondaryLevelMin = gameObject["secondaryLevelMin"] as?  NSNumber,
+                        secondaryLevelMax = gameObject["secondaryLevelMax"] as? NSNumber,
+                        postExpiryTime = gameObject["postExpiryTime"] as? NSNumber,
+                        platformsArray = gameObject["platforms"] as? [String],
+                        charactersArray = gameObject["characters"] as? [String],
+                        playlistArray = gameObject["playlist"] as? [String] {
+                            
+                            var game: Game
+                            
+                            if let gameFound = gamesWithObjectId[objectId] {
+                                game = gameFound
+                                game.platforms = NSSet()
+                                game.characters = NSSet()
+                                game.gameTypes = NSSet()
+                            } else {
+                                game = NSEntityDescription.insertNewObjectForEntityForName("Game", inManagedObjectContext: self.mainContext) as! Game
+                            }
+                            
+                            game.objectId = objectId
+                            game.fullName = fullName
+                            game.shortName = shortName
+                            
+                            game.primaryLevelMin = primaryLevelMin
+                            game.primaryLevelMax = primaryLevelMax
+                            game.secondaryLevelMin = secondaryLevelMin
+                            game.secondaryLevelMax = secondaryLevelMax
+                            game.postExpiryTime = postExpiryTime
+                            
+                            if game.primaryLevelMax.integerValue != 0 {
+                                if let name = gameObject["primaryLevelName"] as? String {
+                                    game.primaryLevelName = name
+                                } else {
+                                    game.primaryLevelName = "Primary Level"
                                 }
-                        }
-                        
-                        downloadedGamesIds.append(objectId)
+                            }
+                            
+                            if game.secondaryLevelMax.integerValue != 0 {
+                                if let name = gameObject["secondaryLevelName"] as? String {
+                                    game.secondaryLevelName = name
+                                } else {
+                                    game.secondaryLevelName = "Secondary Level"
+                                }
+                            }
+                            
+                            
+                            if platformsArray.count > 0 && charactersArray.count > 0 && playlistArray.count > 0 {
+                                
+                                for platformName in platformsArray {
+                                    let platform = NSEntityDescription.insertNewObjectForEntityForName("Platform", inManagedObjectContext: self.mainContext) as! Platform
+                                    platform.name = platformName
+                                    platform.game = game
+                                }
+                                
+                                for characterName in charactersArray {
+                                    let character = NSEntityDescription.insertNewObjectForEntityForName("Character", inManagedObjectContext: self.mainContext) as! Character
+                                    character.name = characterName
+                                    character.game = game
+                                }
+                                
+                                for gameTypeName in playlistArray {
+                                    let gameType = NSEntityDescription.insertNewObjectForEntityForName("GameType", inManagedObjectContext: self.mainContext) as! GameType
+                                    gameType.name = gameTypeName
+                                    gameType.game = game
+                                }
+                            }
+                            
+                            downloadedGamesIds.append(objectId)
                     }
                 }
                 
@@ -315,31 +329,41 @@ class ObjectManager {
                 
                 for postObject in postObjects {
                     
-                    if let objectId = postObject.objectId, updateAt = postObject.updatedAt {
+                    if let objectId = postObject.objectId,
+                    updateAt = postObject.updatedAt,
+                    gameId = postObject["gameId"] as? String,
+                    character = postObject["character"] as? String,
+                    platform = postObject["platform"] as? String,
+                    desc = postObject["description"] as? String,
+                    gameType = postObject["gameType"] as? String,
+                    mic = postObject["mic"] as? Bool,
+                    playerId = postObject["playerId"] as? String,
+                    primaryLevel = postObject["primaryLevel"] as? NSNumber,
+                    secondaryLevel = postObject["secondaryLevel"] as? NSNumber {
                         
-                            if let gameFound = gamesWithObjectId[gameId] {
-                                
-                                var post: Post
-                                
-                                if let postFound = postsWithObjectId[objectId] {
-                                    post = postFound
-                                } else {
-                                    post = NSEntityDescription.insertNewObjectForEntityForName("Post", inManagedObjectContext: self.mainContext) as! Post
-                                }
-                                
-                                post.objectId = objectId
-                                post.updatedAt = updateAt
-                                post.game = gameFound
-                                post.gameId = postObject["gameId"] as! String
-                                post.character = postObject["character"] as! String
-                                post.platform = postObject["platform"] as! String
-                                post.desc = postObject["description"] as! String
-                                post.gameType = postObject["gameType"] as! String
-                                post.mic = postObject["mic"] as! Bool
-                                post.playerId = postObject["playerId"] as! String
-                                post.primaryLevel = postObject["primaryLevel"] as! NSNumber
-                                post.secondaryLevel = postObject["secondaryLevel"] as! NSNumber
+                        if let gameFound = gamesWithObjectId[gameId] {
+                            
+                            var post: Post
+                            
+                            if let postFound = postsWithObjectId[objectId] {
+                                post = postFound
+                            } else {
+                                post = NSEntityDescription.insertNewObjectForEntityForName("Post", inManagedObjectContext: self.mainContext) as! Post
                             }
+                            
+                            post.objectId = objectId
+                            post.updatedAt = updateAt
+                            post.game = gameFound
+                            post.gameId = gameId
+                            post.character = character
+                            post.platform = platform
+                            post.desc = desc
+                            post.gameType = gameType
+                            post.mic = mic
+                            post.playerId = playerId
+                            post.primaryLevel = primaryLevel
+                            post.secondaryLevel = secondaryLevel
+                        }
                     }
                 }
                 
