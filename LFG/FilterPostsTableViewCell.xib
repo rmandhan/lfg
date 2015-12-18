@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterPostsTableViewCell" id="uoq-pB-LE6" customClass="FilterPostsTableViewCell" customModule="LFG" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uoq-pB-LE6" id="01u-7Q-MAk">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jue-Em-Bi5" userLabel="Filter Button">
+                        <rect key="frame" x="277" y="7" width="35" height="30"/>
+                        <state key="normal" title="Filter"/>
+                        <connections>
+                            <action selector="filterButtonTapped:" destination="uoq-pB-LE6" eventType="touchUpInside" id="tMG-h7-39o"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Displaying All" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3PQ-fR-IpP" userLabel="Filter Description">
+                        <rect key="frame" x="8" y="13" width="259" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="jue-Em-Bi5" secondAttribute="trailing" id="0MV-Kf-cxR"/>
+                    <constraint firstItem="jue-Em-Bi5" firstAttribute="centerY" secondItem="01u-7Q-MAk" secondAttribute="centerY" id="3K3-j7-lax"/>
+                    <constraint firstItem="jue-Em-Bi5" firstAttribute="leading" secondItem="3PQ-fR-IpP" secondAttribute="trailing" constant="10" id="FcK-Pv-hnO"/>
+                    <constraint firstItem="3PQ-fR-IpP" firstAttribute="centerY" secondItem="01u-7Q-MAk" secondAttribute="centerY" id="X17-Zc-x2q"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="3PQ-fR-IpP" secondAttribute="leading" id="ZCl-Jq-3wJ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="filterButton" destination="jue-Em-Bi5" id="vHz-5Y-Va0"/>
+                <outlet property="filterDescription" destination="3PQ-fR-IpP" id="eDL-sN-CMo"/>
+            </connections>
+            <point key="canvasLocation" x="382" y="378"/>
+        </tableViewCell>
+    </objects>
+</document>

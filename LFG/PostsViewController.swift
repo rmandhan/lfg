@@ -29,8 +29,11 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: "refreshTriggered", forControlEvents: UIControlEvents.ValueChanged)
         
-        let nib = UINib(nibName: "PostTableViewCell", bundle: nil)
-        self.tableView.registerNib(nib, forCellReuseIdentifier: "PostTableViewCell")
+        let filterCellNib = UINib(nibName: "FilterPostsTableViewCell", bundle: nil)
+        let postCellNib = UINib(nibName: "PostTableViewCell", bundle: nil)
+        self.tableView.registerNib(filterCellNib, forCellReuseIdentifier: "FilterPostsTableViewCell")
+        self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostTableViewCell")
+        
         self.tableView.tableFooterView = UIView()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 63
@@ -95,21 +98,42 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     // MARK: UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.allPosts.count
+        if self.allPosts.count > 0 {
+            return self.allPosts.count + 1
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell") as! PostTableViewCell
-        cell.game = self.game
-        cell.post = self.allPosts[indexPath.row]
-        cell.render()
-        return cell
+        
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("FilterPostsTableViewCell") as! FilterPostsTableViewCell
+            cell.render()
+            return cell
+        }
+        else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell") as! PostTableViewCell
+            cell.game = self.game
+            cell.post = self.allPosts[indexPath.row - 1]
+            cell.render()
+            return cell
+        }
+        
+        return UITableViewCell()
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! PostTableViewCell
-        cell.cellSelected()
+        if indexPath.row > 1 {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! PostTableViewCell
+            cell.cellSelected()
+        }
+    }
+    
+    // MARK: UITableViewDelegate
+    
+    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return false
     }
     
     // MARK: AddPostDelegate

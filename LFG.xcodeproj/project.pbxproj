@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1401F0A61C23BB0800AF0F39 /* FilterPostsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1401F0A51C23BB0800AF0F39 /* FilterPostsTableViewCell.xib */; };
+		1401F0A81C23BC2900AF0F39 /* FilterPostsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1401F0A71C23BC2900AF0F39 /* FilterPostsTableViewCell.swift */; };
 		1416A5561C12A7BA00CD7985 /* GameSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1416A5551C12A7BA00CD7985 /* GameSelectionViewController.swift */; };
 		1416A5581C12A8D100CD7985 /* GameTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1416A5571C12A8D100CD7985 /* GameTableViewCell.xib */; };
 		1416A55A1C12AAEA00CD7985 /* GameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1416A5591C12AAEA00CD7985 /* GameTableViewCell.swift */; };
@@ -26,7 +28,7 @@
 		1416A57B1C14113F00CD7985 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1416A57A1C14113F00CD7985 /* PostTableViewCell.swift */; };
 		1416A57D1C14115000CD7985 /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1416A57C1C14115000CD7985 /* PostTableViewCell.xib */; };
 		1416A57F1C14BC4700CD7985 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1416A57E1C14BC4700CD7985 /* AddPostViewController.swift */; };
-		144EE09A1C20713E002B16EC /* PseudoPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EE0991C20713E002B16EC /* PseudoPost.swift */; settings = {ASSET_TAGS = (); }; };
+		144EE09A1C20713E002B16EC /* PseudoPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EE0991C20713E002B16EC /* PseudoPost.swift */; };
 		146EC6771C0FC97D003BAAD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EC6761C0FC97D003BAAD0 /* AppDelegate.swift */; };
 		146EC6791C0FC97D003BAAD0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EC6781C0FC97D003BAAD0 /* ViewController.swift */; };
 		146EC67C1C0FC97D003BAAD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 146EC67A1C0FC97D003BAAD0 /* Main.storyboard */; };
@@ -60,6 +62,8 @@
 
 /* Begin PBXFileReference section */
 		0711CB6FDF6DD347DDCFAB87 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		1401F0A51C23BB0800AF0F39 /* FilterPostsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterPostsTableViewCell.xib; sourceTree = "<group>"; };
+		1401F0A71C23BC2900AF0F39 /* FilterPostsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterPostsTableViewCell.swift; sourceTree = "<group>"; };
 		1416A5551C12A7BA00CD7985 /* GameSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSelectionViewController.swift; sourceTree = "<group>"; };
 		1416A5571C12A8D100CD7985 /* GameTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameTableViewCell.xib; sourceTree = "<group>"; };
 		1416A5591C12AAEA00CD7985 /* GameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameTableViewCell.swift; sourceTree = "<group>"; };
@@ -158,6 +162,8 @@
 				1416A57C1C14115000CD7985 /* PostTableViewCell.xib */,
 				14E87B111C18E76500FE1738 /* PostDescTableViewCell.xib */,
 				14E87B131C18EB3E00FE1738 /* PostDescTableViewCell.swift */,
+				1401F0A51C23BB0800AF0F39 /* FilterPostsTableViewCell.xib */,
+				1401F0A71C23BC2900AF0F39 /* FilterPostsTableViewCell.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -212,7 +218,6 @@
 				146EC6761C0FC97D003BAAD0 /* AppDelegate.swift */,
 				146EC6801C0FC97D003BAAD0 /* Assets.xcassets */,
 				141656771C10969D00D07664 /* Data */,
-				14E87B151C18F5D300FE1738 /* Extensions */,
 				1416A5791C140FB900CD7985 /* Storyboards */,
 				1416A5771C140F8200CD7985 /* TableViewCells */,
 				1416A5781C140F9500CD7985 /* ViewControllers */,
@@ -236,13 +241,6 @@
 				146EC69B1C0FC97D003BAAD0 /* Info.plist */,
 			);
 			path = LFGUITests;
-			sourceTree = "<group>";
-		};
-		14E87B151C18F5D300FE1738 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Extensions;
 			sourceTree = "<group>";
 		};
 		2F275435825BEE47C4FFE88F /* Frameworks */ = {
@@ -373,6 +371,7 @@
 			files = (
 				146EC6841C0FC97D003BAAD0 /* LaunchScreen.storyboard in Resources */,
 				1416A57D1C14115000CD7985 /* PostTableViewCell.xib in Resources */,
+				1401F0A61C23BB0800AF0F39 /* FilterPostsTableViewCell.xib in Resources */,
 				146EC6811C0FC97D003BAAD0 /* Assets.xcassets in Resources */,
 				146EC67C1C0FC97D003BAAD0 /* Main.storyboard in Resources */,
 				14E87B121C18E76500FE1738 /* PostDescTableViewCell.xib in Resources */,
@@ -452,6 +451,7 @@
 				144EE09A1C20713E002B16EC /* PseudoPost.swift in Sources */,
 				1416A56F1C1371CA00CD7985 /* ObjectManager.swift in Sources */,
 				1416A5701C1371CA00CD7985 /* Platform.swift in Sources */,
+				1401F0A81C23BC2900AF0F39 /* FilterPostsTableViewCell.swift in Sources */,
 				1416A5711C1371CA00CD7985 /* Platform+CoreDataProperties.swift in Sources */,
 				1486E7091C160A550046957E /* OptionsViewController.swift in Sources */,
 				1416A5561C12A7BA00CD7985 /* GameSelectionViewController.swift in Sources */,
