@@ -29,6 +29,7 @@
 		1416A57D1C14115000CD7985 /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1416A57C1C14115000CD7985 /* PostTableViewCell.xib */; };
 		1416A57F1C14BC4700CD7985 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1416A57E1C14BC4700CD7985 /* AddPostViewController.swift */; };
 		144EE09A1C20713E002B16EC /* PseudoPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144EE0991C20713E002B16EC /* PseudoPost.swift */; };
+		1455BE8D1C245A3200349772 /* FilterPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1455BE8C1C245A3200349772 /* FilterPostsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		146EC6771C0FC97D003BAAD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EC6761C0FC97D003BAAD0 /* AppDelegate.swift */; };
 		146EC6791C0FC97D003BAAD0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146EC6781C0FC97D003BAAD0 /* ViewController.swift */; };
 		146EC67C1C0FC97D003BAAD0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 146EC67A1C0FC97D003BAAD0 /* Main.storyboard */; };
@@ -84,6 +85,7 @@
 		1416A57C1C14115000CD7985 /* PostTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostTableViewCell.xib; sourceTree = "<group>"; };
 		1416A57E1C14BC4700CD7985 /* AddPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
 		144EE0991C20713E002B16EC /* PseudoPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PseudoPost.swift; sourceTree = "<group>"; };
+		1455BE8C1C245A3200349772 /* FilterPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterPostsViewController.swift; sourceTree = "<group>"; };
 		146EC6731C0FC97D003BAAD0 /* LFG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LFG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		146EC6761C0FC97D003BAAD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		146EC6781C0FC97D003BAAD0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				146EC6781C0FC97D003BAAD0 /* ViewController.swift */,
 				1416A57E1C14BC4700CD7985 /* AddPostViewController.swift */,
 				1486E7081C160A550046957E /* OptionsViewController.swift */,
+				1455BE8C1C245A3200349772 /* FilterPostsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				1416A56D1C1371CA00CD7985 /* GameType.swift in Sources */,
 				1416A56E1C1371CA00CD7985 /* GameType+CoreDataProperties.swift in Sources */,
 				14E87B141C18EB3E00FE1738 /* PostDescTableViewCell.swift in Sources */,
+				1455BE8D1C245A3200349772 /* FilterPostsViewController.swift in Sources */,
 				146EC67F1C0FC97D003BAAD0 /* LFG.xcdatamodeld in Sources */,
 				1416A5741C1371CA00CD7985 /* UserDefaultsManager.swift in Sources */,
 				1416A5761C13F8CF00CD7985 /* PostsViewController.swift in Sources */,

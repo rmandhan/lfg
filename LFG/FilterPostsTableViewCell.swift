@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: Delete if not used
 class FilterPostsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var filterDescription: UILabel!

@@ -54,6 +54,13 @@ extension Game {
         return false
     }
     
+    var postsCanBeFiltered: Bool {
+        if self.platforms.count > 1 || self.gameTypes.count > 1 {
+            return true
+        }
+        return false
+    }
+    
     func firstCharacter() -> String {
         
         var result = ""
@@ -98,6 +105,8 @@ extension Game {
             strings.append(character.name)
         }
         
+        strings.sortInPlace({ $0 < $1 })
+        
         return strings
     }
     
@@ -109,6 +118,8 @@ extension Game {
             strings.append(gametype.name)
         }
         
+        strings.sortInPlace({ $0 < $1 })
+        
         return strings
     }
     
@@ -119,6 +130,8 @@ extension Game {
         for platform in (self.platforms.allObjects as! [Platform]) {
             strings.append(platform.name)
         }
+        
+        strings.sortInPlace({ $0 < $1 })
         
         return strings
     }

@@ -12,7 +12,7 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var addBarButton: UIBarButtonItem!
+    @IBOutlet var filterBarButton: UIBarButtonItem!
     
     lazy var refreshControl = UIRefreshControl()
     
@@ -29,15 +29,17 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: "refreshTriggered", forControlEvents: UIControlEvents.ValueChanged)
         
-        let filterCellNib = UINib(nibName: "FilterPostsTableViewCell", bundle: nil)
         let postCellNib = UINib(nibName: "PostTableViewCell", bundle: nil)
-        self.tableView.registerNib(filterCellNib, forCellReuseIdentifier: "FilterPostsTableViewCell")
         self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostTableViewCell")
         
         self.tableView.tableFooterView = UIView()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 63
         self.tableView.addSubview(self.refreshControl)
+        
+        if let currentGame = self.game {
+            self.filterBarButton.enabled = currentGame.postsCanBeFiltered
+        }
         
         loadPosts()
     }
@@ -98,23 +100,14 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     // MARK: UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.allPosts.count > 0 {
-            return self.allPosts.count + 1
-        }
-        return 0
+        return self.allPosts.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("FilterPostsTableViewCell") as! FilterPostsTableViewCell
-            cell.render()
-            return cell
-        }
-        else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell") as! PostTableViewCell
+
+        if let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell") as? PostTableViewCell {
             cell.game = self.game
-            cell.post = self.allPosts[indexPath.row - 1]
+            cell.post = self.allPosts[indexPath.row]
             cell.render()
             return cell
         }
@@ -123,11 +116,9 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row > 1 {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! PostTableViewCell
             cell.cellSelected()
-        }
     }
     
     // MARK: UITableViewDelegate
@@ -153,6 +144,9 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func filterButtonTapped(sender: AnyObject) {
+    }
+    
     // Called by UIRefreshControl
     func refreshTriggered() {
         self.fetchNewPosts(forceDownload: false)
@@ -167,6 +161,13 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
             if let addPostViewConroller = nvc.topViewController as? AddPostViewController {
                 addPostViewConroller.delegate = self
                 addPostViewConroller.game = self.game
+            }
+        }
+        else if segue.identifier == "goToFilterPostsViewController" {
+            let nvc = segue.destinationViewController as! UINavigationController
+            if let filterPostsViewController = nvc.topViewController as? FilterPostsViewController {
+                // filterPostsViewController.delegate = self
+                filterPostsViewController.game = self.game
             }
         }
     }

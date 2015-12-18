@@ -12,6 +12,10 @@ import Foundation
 let GAME_ID_KEY = "gameId"
 // Used to know if games were downloaded this app. session
 let GAME_DOWNLOADED_STATE_KEY = "gamesDownloadedState"
+// Used to set default filter value for Platforms
+let DEFAULT_PLATFORMS_FILTER_KEY = "DefaultPlatformsFilter"
+// Used to set default filter value for Game Types
+let DEFAULT_GAMETYPES_FILTER_KEY = "DefaultGameTypesFilter"
 // Used to check how long it has been since the last "posts" download for a specific game
 let LAST_UPDATED_POSTS_DATE_KEY = "LastUpdatedPostsDate"
 
@@ -25,8 +29,8 @@ class UserDefaultsManager {
         userDefaults = NSUserDefaults.standardUserDefaults()
     }
     
-    func getCurrentGameId() -> String {
-        return userDefaults.valueForKey(GAME_ID_KEY) as! String
+    func getCurrentGameId() -> String? {
+        return userDefaults.valueForKey(GAME_ID_KEY) as? String
     }
     
     func setCurrentGameId(id: String) {
@@ -39,6 +43,22 @@ class UserDefaultsManager {
     
     func setGamesDownloadedState(state: Bool) {
         userDefaults.setBool(state, forKey: GAME_DOWNLOADED_STATE_KEY)
+    }
+    
+    func getDefaultPlatformsFilterValue() -> String? {
+        return userDefaults.valueForKey(DEFAULT_PLATFORMS_FILTER_KEY) as? String
+    }
+    
+    func setDefaultPlatformsFilterValue(platform: String) {
+        userDefaults.setValue(platform, forKey: DEFAULT_PLATFORMS_FILTER_KEY)
+    }
+    
+    func getDefaultGameTypesFilterValue() -> String? {
+        return userDefaults.valueForKey(DEFAULT_GAMETYPES_FILTER_KEY) as? String
+    }
+    
+    func setDefaultGameTypesFilterValue(gameType: String) {
+        userDefaults.setValue(gameType, forKey: DEFAULT_GAMETYPES_FILTER_KEY)
     }
     
     func getLastUpdatedPostsDate(forGame gameId: String) -> NSDate {

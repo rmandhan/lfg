@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ggF-Pz-r1Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ggF-Pz-r1Y">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Game Selection View Controller-->
@@ -51,6 +52,55 @@
             </objects>
             <point key="canvasLocation" x="1172" y="258"/>
         </scene>
+        <!--Filter Posts View Controller-->
+        <scene sceneID="BLL-5K-k6D">
+            <objects>
+                <viewController id="aqC-df-uKX" customClass="FilterPostsViewController" customModule="LFG" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MO7-zg-dau"/>
+                        <viewControllerLayoutGuide type="bottom" id="zUL-7c-LF6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TrG-Lt-3Gs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fdG-gR-yWV">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="aqC-df-uKX" id="SXM-QL-9Ot"/>
+                                    <outlet property="delegate" destination="aqC-df-uKX" id="LXz-NK-4yL"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fdG-gR-yWV" firstAttribute="top" secondItem="MO7-zg-dau" secondAttribute="bottom" constant="-64" id="MHh-12-Jqi"/>
+                            <constraint firstItem="fdG-gR-yWV" firstAttribute="leading" secondItem="TrG-Lt-3Gs" secondAttribute="leadingMargin" constant="-20" id="fhZ-SD-jhr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fdG-gR-yWV" secondAttribute="trailing" constant="-20" id="lRS-KW-j7C"/>
+                            <constraint firstItem="zUL-7c-LF6" firstAttribute="top" secondItem="fdG-gR-yWV" secondAttribute="bottom" id="vXH-GU-Ach"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="rOp-75-im7">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ziy-i5-dDR">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="aqC-df-uKX" id="zqe-bG-Emq"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Apply" id="ko8-Hk-CiI">
+                            <connections>
+                                <action selector="applyButtonTapped:" destination="aqC-df-uKX" id="cCf-Au-G0u"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="fdG-gR-yWV" id="6Ie-hY-ij1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IYt-3X-8gI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2898" y="-544"/>
+        </scene>
         <!--Posts View Controller-->
         <scene sceneID="j7r-6A-5X0">
             <objects>
@@ -86,20 +136,28 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ItB-Z6-tuJ">
-                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="Fus-XG-us1">
-                            <connections>
-                                <action selector="addBarButtonTapped:" destination="nCf-QL-sh3" id="BHt-wu-eRa"/>
-                                <segue destination="CBW-qF-HLB" kind="show" identifier="goToAddPostViewController" id="hlg-MN-Apv"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Games" id="EU9-1A-mGv">
+                        <barButtonItem key="leftBarButtonItem" title="Games" id="EU9-1A-mGv">
                             <connections>
                                 <action selector="sideBarButtonTapped:" destination="nCf-QL-sh3" id="7Ip-Zg-D6n"/>
                             </connections>
                         </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="Fus-XG-us1">
+                                <connections>
+                                    <action selector="addBarButtonTapped:" destination="nCf-QL-sh3" id="Egk-ea-Gcy"/>
+                                    <segue destination="CBW-qF-HLB" kind="show" identifier="goToAddPostViewController" id="hlg-MN-Apv"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Filter" id="9xt-oA-x61">
+                                <connections>
+                                    <action selector="filterButtonTapped:" destination="nCf-QL-sh3" id="pyE-lh-Ak7"/>
+                                    <segue destination="6La-LF-86O" kind="show" identifier="goToFilterPostsViewController" id="VDj-38-d9f"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <outlet property="addBarButton" destination="Fus-XG-us1" id="PMn-ZA-lm5"/>
+                        <outlet property="filterBarButton" destination="9xt-oA-x61" id="ach-rk-DLy"/>
                         <outlet property="loadingIndicator" destination="lUl-SN-Mzl" id="uFg-Qe-MvJ"/>
                         <outlet property="tableView" destination="JUz-Kk-yMy" id="U4l-P2-5kH"/>
                     </connections>
@@ -232,6 +290,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oc8-Hn-FIV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1172" y="1047"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ZtE-gA-1o7">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6La-LF-86O" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IgN-Iw-n7U">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="aqC-df-uKX" kind="relationship" relationship="rootViewController" id="f5S-Ka-d5I"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kH2-a5-hZE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2028" y="-544"/>
         </scene>
     </scenes>
 </document>
