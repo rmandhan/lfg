@@ -22,7 +22,6 @@ class OptionsViewController: ViewController, UITableViewDelegate, UITableViewDat
     var optionsList = [String]()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         self.title = pageTitle

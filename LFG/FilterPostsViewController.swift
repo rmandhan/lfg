@@ -8,13 +8,20 @@
 
 import UIKit
 
+enum sectionTitle: String {
+    case platforms = "Platforms"
+    case gameTypes = "Game Types"
+}
+
 protocol FilterPostsDelegate {
-    func userSelectedOptions(options: [String: String?])
+    func userSelectedFilterOptions(options: [String: String])
 }
 
 class FilterPostsViewController: ViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var applyBarButton: UIBarButtonItem!      // Text changes to "Show All" when nothing is selected
+    @IBOutlet var resetBarButton: UIBarButtonItem!
     
     var delegate: FilterPostsDelegate?
     
@@ -24,9 +31,9 @@ class FilterPostsViewController: ViewController, UITableViewDataSource, UITableV
     var selectedRowInSection = [Int]()
     var titleForSection = [String]()
     var sectionNameWithContent = [String: [String]]()
+    var sectionNameWithSelection = [String: String]()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         self.title = "Filter Posts"
@@ -47,14 +54,15 @@ class FilterPostsViewController: ViewController, UITableViewDataSource, UITableV
             if let platforms = currentGame.platforms.allObjects as? [Platform] where platforms.count > 1 {
                 
                 let platformStrings = currentGame.platformsAsStrings()
-                self.titleForSection.append("Platforms")
-                self.sectionNameWithContent["Platforms"] = platformStrings
+                self.titleForSection.append(sectionTitle.platforms.rawValue)
+                self.sectionNameWithContent[sectionTitle.platforms.rawValue] = platformStrings
                 self.numberOfRowsInSection.append(platformStrings.count)
                 
                 // Find previously selected option (if applicable)
                 if let platform = UserDefaultsManager.sharedInstance.getDefaultPlatformsFilterValue(),
                     rowNumber = platformStrings.indexOf(platform) {
                         self.selectedRowInSection.append(rowNumber)
+                        self.sectionNameWithSelection[sectionTitle.platforms.rawValue] = platformStrings[rowNumber]
                 }
                 else {
                     self.selectedRowInSection.append(-1)
@@ -64,20 +72,23 @@ class FilterPostsViewController: ViewController, UITableViewDataSource, UITableV
             if let gameTypes = currentGame.gameTypes.allObjects as? [GameType] where gameTypes.count > 1 {
                 
                 let gameTypeStrings = currentGame.gameTypesAsStrings()
-                self.titleForSection.append("Game Types")
-                self.sectionNameWithContent["Game Types"] = gameTypeStrings
+                self.titleForSection.append(sectionTitle.gameTypes.rawValue)
+                self.sectionNameWithContent[sectionTitle.gameTypes.rawValue] = gameTypeStrings
                 self.numberOfRowsInSection.append(gameTypeStrings.count)
                 
                 // Find previously selected option (if applicable)
                 if let gameType = UserDefaultsManager.sharedInstance.getDefaultGameTypesFilterValue(),
                     rowNumber = gameTypeStrings.indexOf(gameType) {
                         self.selectedRowInSection.append(rowNumber)
+                        self.sectionNameWithSelection[sectionTitle.gameTypes.rawValue] = gameTypeStrings[rowNumber]
                 }
                 else {
                     self.selectedRowInSection.append(-1)
                 }
             }
         }
+        
+        self.updateResetBarButtonState()
     }
     
     // MARK: UITableViewDataSource
@@ -121,31 +132,72 @@ class FilterPostsViewController: ViewController, UITableViewDataSource, UITableV
     // MARK: UITableViewDelegate
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 30
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.01
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        if selectedRowInSection[indexPath.section] == indexPath.row {
-            selectedRowInSection[indexPath.section] = -1
-        } else {
-            self.selectedRowInSection[indexPath.section] = indexPath.row
+        if self.selectedRowInSection[indexPath.section] == indexPath.row {
+            self.selectedRowInSection[indexPath.section] = -1
+            self.sectionNameWithSelection.removeValueForKey(self.titleForSection[indexPath.section])
         }
+        else {
+            self.selectedRowInSection[indexPath.section] = indexPath.row
+            let sectionTitle = self.titleForSection[indexPath.section]
+            if let sectionContent = self.sectionNameWithContent[sectionTitle] {
+                self.sectionNameWithSelection[sectionTitle] = sectionContent[indexPath.row]
+            }
+        }
+        
+        self.updateResetBarButtonState()
         
         tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.None)
     }
     
     // MARK: Actions
     
-    @IBAction func cancelButtonTapped(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: {})
+    @IBAction func resetBarButton(sender: AnyObject) {
+        // Deselect all rows if any are selected
+        for var i = 0; i < self.selectedRowInSection.count; i++ {
+            self.selectedRowInSection[i] = -1
+        }
+        self.sectionNameWithSelection.removeAll()
+        self.tableView.reloadData()
+        self.resetBarButton.enabled = false
     }
     
     @IBAction func applyButtonTapped(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: {})
-        // Populate sectionNameWithSelection Inform delegate and save new userdefaults
+        
+        // Set user defaults
+        let platform = sectionNameWithSelection[sectionTitle.platforms.rawValue]
+        let gameType = sectionNameWithSelection[sectionTitle.gameTypes.rawValue]
+        UserDefaultsManager.sharedInstance.setDefaultPlatformsFilterValue(platform)
+        UserDefaultsManager.sharedInstance.setDefaultGameTypesFilterValue(gameType)
+        
+        self.delegate?.userSelectedFilterOptions(self.sectionNameWithSelection)
+        
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // MARK: Helper Methods
+    
+    func updateResetBarButtonState() {
+        
+        var optionSelected = false
+        
+        for rowNumber in self.selectedRowInSection {
+            if rowNumber != -1 {
+                optionSelected = true
+                break
+            }
+        }
+        
+        self.resetBarButton.enabled = optionSelected
+    }
 }

@@ -49,7 +49,7 @@ class UserDefaultsManager {
         return userDefaults.valueForKey(DEFAULT_PLATFORMS_FILTER_KEY) as? String
     }
     
-    func setDefaultPlatformsFilterValue(platform: String) {
+    func setDefaultPlatformsFilterValue(platform: String?) {
         userDefaults.setValue(platform, forKey: DEFAULT_PLATFORMS_FILTER_KEY)
     }
     
@@ -57,7 +57,7 @@ class UserDefaultsManager {
         return userDefaults.valueForKey(DEFAULT_GAMETYPES_FILTER_KEY) as? String
     }
     
-    func setDefaultGameTypesFilterValue(gameType: String) {
+    func setDefaultGameTypesFilterValue(gameType: String?) {
         userDefaults.setValue(gameType, forKey: DEFAULT_GAMETYPES_FILTER_KEY)
     }
     

@@ -27,7 +27,6 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
     var selectedIndexPath = NSIndexPath()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         self.title = "Submit a Post"
@@ -45,8 +44,8 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         self.rowContent.append("Game Type")
         self.rowContent.append("Character")
         self.rowContent.append("Mic")
-        if self.game.primaryLevelMax.intValue > 0 { self.rowContent.append("Primary Level") }
-        if self.game.secondaryLevelMax.intValue > 0 { self.rowContent.append("Secondary Level") }
+        if self.game.primaryLevelMax.integerValue > 0 { self.rowContent.append("Primary Level") }
+        if self.game.secondaryLevelMax.integerValue > 0 { self.rowContent.append("Secondary Level") }
         self.rowContent.append("Description")
         
         post = PseudoPost(character: "", platform: "", desc: "", gameType: "", mic: false, playerId: "", primaryLevel: 0, secondaryLevel: 0, gameId: self.game.objectId)
@@ -76,9 +75,8 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         
         var cell = UITableViewCell()
         
-//        let dequedCell = tableView.dequeueReusableCellWithIdentifier(content)
-        
         // TODO: Need to understand dequeueReusableCellWithIdentifier more
+//        let dequedCell = tableView.dequeueReusableCellWithIdentifier(content)
 //        if dequedCell != nil {
 //            cell = dequedCell!
 //            return cell
@@ -171,7 +169,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         let content = rowContent[indexPath.row]
         
         if content == "Platform" || content == "Game Type" || content == "Character" {
-            self.performSegueWithIdentifier("goToOptionsViewController", sender: self)
+            self.performSegueWithIdentifier("showOptionsVC", sender: self)
         }
     }
     
@@ -237,6 +235,22 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
     }
     
     // MARK: UITextViewDelegate
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        
+        // Maybe there is a better way to handle this...
+        var descRowNumber = 0
+        
+        if self.game.primaryLevelMax.integerValue > 0 && self.game.secondaryLevelMax.integerValue > 0 {
+            descRowNumber = 8
+        } else if self.game.primaryLevelMax.integerValue > 0 {
+            descRowNumber = 7
+        } else {
+            descRowNumber = 6
+        }
+        
+        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: descRowNumber, inSection: 0), atScrollPosition: .Top, animated: true)
+    }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         
@@ -337,7 +351,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "goToOptionsViewController" {
+        if segue.identifier == "showOptionsVC" {
             
             let selectedContent = self.rowContent[selectedIndexPath.row]
             

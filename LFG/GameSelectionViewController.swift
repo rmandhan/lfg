@@ -17,7 +17,6 @@ class GameSelectionViewController: ViewController, UITableViewDelegate, UITableV
     var selectedPath = NSIndexPath()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         self.title = "Games"
@@ -99,14 +98,14 @@ class GameSelectionViewController: ViewController, UITableViewDelegate, UITableV
         
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! GameTableViewCell
         cell.cellSelected()
-        self.performSegueWithIdentifier("goToPostsViewController", sender: self)
+        self.performSegueWithIdentifier("showPostsVC", sender: self)
     }
     
     // MARK: Segue
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "goToPostsViewController" {
+        if segue.identifier == "showPostsVC" {
             let postsViewController = segue.destinationViewController as! PostsViewController
             postsViewController.game = gamesList[self.selectedPath.row]
         }

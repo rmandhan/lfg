@@ -45,7 +45,7 @@
                     <connections>
                         <outlet property="loadingIndicator" destination="MwV-VO-Ig9" id="FaW-Jr-b7l"/>
                         <outlet property="tableView" destination="QgO-Mx-eUS" id="7b5-mB-u13"/>
-                        <segue destination="nCf-QL-sh3" kind="show" identifier="goToPostsViewController" id="dzn-Au-fdy"/>
+                        <segue destination="nCf-QL-sh3" kind="show" identifier="showPostsVC" id="dzn-Au-fdy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -55,7 +55,7 @@
         <!--Filter Posts View Controller-->
         <scene sceneID="BLL-5K-k6D">
             <objects>
-                <viewController id="aqC-df-uKX" customClass="FilterPostsViewController" customModule="LFG" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FilterPostsViewController" automaticallyAdjustsScrollViewInsets="NO" id="aqC-df-uKX" customClass="FilterPostsViewController" customModule="LFG" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MO7-zg-dau"/>
                         <viewControllerLayoutGuide type="bottom" id="zUL-7c-LF6"/>
@@ -64,9 +64,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fdG-gR-yWV">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="fdG-gR-yWV">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="aqC-df-uKX" id="SXM-QL-9Ot"/>
                                     <outlet property="delegate" destination="aqC-df-uKX" id="LXz-NK-4yL"/>
@@ -75,16 +75,17 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="fdG-gR-yWV" firstAttribute="top" secondItem="MO7-zg-dau" secondAttribute="bottom" constant="-64" id="MHh-12-Jqi"/>
+                            <constraint firstItem="fdG-gR-yWV" firstAttribute="top" secondItem="MO7-zg-dau" secondAttribute="bottom" id="2LM-Q9-PK9"/>
+                            <constraint firstItem="fdG-gR-yWV" firstAttribute="top" secondItem="MO7-zg-dau" secondAttribute="bottom" id="MHh-12-Jqi"/>
                             <constraint firstItem="fdG-gR-yWV" firstAttribute="leading" secondItem="TrG-Lt-3Gs" secondAttribute="leadingMargin" constant="-20" id="fhZ-SD-jhr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fdG-gR-yWV" secondAttribute="trailing" constant="-20" id="lRS-KW-j7C"/>
                             <constraint firstItem="zUL-7c-LF6" firstAttribute="top" secondItem="fdG-gR-yWV" secondAttribute="bottom" id="vXH-GU-Ach"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rOp-75-im7">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ziy-i5-dDR">
+                        <barButtonItem key="leftBarButtonItem" title="Reset" id="eWz-ii-rsY" userLabel="Reset">
                             <connections>
-                                <action selector="cancelButtonTapped:" destination="aqC-df-uKX" id="zqe-bG-Emq"/>
+                                <action selector="resetBarButton:" destination="aqC-df-uKX" id="eYf-Cb-v8G"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Apply" id="ko8-Hk-CiI">
@@ -94,6 +95,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="applyBarButton" destination="ko8-Hk-CiI" id="vdq-Zg-iyX"/>
+                        <outlet property="resetBarButton" destination="eWz-ii-rsY" id="buE-0J-cnB"/>
                         <outlet property="tableView" destination="fdG-gR-yWV" id="6Ie-hY-ij1"/>
                     </connections>
                 </viewController>
@@ -113,9 +116,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JUz-Kk-yMy">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="JUz-Kk-yMy">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="nCf-QL-sh3" id="Qon-T4-aBp"/>
                                     <outlet property="delegate" destination="nCf-QL-sh3" id="kkn-2j-m42"/>
@@ -145,21 +148,25 @@
                             <barButtonItem systemItem="add" id="Fus-XG-us1">
                                 <connections>
                                     <action selector="addBarButtonTapped:" destination="nCf-QL-sh3" id="Egk-ea-Gcy"/>
-                                    <segue destination="CBW-qF-HLB" kind="show" identifier="goToAddPostViewController" id="hlg-MN-Apv"/>
+                                    <segue destination="CBW-qF-HLB" kind="show" identifier="showAddPostVC" id="hlg-MN-Apv"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Filter" id="9xt-oA-x61">
+                            <barButtonItem title="Filter" id="lYr-2s-9qk">
                                 <connections>
-                                    <action selector="filterButtonTapped:" destination="nCf-QL-sh3" id="pyE-lh-Ak7"/>
-                                    <segue destination="6La-LF-86O" kind="show" identifier="goToFilterPostsViewController" id="VDj-38-d9f"/>
+                                    <action selector="filterBarButtonTapped:" destination="nCf-QL-sh3" id="vdi-jR-f2s"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <outlet property="filterBarButton" destination="9xt-oA-x61" id="ach-rk-DLy"/>
+                        <outlet property="addBarButton" destination="Fus-XG-us1" id="isx-zc-1KA"/>
+                        <outlet property="filterBarButton" destination="lYr-2s-9qk" id="S4r-Ef-w8M"/>
+                        <outlet property="listBarButton" destination="EU9-1A-mGv" id="Qd1-wB-6Yh"/>
                         <outlet property="loadingIndicator" destination="lUl-SN-Mzl" id="uFg-Qe-MvJ"/>
                         <outlet property="tableView" destination="JUz-Kk-yMy" id="U4l-P2-5kH"/>
+                        <segue destination="6La-LF-86O" kind="popoverPresentation" identifier="showFilterPostsVC" popoverAnchorBarButtonItem="lYr-2s-9qk" id="bDz-KR-brk">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dO0-hB-aiS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -211,7 +218,7 @@
                         <outlet property="cancelBarButton" destination="8oM-Ud-15y" id="yQB-AY-7ZO"/>
                         <outlet property="postBarButton" destination="fNT-hw-pKP" id="SIc-dv-oTJ"/>
                         <outlet property="tableView" destination="93v-fo-eF6" id="k8n-YW-Znq"/>
-                        <segue destination="YRB-yk-nsz" kind="show" identifier="goToOptionsViewController" id="cgZ-2l-Jyw"/>
+                        <segue destination="YRB-yk-nsz" kind="show" identifier="showOptionsVC" id="cgZ-2l-Jyw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Cw-Hc-aaq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -301,6 +308,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="fWK-qg-g3I">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="aqC-df-uKX" kind="relationship" relationship="rootViewController" id="f5S-Ka-d5I"/>
                     </connections>

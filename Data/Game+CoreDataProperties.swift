@@ -12,7 +12,7 @@
 import Foundation
 import CoreData
 
-// TODO: Define other constants
+// Maybe define in an enum?
 let BLACK_OPS_3 = "Call of Duty Black Ops III"
 let DESTINY = "Destiny"
 
@@ -153,4 +153,20 @@ extension Game {
         
         return result
     }
+    
+    func applyDefaultFiltersToPosts(posts: [Post]) -> [Post] {
+        
+        var filteredPosts = posts
+
+        if let platform = UserDefaultsManager.sharedInstance.getDefaultPlatformsFilterValue() where self.platformsAsStrings().contains(platform) {
+            filteredPosts = filteredPosts.filter({ $0.platform == platform })
+        }
+        
+        if let gameType = UserDefaultsManager.sharedInstance.getDefaultGameTypesFilterValue() where self.gameTypesAsStrings().contains(gameType) {
+            filteredPosts = filteredPosts.filter({ $0.gameType == gameType })
+        }
+        
+        return filteredPosts
+    }
+    
 }
