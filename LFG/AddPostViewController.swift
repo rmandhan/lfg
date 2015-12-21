@@ -242,11 +242,11 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         var descRowNumber = 0
         
         if self.game.primaryLevelMax.integerValue > 0 && self.game.secondaryLevelMax.integerValue > 0 {
-            descRowNumber = 8
-        } else if self.game.primaryLevelMax.integerValue > 0 {
             descRowNumber = 7
-        } else {
+        } else if self.game.primaryLevelMax.integerValue > 0 {
             descRowNumber = 6
+        } else {
+            descRowNumber = 5
         }
         
         self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: descRowNumber, inSection: 0), atScrollPosition: .Top, animated: true)
