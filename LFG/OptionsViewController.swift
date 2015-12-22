@@ -2,7 +2,7 @@
 //  OptionsViewController.swift
 //  LFG
 //
-//  Created by Rakesh Mandhan on 2015-12-07.
+//  Created by Rakesh Mandhan on 2015-12-21.
 //  Copyright © 2015 Rakesh. All rights reserved.
 //
 
@@ -12,9 +12,7 @@ protocol OptionSelectedDelegate {
     func userSelectedOption(option: String)
 }
 
-class OptionsViewController: ViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    @IBOutlet weak var tableView: UITableView!
+class OptionsViewController: TableViewController {
     
     var delegate: OptionSelectedDelegate?
     
@@ -34,19 +32,20 @@ class OptionsViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     // MARK: UITableViewDataSource
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return optionsList.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell")
         cell?.textLabel?.text = optionsList[indexPath.row]
         return cell!
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         self.delegate?.userSelectedOption(optionsList[indexPath.row])
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
+
 }

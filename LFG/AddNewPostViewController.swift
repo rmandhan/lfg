@@ -1,8 +1,8 @@
 //
-//  AddPostViewController.swift
+//  AddNewPostViewController
 //  LFG
 //
-//  Created by Rakesh Mandhan on 2015-12-06.
+//  Created by Rakesh Mandhan on 2015-12-21.
 //  Copyright © 2015 Rakesh. All rights reserved.
 //
 
@@ -12,12 +12,10 @@ protocol AddPostDelegate {
     func userSubmittedPost()
 }
 
-class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, OptionSelectedDelegate {
+class AddNewPostViewController: TableViewController, UITextFieldDelegate, UITextViewDelegate, OptionSelectedDelegate {
     
     @IBOutlet weak var cancelBarButton: UIBarButtonItem!
     @IBOutlet weak var postBarButton: UIBarButtonItem!
-    
-    @IBOutlet weak var tableView: UITableView!
     
     var delegate: AddPostDelegate?
     
@@ -55,32 +53,32 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name:UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name:UIKeyboardWillHideNotification, object: nil)
-
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-//        NSNotificationCenter.defaultCenter().removeObserver(self)
+        //        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-
+    
     // MARK: UITableViewDataSource
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rowContent.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let content = rowContent[indexPath.row]
         
         var cell = UITableViewCell()
         
         // TODO: Need to understand dequeueReusableCellWithIdentifier more
-//        let dequedCell = tableView.dequeueReusableCellWithIdentifier(content)
-//        if dequedCell != nil {
-//            cell = dequedCell!
-//            return cell
-//        }
+        //        let dequedCell = tableView.dequeueReusableCellWithIdentifier(content)
+        //        if dequedCell != nil {
+        //            cell = dequedCell!
+        //            return cell
+        //        }
         
         if content == "Platform" {
             
@@ -135,7 +133,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
             }
         }
         else if content == "Secondary Level" {
-           
+            
             let placeholder = self.game.secondaryLevelMin.stringValue + " - " + self.game.secondaryLevelMax.stringValue
             
             if post.secondaryLevel.integerValue != 0 {
@@ -144,7 +142,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
                 cell = self.createTextFieldCell(withIdentifier: content, withTag: 2, text: "", placeholder: placeholder, keyboardType: UIKeyboardType.NumbersAndPunctuation)
             }
         }
-        // Custom Cell
+            // Custom Cell
         else if content == "Description" {
             
             if let postDescriptionCell = tableView.dequeueReusableCellWithIdentifier("PostDescTableViewCell") as?PostDescTableViewCell {
@@ -161,7 +159,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         self.selectedIndexPath = indexPath
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -169,7 +167,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         let content = rowContent[indexPath.row]
         
         if content == "Platform" || content == "Game Type" || content == "Character" {
-            self.performSegueWithIdentifier("showOptionsVC", sender: self)
+            self.performSegueWithIdentifier("showOptionsView", sender: self)
         }
     }
     
@@ -194,7 +192,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
             post.playerId = textAfterUpdate
         }
             
-        // Primary Level
+            // Primary Level
         else if textField.tag == 1 {
             if let level = Int(textAfterUpdate) {
                 if level > self.game.primaryLevelMax.integerValue || level < self.game.primaryLevelMin.integerValue {
@@ -210,7 +208,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
             }
         }
             
-        // Secondary Level
+            // Secondary Level
         else if textField.tag == 2 {
             if let level = Int(textAfterUpdate) {
                 if level > self.game.secondaryLevelMax.integerValue || level < self.game.secondaryLevelMin.integerValue {
@@ -292,13 +290,13 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         
         if self.post.character.isEmpty || self.post.platform.isEmpty ||
             self.post.gameType.isEmpty || self.post.playerId.isEmpty {
-            incompletePost = true
+                incompletePost = true
         }
         
         // > 0 condition is to check if there is even a primary or secondary level in the game
         if (self.game.primaryLevelMax.integerValue > 0 && self.post.primaryLevel.integerValue < self.game.primaryLevelMin.integerValue) ||
             (self.game.secondaryLevelMax.integerValue  > 0 && self.post.secondaryLevel.integerValue  < self.game.secondaryLevelMin.integerValue) {
-            incompletePost = true
+                incompletePost = true
         }
         
         if incompletePost {
@@ -308,7 +306,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
             alert.addButtonWithTitle("OK")
             alert.show()
         }
-        // Upload Post
+            // Upload Post
         else {
             // TODO: Display a uploading screen or indicator
             ObjectManager.sharedInstance.uploadPost(self.post, completionHandler: {
@@ -351,7 +349,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "showOptionsVC" {
+        if segue.identifier == "showOptionsView" {
             
             let selectedContent = self.rowContent[selectedIndexPath.row]
             
@@ -378,7 +376,7 @@ class AddPostViewController: ViewController, UITableViewDelegate, UITableViewDat
         var userInfo = notification.userInfo!
         var keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
         keyboardFrame = self.view.convertRect(keyboardFrame, fromView: nil)
-
+        
         self.tableView.contentInset.bottom = keyboardFrame.size.height
     }
     

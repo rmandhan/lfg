@@ -2,21 +2,18 @@
 //  PostsViewController.swift
 //  LFG
 //
-//  Created by Rakesh Mandhan on 2015-12-06.
+//  Created by Rakesh Mandhan on 2015-12-21.
 //  Copyright © 2015 Rakesh. All rights reserved.
 //
 
 import UIKit
 
-class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate, AddPostDelegate, FilterPostsDelegate {
+class PostsViewController: TableViewController, UIPopoverPresentationControllerDelegate, AddPostDelegate, FilterPostsDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    @IBOutlet var listBarButton: UIBarButtonItem!
+//    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet var panelBarButton: UIBarButtonItem!
     @IBOutlet var filterBarButton: UIBarButtonItem!
     @IBOutlet var addBarButton: UIBarButtonItem!
-
-    lazy var refreshControl = UIRefreshControl()
     
     var game: Game?
     var allPosts = [Post]()
@@ -30,17 +27,14 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         self.title = "Posts"
         self.navigationItem.setHidesBackButton(true, animated: true)
         
-        self.refreshControl.attributedTitle = NSAttributedString(string: "")
-        self.refreshControl.addTarget(self, action: "refreshTriggered", forControlEvents: UIControlEvents.ValueChanged)
-        
         let postCellNib = UINib(nibName: "PostTableViewCell", bundle: nil)
         self.tableView.registerNib(postCellNib, forCellReuseIdentifier: "PostTableViewCell")
         
         self.tableView.tableFooterView = UIView()
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 63
-        self.tableView.addSubview(self.refreshControl)
-        self.tableView.sendSubviewToBack(self.refreshControl)
+        
+        self.refreshControl?.addTarget(self, action: "refreshTriggered", forControlEvents: UIControlEvents.ValueChanged)
         
         loadPosts()
     }
@@ -49,18 +43,18 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         super.viewWillAppear(animated)
         
         if self.allPosts.count == 0 {
-            self.loadingIndicator.startAnimating()
+//            self.loadingIndicator.startAnimating()
         }
         
         fetchNewPosts(forceDownload: false)
     }
     
     // NOTE: Remove if not used
-//    override func viewWillLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        // Due to iOS bug
-//        self.refreshControl.superview?.sendSubviewToBack(self.refreshControl)
-//    }
+    //    override func viewWillLayoutSubviews() {
+    //        super.viewDidLayoutSubviews()
+    //        // Due to iOS bug
+    //        self.refreshControl.superview?.sendSubviewToBack(self.refreshControl)
+    //    }
     
     func loadPosts() {
         if let currentGame = self.game {
@@ -90,21 +84,21 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
                     }
                     
                     dispatch_async(dispatch_get_main_queue(), {
-                        self.loadingIndicator.stopAnimating()
+//                        self.loadingIndicator.stopAnimating()
                     })
                 })
             }
             else {
-                self.loadingIndicator.stopAnimating()
+//                self.loadingIndicator.stopAnimating()
             }
             
-            self.refreshControl.endRefreshing()
+            self.refreshControl?.endRefreshing()
         }
     }
     
     // MARK: UITableViewDataSource
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if self.displayingFilteredPosts {
             return "Displaying filtered posts"
         } else {
@@ -112,7 +106,7 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.displayingFilteredPosts {
             return self.filteredPosts.count
         } else {
@@ -120,8 +114,8 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         if let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell") as? PostTableViewCell {
             
             cell.game = self.game
@@ -139,23 +133,23 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
         return UITableViewCell()
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as! PostTableViewCell
-            cell.cellSelected()
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! PostTableViewCell
+        cell.cellSelected()
     }
     
     // MARK: UITableViewDelegate
     
-    func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.01
     }
     
@@ -164,7 +158,7 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     func userSubmittedPost() {
         self.fetchNewPosts(forceDownload: true)
     }
-
+    
     // MARK: FilterPostsDelegate
     
     func userSelectedFilterOptions(options: [String : String]) {
@@ -192,19 +186,12 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     }
     
     // MARK: Actions
-    
-    @IBAction func addBarButtonTapped(sender: AnyObject) {
-        
-    }
-    
-    @IBAction func filterBarButtonTapped(sender: AnyObject) {
-        self.changeBarButtonsState(enabled: false)
-        self.performSegueWithIdentifier("showFilterPostsVC", sender: self)
-    }
-    
-    // TEMP: Takes user back to the Games list
-    @IBAction func sideBarButtonTapped(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+
+    @IBAction func panelBarButtonTapped(sender: AnyObject) {
+        if let mainNVC = self.navigationController as? MainNavigationController {
+            mainNVC.togglePanel()
+        }
+        // self.navigationController?.popViewControllerAnimated(true)
     }
     
     // Called by UIRefreshControl
@@ -216,20 +203,21 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "showAddPostVC" {
+        if segue.identifier == "presentAddNewPostView" {
             let nvc = segue.destinationViewController as! UINavigationController
-            if let addPostViewConroller = nvc.topViewController as? AddPostViewController {
-                addPostViewConroller.delegate = self
-                addPostViewConroller.game = self.game
+            if let addNewPostVC = nvc.topViewController as? AddNewPostViewController {
+                addNewPostVC.delegate = self
+                addNewPostVC.game = self.game
             }
         }
-        else if segue.identifier == "showFilterPostsVC" {
+        else if segue.identifier == "showFilterPopover" {
+            self.changeBarButtonsState(enabled: false)
             let nvc = segue.destinationViewController as! UINavigationController
-            if let filterPostsViewController = nvc.topViewController as? FilterPostsViewController,
-                popoverVC = nvc.popoverPresentationController  {
-                filterPostsViewController.delegate = self
-                filterPostsViewController.game = self.game
-                popoverVC.delegate = self
+            if let filterPostsVC = nvc.topViewController as? FilterPostsViewController,
+                popoverController = nvc.popoverPresentationController  {
+                    filterPostsVC.delegate = self
+                    filterPostsVC.game = self.game
+                    popoverController.delegate = self
             }
         }
     }
@@ -250,7 +238,7 @@ class PostsViewController: ViewController, UITableViewDelegate, UITableViewDataS
     
     // Excludes filter bar button
     func changeBarButtonsState(enabled enabled: Bool) {
-        self.listBarButton.enabled = enabled
+        self.panelBarButton.enabled = enabled
         self.addBarButton.enabled = enabled
     }
     

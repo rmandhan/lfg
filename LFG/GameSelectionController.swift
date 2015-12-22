@@ -105,7 +105,7 @@ class GameSelectionController: TableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "showPostsView" {
-            let postsVC = segue.destinationViewController as! PostsController
+            let postsVC = segue.destinationViewController as! PostsViewController
             postsVC.game = gamesList[self.selectedPath.row]
         }
     }
