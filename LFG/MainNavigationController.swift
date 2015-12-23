@@ -21,7 +21,20 @@ class MainNavigationController: UINavigationController, UINavigationControllerDe
         }
     }
     
-     
+    func showViewForPanelOption(option: PanelOption) {
+        switch(option)
+        {
+        case .Games:
+            self.popViewControllerAnimated(true)
+            break
+        case .Feedback:
+            break
+        case .Donate:
+            break
+        case .Help:
+            break
+        }
+    }
     
     func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
         
