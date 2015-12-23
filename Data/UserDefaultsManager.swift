@@ -9,9 +9,9 @@
 import Foundation
 
 // Used to keep track of the current game
-let GAME_ID_KEY = "gameId"
+let GAME_ID_KEY = "GameId"
 // Used to know if games were downloaded this app. session
-let GAME_DOWNLOADED_STATE_KEY = "gamesDownloadedState"
+let GAME_DOWNLOADED_STATE_KEY = "GamesDownloadedState"
 // Used to set default filter value for Platforms
 let DEFAULT_PLATFORMS_FILTER_KEY = "DefaultPlatformsFilter"
 // Used to set default filter value for Game Types

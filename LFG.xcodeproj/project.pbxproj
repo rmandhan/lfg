@@ -43,6 +43,8 @@
 		14D733051C285E7C00F0C892 /* AddNewPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D733041C285E7C00F0C892 /* AddNewPostViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		14E87B121C18E76500FE1738 /* PostDescTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14E87B111C18E76500FE1738 /* PostDescTableViewCell.xib */; };
 		14E87B141C18EB3E00FE1738 /* PostDescTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E87B131C18EB3E00FE1738 /* PostDescTableViewCell.swift */; };
+		14F144191C2B075100288A91 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F144181C2B075100288A91 /* HelpViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		14F1441D1C2B243900288A91 /* DonateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F1441C1C2B243900288A91 /* DonateViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		D491023C277E97248EA036C1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42220C7FE9B83F608BCD988 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +109,9 @@
 		14D733041C285E7C00F0C892 /* AddNewPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewPostViewController.swift; sourceTree = "<group>"; };
 		14E87B111C18E76500FE1738 /* PostDescTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostDescTableViewCell.xib; sourceTree = "<group>"; };
 		14E87B131C18EB3E00FE1738 /* PostDescTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDescTableViewCell.swift; sourceTree = "<group>"; };
+		14F144161C2B008200288A91 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		14F144181C2B075100288A91 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		14F1441C1C2B243900288A91 /* DonateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DonateViewController.swift; sourceTree = "<group>"; };
 		61BA809DBFF49959F8DC30D2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D42220C7FE9B83F608BCD988 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -175,16 +180,18 @@
 		1416A5781C140F9500CD7985 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				14B11B971C29C61C00700132 /* OptionsViewController.swift */,
-				14B11B981C29C61C00700132 /* PostsViewController.swift */,
 				14D733041C285E7C00F0C892 /* AddNewPostViewController.swift */,
 				14B11B931C28A5CE00700132 /* ContainerViewController.swift */,
+				14F1441C1C2B243900288A91 /* DonateViewController.swift */,
 				1455BE8C1C245A3200349772 /* FilterPostsViewController.swift */,
 				14D733001C285DEB00F0C892 /* GameSelectionController.swift */,
+				14F144181C2B075100288A91 /* HelpViewController.swift */,
+				14B11B9B1C29C84C00700132 /* MainNavigationController.swift */,
+				14B11B971C29C61C00700132 /* OptionsViewController.swift */,
 				14B11B951C28A5DA00700132 /* PanelViewController.swift */,
+				14B11B981C29C61C00700132 /* PostsViewController.swift */,
 				14D732FE1C285C8500F0C892 /* TableViewController.swift */,
 				146EC6781C0FC97D003BAAD0 /* ViewController.swift */,
-				14B11B9B1C29C84C00700132 /* MainNavigationController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -255,6 +262,7 @@
 		2F275435825BEE47C4FFE88F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				14F144161C2B008200288A91 /* MessageUI.framework */,
 				D42220C7FE9B83F608BCD988 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -475,6 +483,7 @@
 				14D732FD1C285A9E00F0C892 /* PseudoPost.swift in Sources */,
 				14D733011C285DEB00F0C892 /* GameSelectionController.swift in Sources */,
 				14B11B9C1C29C84C00700132 /* MainNavigationController.swift in Sources */,
+				14F1441D1C2B243900288A91 /* DonateViewController.swift in Sources */,
 				146EC6771C0FC97D003BAAD0 /* AppDelegate.swift in Sources */,
 				1416A5721C1371CA00CD7985 /* Post.swift in Sources */,
 				14B11B941C28A5CE00700132 /* ContainerViewController.swift in Sources */,
@@ -484,6 +493,7 @@
 				1416A56A1C1371CA00CD7985 /* Character+CoreDataProperties.swift in Sources */,
 				14D732FF1C285C8500F0C892 /* TableViewController.swift in Sources */,
 				1416A55A1C12AAEA00CD7985 /* GameTableViewCell.swift in Sources */,
+				14F144191C2B075100288A91 /* HelpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

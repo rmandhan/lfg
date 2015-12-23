@@ -15,13 +15,15 @@ class ContainerViewController: ViewController, UIScrollViewDelegate , PanelDeleg
     // This value matches the left menu's width in the Storyboard
     let leftMenuWidth: CGFloat = 200
     
+    var panelSelectedOption = PanelOption.Games
+    var panelOptionSelected = false
     var panelEnabled = false {
         didSet {
             self.scrollView.scrollEnabled = panelEnabled
         }
     }
     
-    var mainNVC: MainNavigationController?
+     var mainNVC: MainNavigationController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,10 +65,18 @@ class ContainerViewController: ViewController, UIScrollViewDelegate , PanelDeleg
     
     func userDidSelectPanelOption(option: PanelOption) {
         self.closePanel(animated: true)
-        self.mainNVC?.showViewForPanelOption(option)
+        panelSelectedOption = option
+        panelOptionSelected = true
     }
     
     // MARK: UIScrollViewDelegate
+    
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        if self.panelOptionSelected {
+            self.panelOptionSelected = false
+            self.mainNVC?.showViewForPanelOption(self.panelSelectedOption)
+        }
+    }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.scrollView.pagingEnabled = true

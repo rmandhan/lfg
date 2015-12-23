@@ -194,6 +194,99 @@
             </objects>
             <point key="canvasLocation" x="3758" y="1066"/>
         </scene>
+        <!--Help View Controller-->
+        <scene sceneID="SwL-o7-Jhb">
+            <objects>
+                <tableViewController storyboardIdentifier="HelpViewController" title="Help View Controller" id="5Lz-Kw-TGC" customClass="HelpViewController" customModule="LFG" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="CW8-Jq-Vzr">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="9Zk-4o-rpz">
+                                <rect key="frame" x="0.0" y="49.5" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Zk-4o-rpz" id="SC0-Vl-AxG">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="5Lz-Kw-TGC" id="wJB-e4-kE5"/>
+                            <outlet property="delegate" destination="5Lz-Kw-TGC" id="vHU-M9-cKv"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mMI-N2-p5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3758" y="242"/>
+        </scene>
+        <!--Donate View Controller-->
+        <scene sceneID="bfo-Yd-zhN">
+            <objects>
+                <viewController storyboardIdentifier="DonateViewController" title="Donate View Controller" id="qH4-XX-j0b" customClass="DonateViewController" customModule="LFG" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VfN-lL-N0g"/>
+                        <viewControllerLayoutGuide type="bottom" id="51G-s1-5RQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nxv-dR-SiG">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SZA-nX-o9i">
+                                <rect key="frame" x="0.0" y="263" width="600" height="75"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Buy me a coffee?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7jA-mK-ehE">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a15-hS-AEh">
+                                        <rect key="frame" x="200" y="36" width="200" height="39"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="7Vg-PY-gAc"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Yes!"/>
+                                        <connections>
+                                            <action selector="proceedButtonTapped:" destination="qH4-XX-j0b" eventType="touchUpInside" id="73U-eq-ivq"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="a15-hS-AEh" firstAttribute="top" secondItem="7jA-mK-ehE" secondAttribute="bottom" id="BGW-At-OlF"/>
+                                    <constraint firstItem="7jA-mK-ehE" firstAttribute="width" secondItem="SZA-nX-o9i" secondAttribute="width" id="NBr-eI-vqi"/>
+                                    <constraint firstItem="a15-hS-AEh" firstAttribute="centerX" secondItem="SZA-nX-o9i" secondAttribute="centerX" id="OuX-wV-lsV"/>
+                                    <constraint firstAttribute="bottom" secondItem="a15-hS-AEh" secondAttribute="bottom" id="Qsg-xs-tzj"/>
+                                    <constraint firstItem="7jA-mK-ehE" firstAttribute="centerX" secondItem="SZA-nX-o9i" secondAttribute="centerX" id="fhJ-Le-jks"/>
+                                    <constraint firstItem="7jA-mK-ehE" firstAttribute="top" secondItem="SZA-nX-o9i" secondAttribute="top" id="oM1-gf-dba"/>
+                                    <constraint firstItem="a15-hS-AEh" firstAttribute="width" secondItem="7jA-mK-ehE" secondAttribute="width" id="pue-xh-mAy"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="pue-xh-mAy"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="SZA-nX-o9i" firstAttribute="width" secondItem="nxv-dR-SiG" secondAttribute="width" id="6dK-P3-zFC"/>
+                            <constraint firstItem="SZA-nX-o9i" firstAttribute="centerX" secondItem="nxv-dR-SiG" secondAttribute="centerX" id="kB7-CN-fP3"/>
+                            <constraint firstItem="SZA-nX-o9i" firstAttribute="centerY" secondItem="nxv-dR-SiG" secondAttribute="centerY" id="kOA-kY-lHz"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="proceedButton" destination="a15-hS-AEh" id="T9v-Zk-qfG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fFI-15-8Wt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4554" y="242"/>
+        </scene>
         <!--Options View Controller-->
         <scene sceneID="iEy-aP-G1m">
             <objects>
@@ -222,10 +315,10 @@
             </objects>
             <point key="canvasLocation" x="4554" y="1066"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Filter Navigation Controller-->
         <scene sceneID="ZtE-gA-1o7">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6La-LF-86O" sceneMemberID="viewController">
+                <navigationController title="Filter Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" id="6La-LF-86O" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IgN-Iw-n7U">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -262,10 +355,10 @@
             </objects>
             <point key="canvasLocation" x="1266" y="242"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--New Post Navigation Controller-->
         <scene sceneID="g9Y-aR-UsU">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="N2Q-gd-o1b" sceneMemberID="viewController">
+                <navigationController title="New Post Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" id="N2Q-gd-o1b" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uya-K7-1Rl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -280,10 +373,10 @@
             </objects>
             <point key="canvasLocation" x="2946" y="1066"/>
         </scene>
-        <!--Container View Controller-->
+        <!--App (Container) View Controller -->
         <scene sceneID="Geg-Mk-Ek1">
             <objects>
-                <viewController id="bpV-Ga-tbR" customClass="ContainerViewController" customModule="LFG" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="App (Container) View Controller " id="bpV-Ga-tbR" customClass="ContainerViewController" customModule="LFG" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yN5-8t-bBZ"/>
                         <viewControllerLayoutGuide type="bottom" id="xD3-yK-nGR"/>
@@ -378,10 +471,10 @@
             </objects>
             <point key="canvasLocation" x="1066" y="1066"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Main Navigation Controller-->
         <scene sceneID="cXb-Az-hvO">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BCi-0C-gCJ" sceneMemberID="viewController">
+                <navigationController title="Main Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" id="BCi-0C-gCJ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="200" height="600"/>

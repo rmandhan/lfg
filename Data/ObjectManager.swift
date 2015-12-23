@@ -38,7 +38,7 @@ class ObjectManager {
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         do {
-            let results = try mainContext.executeFetchRequest(fetchRequest)
+            let results = try self.mainContext.executeFetchRequest(fetchRequest)
             
             for result in results {
                 if let game = result as? Game {
@@ -63,7 +63,7 @@ class ObjectManager {
         fetchRequest.predicate = NSPredicate(format: "objectId == %@", id)
         
         do {
-            let results = try mainContext.executeFetchRequest(fetchRequest)
+            let results = try self.mainContext.executeFetchRequest(fetchRequest)
             
             if results.count > 0 {
                 if let gameFound = results[0] as? Game {
@@ -87,7 +87,7 @@ class ObjectManager {
         fetchRequest.predicate = NSPredicate(format: "gameId == %@", gameId)
         
         do {
-            let results = try mainContext.executeFetchRequest(fetchRequest)
+            let results = try self.mainContext.executeFetchRequest(fetchRequest)
             
             for result in results {
                 if let post = result as? Post {
@@ -114,7 +114,7 @@ class ObjectManager {
         fetchRequest.predicate = predicate
         
         do {
-            let results = try mainContext.executeFetchRequest(fetchRequest)
+            let results = try self.mainContext.executeFetchRequest(fetchRequest)
             
             for result in results {
                 if let post = result as? Post {

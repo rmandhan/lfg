@@ -49,13 +49,6 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
         fetchNewPosts(forceDownload: false)
     }
     
-    // NOTE: Remove if not used
-    //    override func viewWillLayoutSubviews() {
-    //        super.viewDidLayoutSubviews()
-    //        // Due to iOS bug
-    //        self.refreshControl.superview?.sendSubviewToBack(self.refreshControl)
-    //    }
-    
     func loadPosts() {
         if let currentGame = self.game {
             self.allPosts = currentGame.recentPostsSortedByDate()
