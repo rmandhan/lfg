@@ -175,7 +175,10 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
         self.displayingFilteredPosts = postsWereFiltered
         
         self.tableView.reloadData()
-        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
+        
+        if self.filteredPosts.count > 0 {
+            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
+        }
     }
     
     // MARK: Actions
