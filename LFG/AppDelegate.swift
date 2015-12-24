@@ -27,11 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Track statistics around application opens.
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
         
+        // Check for user
+        ObjectManager.sharedInstance.checkForUser()
+        
         // Reset games downloaded status
         UserDefaultsManager.sharedInstance.setGamesDownloadedState(false)
         
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        print("Databse Location: \(paths[0]) \n")
+        print("\nDatabse Location: \(paths[0])\n")
         
         return true
     }

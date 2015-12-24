@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Used to create a post object without inserting a new entity into a context
 struct PseudoPost {
     
     var character: String

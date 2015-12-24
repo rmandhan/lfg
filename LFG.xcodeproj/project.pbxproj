@@ -45,6 +45,10 @@
 		14E87B141C18EB3E00FE1738 /* PostDescTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E87B131C18EB3E00FE1738 /* PostDescTableViewCell.swift */; };
 		14F144191C2B075100288A91 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F144181C2B075100288A91 /* HelpViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		14F1441D1C2B243900288A91 /* DonateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F1441C1C2B243900288A91 /* DonateViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		14F1443A1C2B43C800288A91 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F144361C2B43C800288A91 /* User+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
+		14F1443B1C2B43C800288A91 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F144371C2B43C800288A91 /* User.swift */; settings = {ASSET_TAGS = (); }; };
+		14F1443C1C2B43C800288A91 /* UserPostEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F144381C2B43C800288A91 /* UserPostEntry+CoreDataProperties.swift */; settings = {ASSET_TAGS = (); }; };
+		14F1443D1C2B43C800288A91 /* UserPostEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F144391C2B43C800288A91 /* UserPostEntry.swift */; settings = {ASSET_TAGS = (); }; };
 		D491023C277E97248EA036C1 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42220C7FE9B83F608BCD988 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -112,6 +116,10 @@
 		14F144161C2B008200288A91 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		14F144181C2B075100288A91 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		14F1441C1C2B243900288A91 /* DonateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DonateViewController.swift; sourceTree = "<group>"; };
+		14F144361C2B43C800288A91 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "Data/User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		14F144371C2B43C800288A91 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Data/User.swift; sourceTree = "<group>"; };
+		14F144381C2B43C800288A91 /* UserPostEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UserPostEntry+CoreDataProperties.swift"; path = "Data/UserPostEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		14F144391C2B43C800288A91 /* UserPostEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserPostEntry.swift; path = Data/UserPostEntry.swift; sourceTree = "<group>"; };
 		61BA809DBFF49959F8DC30D2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D42220C7FE9B83F608BCD988 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -145,6 +153,10 @@
 		141656771C10969D00D07664 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				14F144361C2B43C800288A91 /* User+CoreDataProperties.swift */,
+				14F144371C2B43C800288A91 /* User.swift */,
+				14F144381C2B43C800288A91 /* UserPostEntry+CoreDataProperties.swift */,
+				14F144391C2B43C800288A91 /* UserPostEntry.swift */,
 				1416A55D1C1371CA00CD7985 /* Character.swift */,
 				1416A55E1C1371CA00CD7985 /* Character+CoreDataProperties.swift */,
 				1416A55F1C1371CA00CD7985 /* Game.swift */,
@@ -468,6 +480,7 @@
 				1416A56F1C1371CA00CD7985 /* ObjectManager.swift in Sources */,
 				1416A5701C1371CA00CD7985 /* Platform.swift in Sources */,
 				14B11B9A1C29C61C00700132 /* PostsViewController.swift in Sources */,
+				14F1443B1C2B43C800288A91 /* User.swift in Sources */,
 				1416A5711C1371CA00CD7985 /* Platform+CoreDataProperties.swift in Sources */,
 				1416A5691C1371CA00CD7985 /* Character.swift in Sources */,
 				1416A57B1C14113F00CD7985 /* PostTableViewCell.swift in Sources */,
@@ -479,7 +492,9 @@
 				14E87B141C18EB3E00FE1738 /* PostDescTableViewCell.swift in Sources */,
 				1455BE8D1C245A3200349772 /* FilterPostsViewController.swift in Sources */,
 				146EC67F1C0FC97D003BAAD0 /* LFG.xcdatamodeld in Sources */,
+				14F1443A1C2B43C800288A91 /* User+CoreDataProperties.swift in Sources */,
 				1416A5741C1371CA00CD7985 /* UserDefaultsManager.swift in Sources */,
+				14F1443C1C2B43C800288A91 /* UserPostEntry+CoreDataProperties.swift in Sources */,
 				14D732FD1C285A9E00F0C892 /* PseudoPost.swift in Sources */,
 				14D733011C285DEB00F0C892 /* GameSelectionController.swift in Sources */,
 				14B11B9C1C29C84C00700132 /* MainNavigationController.swift in Sources */,
@@ -494,6 +509,7 @@
 				14D732FF1C285C8500F0C892 /* TableViewController.swift in Sources */,
 				1416A55A1C12AAEA00CD7985 /* GameTableViewCell.swift in Sources */,
 				14F144191C2B075100288A91 /* HelpViewController.swift in Sources */,
+				14F1443D1C2B43C800288A91 /* UserPostEntry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

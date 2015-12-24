@@ -28,6 +28,92 @@ class ObjectManager {
         mainContext.parentContext = masterContext
     }
     
+    // Creates a User entity if there isn't one already
+    func checkForUser() {
+        let fetchRequest = NSFetchRequest(entityName: "User")
+        do {
+            let result = try self.mainContext.executeFetchRequest(fetchRequest)
+            
+            if result.count == 0 {
+                self.createNewUser()
+            }
+            else {
+                print("User exists")
+            }
+        }
+        catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+    }
+    
+    // Creates new User
+    func createNewUser() {
+        
+        let user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.mainContext) as! User
+        
+        do {
+            try self.mainContext.save()
+            
+            self.masterContext.performBlock({
+                do {
+                    try self.masterContext.save()
+                    print("Successfully created User")
+                }
+                catch let error as NSError {
+                    print("Failed to create user \(error), \(error.userInfo)")
+                }
+            })
+        }
+        catch let error as NSError {
+            print("Failed to create user \(error), \(error.userInfo)")
+        }
+    }
+    
+    // Retrieves User
+    func retrieveUser() -> User {
+        let fetchRequest = NSFetchRequest(entityName: "User")
+        do {
+            let result = try self.mainContext.executeFetchRequest(fetchRequest)
+            
+            if result.count > 0 {
+                
+            }
+            
+        }
+        catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+    }
+    
+    // Retrieves UserPostEntry for a gameId from Core Data if it exists
+    func retrieveUserPostEntry(forGameId id: String) -> UserPostEntry? {
+        
+        let fetchRequest = NSFetchRequest(entityName: "UserPostEntry")
+        fetchRequest.predicate = NSPredicate(format: "gameId == %@", id)
+        
+        do {
+            let result = try self.mainContext.executeFetchRequest(fetchRequest)
+            if result.count > 0 {
+                return (result.first as? UserPostEntry)
+            }
+        }
+        catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+            
+        }
+        
+        return nil
+    }
+    
+    func saveUserPostEntry(usingPost post: PseudoPost) {
+        var postEntry: UserPostEntry!
+        if let entryFound = self.fetchUserPostEntry(forGameId: post.gameId) {
+            postEntry = entryFound
+        } else {
+            postEntry = NSEntityDescription.insertNewObjectForEntityForName("UserPostEntry", inManagedObjectContext: <#T##NSManagedObjectContext#>)
+        }
+    }
+    
     // Retrieves the Game objects from Core Data
     func retrieveGames() -> [Game] {
         
@@ -426,6 +512,8 @@ class ObjectManager {
                 handler(success: success)
             }
         }
+        
+        self.saveUserPostEntry(usingPost: post)
     }
     
     // MARK: Helper Methods
