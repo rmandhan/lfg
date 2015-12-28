@@ -143,7 +143,7 @@ class ObjectManager {
             if game.postExpiryTime.integerValue != -1 {
                 // Delete posts that are older than X hours
                 let xHoursAgo = NSDate(timeIntervalSinceNow: NSTimeInterval.init(game.postExpiryTime.intValue*(-1)))
-                let predicate = NSPredicate(format: "gameId == %@ AND updatedAt < %@", gameId, xHoursAgo)
+                let predicate = NSPredicate(format: "gameId == %@ AND createdAt < %@", gameId, xHoursAgo)
                 fetchRequest.predicate = predicate
                 
                 do {
@@ -317,7 +317,7 @@ class ObjectManager {
         if game.postExpiryTime.integerValue != -1 {
             // Always get posts that are at max X hours old
             let xHoursAgo = NSDate(timeIntervalSinceNow: NSTimeInterval.init(game.postExpiryTime.intValue*(-1)))
-            query.whereKey("updatedAt", greaterThanOrEqualTo: xHoursAgo)
+            query.whereKey("createdAt", greaterThanOrEqualTo: xHoursAgo)
         }
         
         query.findObjectsInBackgroundWithBlock({
@@ -330,6 +330,7 @@ class ObjectManager {
                 for postObject in postObjects {
                     
                     if let objectId = postObject.objectId,
+                    createdAt = postObject.createdAt,
                     updateAt = postObject.updatedAt,
                     gameId = postObject["gameId"] as? String,
                     character = postObject["character"] as? String,
@@ -352,6 +353,7 @@ class ObjectManager {
                             }
                             
                             post.objectId = objectId
+                            post.createdAt = createdAt
                             post.updatedAt = updateAt
                             post.game = gameFound
                             post.gameId = gameId

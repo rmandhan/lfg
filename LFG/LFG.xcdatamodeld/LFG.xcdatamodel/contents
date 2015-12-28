@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F27" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Automatic">
     <entity name="Character" representedClassName=".Character" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="characters" inverseEntity="Game" syncable="YES"/>
@@ -30,6 +30,7 @@
     </entity>
     <entity name="Post" representedClassName=".Post" syncable="YES">
         <attribute name="character" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gameId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gameType" optional="YES" attributeType="String" syncable="YES"/>
@@ -47,6 +48,6 @@
         <element name="Game" positionX="-63" positionY="-27" width="128" height="253"/>
         <element name="GameType" positionX="-243" positionY="108" width="128" height="73"/>
         <element name="Platform" positionX="-218" positionY="198" width="128" height="73"/>
-        <element name="Post" positionX="115" positionY="90" width="128" height="225"/>
+        <element name="Post" positionX="115" positionY="90" width="128" height="240"/>
     </elements>
 </model>

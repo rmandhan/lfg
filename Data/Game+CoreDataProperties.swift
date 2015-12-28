@@ -143,13 +143,13 @@ extension Game {
         
         if self.postExpiryTime.integerValue != -1 {
             let xHoursAgo = NSDate(timeIntervalSinceNow: NSTimeInterval.init(self.postExpiryTime.integerValue*(-1)))
-            result = allPosts.filter({ return $0.updatedAt.compare(xHoursAgo) == NSComparisonResult.OrderedDescending })
+            result = allPosts.filter({ return $0.createdAt.compare(xHoursAgo) == NSComparisonResult.OrderedDescending })
         }
         else {
             result = allPosts
         }
         
-        result.sortInPlace({ $0.updatedAt.compare($1.updatedAt) == .OrderedDescending })
+        result.sortInPlace({ $0.createdAt.compare($1.createdAt) == .OrderedDescending })
         
         return result
     }

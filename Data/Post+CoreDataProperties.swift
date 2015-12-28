@@ -25,6 +25,7 @@ extension Post {
     @NSManaged var primaryLevel: NSNumber
     @NSManaged var secondaryLevel: NSNumber
     @NSManaged var updatedAt: NSDate
+    @NSManaged var createdAt: NSDate
     @NSManaged var game: Game
 
 }
