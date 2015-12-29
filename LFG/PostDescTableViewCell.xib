@@ -28,7 +28,7 @@
                         </constraints>
                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="alphabet"/>
                     </textView>
                 </subviews>
                 <constraints>

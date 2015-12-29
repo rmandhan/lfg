@@ -10,6 +10,8 @@ import UIKit
 
 class ContainerViewController: ViewController, UIScrollViewDelegate , PanelDelegate {
     
+    @IBOutlet weak var panelView: UIView!
+    @IBOutlet weak var mainView: UIView!
     @IBOutlet var scrollView: UIScrollView!
     
     // This value matches the left menu's width in the Storyboard
@@ -41,12 +43,44 @@ class ContainerViewController: ViewController, UIScrollViewDelegate , PanelDeleg
     
     // Open is the natural state of the menu because of how the storyboard is setup
     func openPanel() {
-        self.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        
+        self.scrollView.userInteractionEnabled = false
+        
+        UIView.animateWithDuration(0.3,
+            animations: {
+                self.scrollView.contentOffset = CGPoint(x: 0, y: 0)
+            },
+            completion: {
+                (Bool) -> Void in
+                self.scrollView.userInteractionEnabled = true
+            }
+        )
     }
     
     // Use scrollview content offset-x to slide the menu.
-    func closePanel(animated animated: Bool){
-        self.scrollView.setContentOffset(CGPoint(x: leftMenuWidth, y: 0), animated: animated)
+    func closePanel(animated animated: Bool) {
+        
+        if animated {
+            self.scrollView.userInteractionEnabled = false
+            
+            UIView.animateWithDuration(0.3,
+                animations: {
+                    self.scrollView.contentOffset = CGPoint(x: self.leftMenuWidth, y: 0)
+                },
+                completion: {
+                    (Bool) -> Void in
+                    self.scrollView.userInteractionEnabled = true
+                    
+                    if self.panelOptionSelected {
+                        self.panelOptionSelected = false
+                        self.mainNVC?.showViewForPanelOption(self.panelSelectedOption)
+                    }
+                }
+            )
+        }
+        else {
+            self.scrollView.setContentOffset(CGPoint(x: leftMenuWidth, y: 0), animated: animated)
+        }
     }
     
     // MARK: Segue
@@ -71,19 +105,21 @@ class ContainerViewController: ViewController, UIScrollViewDelegate , PanelDeleg
     
     // MARK: UIScrollViewDelegate
     
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-        if self.panelOptionSelected {
-            self.panelOptionSelected = false
-            self.mainNVC?.showViewForPanelOption(self.panelSelectedOption)
-        }
-    }
-    
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        self.viewsEnabled(false)
         self.scrollView.pagingEnabled = true
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        self.viewsEnabled(true)
         self.scrollView.pagingEnabled = false
+    }
+    
+    // MARK: Helper Methods
+    
+    func viewsEnabled(enabled: Bool) {
+        self.panelView.userInteractionEnabled = enabled
+        self.mainView.userInteractionEnabled = enabled
     }
     
 }

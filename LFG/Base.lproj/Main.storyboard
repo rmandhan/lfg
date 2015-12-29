@@ -389,7 +389,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQ8-op-Yp6">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sqm-MP-7dZ" userLabel="left container">
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sqm-MP-7dZ" userLabel="Panel Container View">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="600"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="uBl-Hr-K01"/>
@@ -398,7 +398,7 @@
                                             <segue destination="BCi-0C-gCJ" kind="embed" identifier="panelView" id="njk-ua-y7a"/>
                                         </connections>
                                     </containerView>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcy-hE-N0r" userLabel="right container">
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcy-hE-N0r" userLabel="Main Container View">
                                         <rect key="frame" x="200" y="0.0" width="600" height="600"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
@@ -436,6 +436,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="mainView" destination="lcy-hE-N0r" id="7mh-6q-pJ8"/>
+                        <outlet property="panelView" destination="Sqm-MP-7dZ" id="ZVt-ew-PCO"/>
                         <outlet property="scrollView" destination="vQ8-op-Yp6" id="i1i-SS-dXF"/>
                     </connections>
                 </viewController>
