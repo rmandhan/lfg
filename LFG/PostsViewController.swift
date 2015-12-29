@@ -18,6 +18,8 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
     var game: Game?
     var allPosts = [Post]()
     var filteredPosts = [Post]()
+    var selectedPost: Post?
+    
     var filterHeaderText = "Displaying all posts"
     var displayingFilteredPosts = false
     
@@ -134,9 +136,16 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! PostTableViewCell
-        cell.cellSelected()
+        
+        if self.displayingFilteredPosts {
+            self.selectedPost = self.filteredPosts[indexPath.row]
+        } else {
+            self.selectedPost = self.allPosts[indexPath.row]
+        }
+        
+        self.presentPostOptions()
     }
     
     // MARK: UITableViewDelegate
@@ -205,6 +214,35 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
         if let mainNVC = self.navigationController as? MainNavigationController {
             mainNVC.togglePanel()
         }
+    }
+    
+    // Called when a cell is selected
+    
+    func presentPostOptions() {
+        
+        let optionMenu = UIAlertController(title: "Choose Option", message: nil, preferredStyle: .ActionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .Default, handler: {
+             (alert: UIAlertAction!) -> Void in
+            
+            if let id = self.selectedPost?.objectId {
+                ObjectManager.sharedInstance.deletePostForId(id, completionHandler: {
+                    (success: Bool) -> Void in
+                    // TODO: Error Handling
+                    if success {
+                        // Is it bad to do this? Do I need weakSelf? Or something else?
+                        self.fetchNewPosts(forceDownload: true)
+                    }
+                })
+            }
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        
+        optionMenu.addAction(deleteAction)
+        optionMenu.addAction(cancelAction)
+        
+        self.presentViewController(optionMenu, animated: true, completion: nil)
     }
     
     // Called by UIRefreshControl

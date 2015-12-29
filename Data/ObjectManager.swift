@@ -529,6 +529,26 @@ class ObjectManager {
         
     }
     
+    // Deletes post with given objecId
+    func deletePostForId(id: String, completionHandler: ((success: Bool) -> Void)?) {
+        
+        let postObject = PFObject(withoutDataWithClassName: "Post", objectId: id)
+        
+        postObject.deleteInBackgroundWithBlock({
+            (success: Bool, error: NSError?) -> Void in
+            
+            if success && error == nil {
+                print("Post object deleted in Parse")
+            } else {
+                print("Failed to delete object in Parse")
+            }
+            
+            if let handler = completionHandler {
+                handler(success: success)
+            }
+        })
+    }
+    
     // MARK: Helper Methods
     
     func getGameWithObjectIds(withPredicate predicate: NSPredicate?) -> [String: Game] {
