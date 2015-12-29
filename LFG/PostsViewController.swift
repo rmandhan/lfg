@@ -42,9 +42,9 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if self.allPosts.count == 0 {
+//        if self.allPosts.count == 0 {
 //            self.loadingIndicator.startAnimating()
-        }
+//        }
         
         fetchNewPosts(forceDownload: false)
     }
@@ -119,7 +119,14 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
                 cell.post = self.allPosts[indexPath.row]
             }
             
+            if cell.post?.deviceId == UIDevice.currentDevice().identifierForVendor?.UUIDString {
+                cell.userInteractionEnabled = true
+            } else {
+                cell.userInteractionEnabled = false
+            }
+            
             cell.render()
+            
             return cell
         }
         
@@ -135,7 +142,7 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
     // MARK: UITableViewDelegate
     
     override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
+        return true
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -149,7 +156,7 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
     // MARK: AddPostDelegate
     
     func userSubmittedPost() {
-        self.fetchNewPosts(forceDownload: true)
+        self.fetchNewPosts(forceDownload: false)
     }
     
     // MARK: FilterPostsDelegate
@@ -183,11 +190,21 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
     
     // MARK: Actions
 
+    @IBAction func addBarButtonTapped(sender: AnyObject) {
+        if let postDate = UserDefaultsManager.sharedInstance.getLastPostDate() {
+            if !postDate.isOlderThanFiveMinutes {
+                self.presentNewPostTimeAlert()
+                return
+            }
+        }
+        
+        self.performSegueWithIdentifier("presentAddNewPostView", sender: self)
+    }
+    
     @IBAction func panelBarButtonTapped(sender: AnyObject) {
         if let mainNVC = self.navigationController as? MainNavigationController {
             mainNVC.togglePanel()
         }
-        // self.navigationController?.popViewControllerAnimated(true)
     }
     
     // Called by UIRefreshControl
@@ -236,6 +253,14 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
     func changeBarButtonsState(enabled enabled: Bool) {
         self.panelBarButton.enabled = enabled
         self.addBarButton.enabled = enabled
+    }
+    
+    func presentNewPostTimeAlert() {
+        let alert = UIAlertView()
+        alert.title = "Unable to Post"
+        alert.message = "Please wait at least 5 minutes before posting again"
+        alert.addButtonWithTitle("OK")
+        alert.show()
     }
     
 }

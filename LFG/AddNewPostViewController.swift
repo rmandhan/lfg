@@ -47,6 +47,8 @@ class AddNewPostViewController: TableViewController, UITextFieldDelegate, UIText
         self.rowContent.append("Description")
         
         post = PseudoPost(character: "", platform: "", desc: "", gameType: "", mic: false, playerId: "", primaryLevel: 0, secondaryLevel: 0, gameId: self.game.objectId)
+        
+        loadPostPresets()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -59,6 +61,17 @@ class AddNewPostViewController: TableViewController, UITextFieldDelegate, UIText
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         //        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func loadPostPresets() {
+        if let lastPost = self.game.postPresets {
+            self.post.character = lastPost.character
+            self.post.platform = lastPost.platform
+            self.post.mic = lastPost.mic
+            self.post.playerId = lastPost.playerId
+            self.post.primaryLevel = lastPost.primaryLevel
+            self.post.secondaryLevel = lastPost.secondaryLevel
+        }
     }
     
     // MARK: UITableViewDataSource
@@ -308,6 +321,7 @@ class AddNewPostViewController: TableViewController, UITextFieldDelegate, UIText
         }
             // Upload Post
         else {
+            self.postBarButton.enabled = false
             // TODO: Display a uploading screen or indicator
             ObjectManager.sharedInstance.uploadPost(self.post, completionHandler: {
                 (success: Bool) -> Void in

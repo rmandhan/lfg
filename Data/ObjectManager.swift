@@ -308,6 +308,7 @@ class ObjectManager {
         // Maybe improve this in the future
         let gamePredicate = NSPredicate(format: "gameId == %@", gameId)
         let postsWithObjectId = self.getPostsWithObjectIds(withPredicate: gamePredicate)
+        var downloadedPostsIds = [String]()
         
         let downloadDate = NSDate()
         
@@ -329,43 +330,64 @@ class ObjectManager {
                 
                 for postObject in postObjects {
                     
-                    if let objectId = postObject.objectId,
-                    createdAt = postObject.createdAt,
-                    updateAt = postObject.updatedAt,
-                    gameId = postObject["gameId"] as? String,
-                    character = postObject["character"] as? String,
-                    platform = postObject["platform"] as? String,
-                    desc = postObject["description"] as? String,
-                    gameType = postObject["gameType"] as? String,
-                    mic = postObject["mic"] as? Bool,
-                    playerId = postObject["playerId"] as? String,
-                    primaryLevel = postObject["primaryLevel"] as? NSNumber,
-                    secondaryLevel = postObject["secondaryLevel"] as? NSNumber {
-                        
-                        if let gameFound = gamesWithObjectId[gameId] {
+                    if let deviceId = postObject["deviceId"] as? String,
+                        objectId = postObject.objectId,
+                        createdAt = postObject.createdAt,
+                        updateAt = postObject.updatedAt,
+                        gameId = postObject["gameId"] as? String,
+                        character = postObject["character"] as? String,
+                        platform = postObject["platform"] as? String,
+                        desc = postObject["description"] as? String,
+                        gameType = postObject["gameType"] as? String,
+                        mic = postObject["mic"] as? Bool,
+                        playerId = postObject["playerId"] as? String,
+                        primaryLevel = postObject["primaryLevel"] as? NSNumber,
+                        secondaryLevel = postObject["secondaryLevel"] as? NSNumber {
                             
-                            var post: Post
-                            
-                            if let postFound = postsWithObjectId[objectId] {
-                                post = postFound
-                            } else {
-                                post = NSEntityDescription.insertNewObjectForEntityForName("Post", inManagedObjectContext: self.mainContext) as! Post
+                            if let gameFound = gamesWithObjectId[gameId] {
+                                
+                                var post: Post
+                                
+                                if let postFound = postsWithObjectId[objectId] {
+                                    post = postFound
+                                } else {
+                                    post = NSEntityDescription.insertNewObjectForEntityForName("Post", inManagedObjectContext: self.mainContext) as! Post
+                                }
+                                
+                                post.deviceId = deviceId
+                                post.objectId = objectId
+                                post.createdAt = createdAt
+                                post.updatedAt = updateAt
+                                post.game = gameFound
+                                post.gameId = gameId
+                                post.character = character
+                                post.platform = platform
+                                post.desc = desc
+                                post.gameType = gameType
+                                post.mic = mic
+                                post.playerId = playerId
+                                post.primaryLevel = primaryLevel
+                                post.secondaryLevel = secondaryLevel
+                                
+                                downloadedPostsIds.append(objectId)
                             }
-                            
-                            post.objectId = objectId
-                            post.createdAt = createdAt
-                            post.updatedAt = updateAt
-                            post.game = gameFound
-                            post.gameId = gameId
-                            post.character = character
-                            post.platform = platform
-                            post.desc = desc
-                            post.gameType = gameType
-                            post.mic = mic
-                            post.playerId = playerId
-                            post.primaryLevel = primaryLevel
-                            post.secondaryLevel = secondaryLevel
-                        }
+                    }
+                }
+                
+                // Keep device and cloud in sync by deleting posts that were deleted in the cloud (if any)
+                
+                var postsToDelete = [String]()
+                
+                for key in postsWithObjectId.keys {
+                    if !downloadedPostsIds.contains(key) {
+                        postsToDelete.append(key)
+                    }
+                }
+                
+                for postId in postsToDelete {
+                    if let post = postsWithObjectId[postId] {
+                        print("Deleting post(\(post.objectId))")
+                        self.mainContext.deleteObject(post)
                     }
                 }
                 
@@ -379,7 +401,7 @@ class ObjectManager {
                             print("Post(s) saved successfully")
                         }
                         catch let error as NSError {
-                            print("Could not save downloaded game \(error), \(error.userInfo)")
+                            print("Could not save downloaded post(s) \(error), \(error.userInfo)")
                         }
                     })
                 }
@@ -404,6 +426,9 @@ class ObjectManager {
     // Uploads Post data to Parse
     func uploadPost(post: PseudoPost, completionHandler: ((success: Bool) -> Void)?) {
         
+        self.savePresetsForPost(post)
+        self.deleteUsersLastPost()
+        
         let gameObject = PFObject(withoutDataWithClassName: "Game", objectId: post.gameId)
         let postObject = PFObject(className: "Post")
         
@@ -418,16 +443,90 @@ class ObjectManager {
         postObject["game"] = gameObject
         postObject["gameId"] = gameObject.objectId
         
+        if let deviceId = UIDevice.currentDevice().identifierForVendor?.UUIDString {
+            postObject["deviceId"] = deviceId
+        }
+        
         postObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            
             if success && error == nil {
                 print("Post has been uploaded.")
-            } else {
+                UserDefaultsManager.sharedInstance.setLastPostDate(NSDate())
+            }
+            else {
                 print("Post failed to upload. \(error!), \(error!.userInfo)")
             }
+            
             if let handler = completionHandler {
                 handler(success: success)
             }
         }
+    }
+    
+    // Saves last uploaded post's data into game's "postPresets" property
+    func savePresetsForPost(post: PseudoPost) {
+        
+        guard let game = self.retrieveGame(withId: post.gameId) else { return }
+        
+        let postPresets: PostPresets!
+        
+        if let presetsFound = game.postPresets {
+            postPresets = presetsFound
+        } else {
+            postPresets = NSEntityDescription.insertNewObjectForEntityForName("PostPresets", inManagedObjectContext: self.mainContext) as! PostPresets
+            game.postPresets = postPresets
+        }
+        
+        postPresets.gameId = post.gameId
+        postPresets.platform  = post.platform
+        postPresets.mic  = post.mic
+        postPresets.playerId  = post.playerId
+        postPresets.character  = post.character
+        postPresets.primaryLevel  = post.primaryLevel
+        postPresets.secondaryLevel  = post.secondaryLevel
+        postPresets.desc  = post.desc
+        postPresets.gameType  = post.gameType
+        
+        // Not the most precise or accurate, but just putting it in there
+        postPresets.createdAt = NSDate()
+        
+        do {
+            try self.mainContext.save()
+            
+            self.masterContext.performBlock({
+                do {
+                    try self.masterContext.save()
+                }
+                catch let error as NSError {
+                    print("Could not save post presets \(error), \(error.userInfo)")
+                }
+            })
+        }
+        catch let error as NSError {
+            print("Could not save post presets \(error), \(error.userInfo)")
+        }
+        
+    }
+    
+    // Deletes previous posts on Parse by the user
+    func deleteUsersLastPost() {
+        
+        if let deviceId = UIDevice.currentDevice().identifierForVendor?.UUIDString {
+            
+            let query = PFQuery(className: "Post")
+            query.whereKey("deviceId", equalTo: deviceId)
+            query.whereKey("createdAt", lessThan: NSDate())
+
+            query.findObjectsInBackgroundWithBlock() {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                if let posts = objects {
+                    for post in posts {
+                        post.deleteEventually()
+                    }
+                }
+            }
+        }
+        
     }
     
     // MARK: Helper Methods

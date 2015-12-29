@@ -32,6 +32,7 @@ extension Game {
     @NSManaged var gameTypes: NSSet
     @NSManaged var platforms: NSSet
     @NSManaged var posts: NSSet
+    @NSManaged var postPresets: PostPresets?
     
     var hasOnlyOneCharacter: Bool {
         if self.characters.count == 1 {

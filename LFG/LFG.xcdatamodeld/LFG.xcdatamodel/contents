@@ -18,6 +18,7 @@
         <relationship name="characters" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Character" inverseName="game" inverseEntity="Character" syncable="YES"/>
         <relationship name="gameTypes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GameType" inverseName="game" inverseEntity="GameType" syncable="YES"/>
         <relationship name="platforms" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Platform" inverseName="game" inverseEntity="Platform" syncable="YES"/>
+        <relationship name="postPresets" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="PostPresets" syncable="YES"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Post" inverseName="game" inverseEntity="Post" syncable="YES"/>
     </entity>
     <entity name="GameType" representedClassName=".GameType" syncable="YES">
@@ -32,6 +33,7 @@
         <attribute name="character" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deviceId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gameId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gameType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mic" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -43,11 +45,25 @@
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="posts" inverseEntity="Game" syncable="YES"/>
     </entity>
+    <entity name="PostPresets" representedClassName=".PostPresets" syncable="YES">
+        <attribute name="character" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mic" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="platform" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="playerId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="primaryLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="secondaryLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Character" positionX="-245" positionY="18" width="128" height="73"/>
-        <element name="Game" positionX="-63" positionY="-27" width="128" height="253"/>
+        <element name="Game" positionX="-63" positionY="-27" width="128" height="270"/>
         <element name="GameType" positionX="-243" positionY="108" width="128" height="73"/>
         <element name="Platform" positionX="-218" positionY="198" width="128" height="73"/>
-        <element name="Post" positionX="115" positionY="90" width="128" height="240"/>
+        <element name="Post" positionX="115" positionY="90" width="128" height="255"/>
+        <element name="PostPresets" positionX="-63" positionY="126" width="128" height="210"/>
     </elements>
 </model>

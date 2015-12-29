@@ -16,6 +16,10 @@ let GAME_DOWNLOADED_STATE_KEY = "GamesDownloadedState"
 let DEFAULT_PLATFORMS_FILTER_KEY = "DefaultPlatformsFilter"
 // Used to set default filter value for Game Types
 let DEFAULT_GAMETYPES_FILTER_KEY = "DefaultGameTypesFilter"
+// Used to check when was the last time user made a post
+let LAST_POST_DATE_KEY = "LastPostDate"
+// As of now, used to easily delete user's last post on Parse
+let LAST_POST_OBJECTID_KEY = "LastPostObjectId"
 // Used to check how long it has been since the last "posts" download for a specific game
 let LAST_UPDATED_POSTS_DATE_KEY = "LastUpdatedPostsDate"
 
@@ -59,6 +63,14 @@ class UserDefaultsManager {
     
     func setDefaultGameTypesFilterValue(gameType: String?) {
         userDefaults.setValue(gameType, forKey: DEFAULT_GAMETYPES_FILTER_KEY)
+    }
+    
+    func getLastPostDate() -> NSDate? {
+        return userDefaults.valueForKey(LAST_POST_DATE_KEY) as? NSDate
+    }
+    
+    func setLastPostDate(date: NSDate?) {
+        userDefaults.setValue(date, forKey: LAST_POST_DATE_KEY)
     }
     
     func getLastUpdatedPostsDate(forGame gameId: String) -> NSDate {
