@@ -21,7 +21,7 @@ class HelpViewController: TableViewController {
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -34,8 +34,12 @@ class HelpViewController: TableViewController {
         
         if section == 0 {
             title = "How to make a post"
-        } else if section == 1 {
+        }
+        else if section == 1 {
             title = "How to filter posts"
+        }
+        else if section == 2 {
+            title = "How to delete a post"
         }
         
         return title
@@ -53,9 +57,13 @@ class HelpViewController: TableViewController {
         
         if indexPath.section == 0 {
             cell?.textLabel?.text = "1. Tap the plus button in the navigation bar \n2. Fill in all the fields (description is optional) \n3. Finally, tap \"Post!\""
-        } else if indexPath.section == 1 {
+        }
+        else if indexPath.section == 1 {
             cell?.textLabel?.text = "1. Tap the filter button in the navigation bar \n2. Choose any combination of Platform and Gametype \n3. Finally, hit \"Apply\" \n"
             cell?.detailTextLabel?.text = "To remove the filter: simply tap \"Reset\" and \"Apply\""
+        }
+        else if indexPath.section == 2 {
+            cell?.textLabel?.text = "1. Tap on your post \n2. The delete button should come up at the bottom \n3. Now, just tap \"Delete\""
         }
         
         cell?.textLabel?.numberOfLines = 0
