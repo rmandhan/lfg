@@ -58,22 +58,6 @@ class GameSelectionController: TableViewController {
         return 80
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        //        cell.contentView.backgroundColor = UIColor.clearColor()
-        //
-        //        let whiteRoundedView : UIView = UIView(frame: CGRectMake(0, 10, self.view.frame.size.width, 70))
-        //
-        //        whiteRoundedView.layer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 1.0, 1.0, 1.0])
-        //        whiteRoundedView.layer.masksToBounds = false
-        //        whiteRoundedView.layer.cornerRadius = 2.0
-        //        whiteRoundedView.layer.shadowOffset = CGSizeMake(-1, 1)
-        //        whiteRoundedView.layer.shadowOpacity = 0
-        //
-        //        cell.contentView.addSubview(whiteRoundedView)
-        //        cell.contentView.sendSubviewToBack(whiteRoundedView)
-    }
-    
     // MARK: UITableViewDataSource
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

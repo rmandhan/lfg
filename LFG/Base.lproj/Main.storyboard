@@ -319,7 +319,7 @@
         <!--Filter Navigation Controller-->
         <scene sceneID="ZtE-gA-1o7">
             <objects>
-                <navigationController title="Filter Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" id="6La-LF-86O" sceneMemberID="viewController">
+                <navigationController title="Filter Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" id="6La-LF-86O" customClass="NavigationController" customModule="LFG" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IgN-Iw-n7U">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -359,7 +359,7 @@
         <!--New Post Navigation Controller-->
         <scene sceneID="g9Y-aR-UsU">
             <objects>
-                <navigationController title="New Post Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" id="N2Q-gd-o1b" sceneMemberID="viewController">
+                <navigationController title="New Post Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" id="N2Q-gd-o1b" customClass="NavigationController" customModule="LFG" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uya-K7-1Rl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -477,7 +477,7 @@
         <!--Main Navigation Controller-->
         <scene sceneID="cXb-Az-hvO">
             <objects>
-                <navigationController title="Main Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" id="BCi-0C-gCJ" sceneMemberID="viewController">
+                <navigationController title="Main Navigation Controller" automaticallyAdjustsScrollViewInsets="NO" id="BCi-0C-gCJ" customClass="NavigationController" customModule="LFG" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="200" height="600"/>

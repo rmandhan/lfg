@@ -33,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         print("Databse Location: \(paths[0]) \n")
         
+        UINavigationBar.appearance().tintColor = UIColor(rgb: 0xFF9500)
+        UIButton.appearance().tintColor = UIColor(rgb: 0xFF9500)
+        
         return true
     }
 

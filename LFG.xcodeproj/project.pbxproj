@@ -40,6 +40,8 @@
 		14BC31B91C31B39E0074E16C /* PostPresets+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BC31B71C31B39E0074E16C /* PostPresets+CoreDataProperties.swift */; };
 		14BC31BA1C31B39E0074E16C /* PostPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BC31B81C31B39E0074E16C /* PostPresets.swift */; };
 		14BC31BD1C31D5230074E16C /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BC31BC1C31D5230074E16C /* NSDateExtension.swift */; };
+		14BC31BF1C34597E0074E16C /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BC31BE1C34597E0074E16C /* NavigationController.swift */; };
+		14BC31C21C345ECC0074E16C /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BC31C11C345ECC0074E16C /* UIColorExtension.swift */; };
 		14D732FD1C285A9E00F0C892 /* PseudoPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D732FC1C285A9E00F0C892 /* PseudoPost.swift */; };
 		14D732FF1C285C8500F0C892 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D732FE1C285C8500F0C892 /* TableViewController.swift */; };
 		14D733011C285DEB00F0C892 /* GameSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D733001C285DEB00F0C892 /* GameSelectionController.swift */; };
@@ -109,6 +111,8 @@
 		14BC31B71C31B39E0074E16C /* PostPresets+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PostPresets+CoreDataProperties.swift"; path = "Data/PostPresets+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		14BC31B81C31B39E0074E16C /* PostPresets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostPresets.swift; path = Data/PostPresets.swift; sourceTree = "<group>"; };
 		14BC31BC1C31D5230074E16C /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
+		14BC31BE1C34597E0074E16C /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		14BC31C11C345ECC0074E16C /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		14D732FC1C285A9E00F0C892 /* PseudoPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PseudoPost.swift; path = Data/PseudoPost.swift; sourceTree = "<group>"; };
 		14D732FE1C285C8500F0C892 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		14D733001C285DEB00F0C892 /* GameSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSelectionController.swift; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 		1416A5781C140F9500CD7985 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				14BC31C01C34599C0074E16C /* Parents */,
 				14D733041C285E7C00F0C892 /* AddNewPostViewController.swift */,
 				14B11B931C28A5CE00700132 /* ContainerViewController.swift */,
 				14F1441C1C2B243900288A91 /* DonateViewController.swift */,
@@ -198,8 +203,6 @@
 				14B11B971C29C61C00700132 /* OptionsViewController.swift */,
 				14B11B951C28A5DA00700132 /* PanelViewController.swift */,
 				14B11B981C29C61C00700132 /* PostsViewController.swift */,
-				14D732FE1C285C8500F0C892 /* TableViewController.swift */,
-				146EC6781C0FC97D003BAAD0 /* ViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -272,8 +275,19 @@
 			isa = PBXGroup;
 			children = (
 				14BC31BC1C31D5230074E16C /* NSDateExtension.swift */,
+				14BC31C11C345ECC0074E16C /* UIColorExtension.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		14BC31C01C34599C0074E16C /* Parents */ = {
+			isa = PBXGroup;
+			children = (
+				14D732FE1C285C8500F0C892 /* TableViewController.swift */,
+				146EC6781C0FC97D003BAAD0 /* ViewController.swift */,
+				14BC31BE1C34597E0074E16C /* NavigationController.swift */,
+			);
+			name = Parents;
 			sourceTree = "<group>";
 		};
 		2F275435825BEE47C4FFE88F /* Frameworks */ = {
@@ -486,6 +500,7 @@
 				1416A5701C1371CA00CD7985 /* Platform.swift in Sources */,
 				14B11B9A1C29C61C00700132 /* PostsViewController.swift in Sources */,
 				1416A5711C1371CA00CD7985 /* Platform+CoreDataProperties.swift in Sources */,
+				14BC31BF1C34597E0074E16C /* NavigationController.swift in Sources */,
 				1416A5691C1371CA00CD7985 /* Character.swift in Sources */,
 				1416A57B1C14113F00CD7985 /* PostTableViewCell.swift in Sources */,
 				1416A56B1C1371CA00CD7985 /* Game.swift in Sources */,
@@ -502,6 +517,7 @@
 				14B11B9C1C29C84C00700132 /* MainNavigationController.swift in Sources */,
 				14F1441D1C2B243900288A91 /* DonateViewController.swift in Sources */,
 				146EC6771C0FC97D003BAAD0 /* AppDelegate.swift in Sources */,
+				14BC31C21C345ECC0074E16C /* UIColorExtension.swift in Sources */,
 				1416A5721C1371CA00CD7985 /* Post.swift in Sources */,
 				14B11B941C28A5CE00700132 /* ContainerViewController.swift in Sources */,
 				14D733051C285E7C00F0C892 /* AddNewPostViewController.swift in Sources */,

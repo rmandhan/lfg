@@ -9,7 +9,7 @@
 import UIKit
 import MessageUI
 
-class MainNavigationController: UINavigationController, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate {
+class MainNavigationController: NavigationController, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
