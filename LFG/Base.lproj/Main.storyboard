@@ -115,7 +115,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="gPN-BD-ILt">
-                        <barButtonItem key="leftBarButtonItem" image="List" id="ev3-NL-78q">
+                        <barButtonItem key="leftBarButtonItem" image="Panel" id="ev3-NL-78q">
                             <connections>
                                 <action selector="panelBarButtonTapped:" destination="kSV-J6-tKZ" id="x3P-y5-zRa"/>
                             </connections>
@@ -497,7 +497,7 @@
     </scenes>
     <resources>
         <image name="Filter" width="44" height="44"/>
-        <image name="List" width="44" height="44"/>
+        <image name="Panel" width="44" height="44"/>
         <image name="Plus" width="44" height="44"/>
     </resources>
 </document>
