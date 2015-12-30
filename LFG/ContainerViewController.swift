@@ -29,8 +29,24 @@ class ContainerViewController: ViewController, UIScrollViewDelegate , PanelDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         dispatch_async(dispatch_get_main_queue()) {
             self.closePanel(animated: false)
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "rotated", name: UIDeviceOrientationDidChangeNotification, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func rotated(){
+        if UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation) {
+            dispatch_async(dispatch_get_main_queue()) {
+                print("Closing menu on rotate")
+                self.closePanel(animated: true)
+            }
         }
     }
     
