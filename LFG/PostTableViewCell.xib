@@ -61,11 +61,11 @@
                                 <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mic" translatesAutoresizingMaskIntoConstraints="NO" id="WQl-Ri-zEh">
-                                <rect key="frame" x="251" y="42" width="20" height="20"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMic" translatesAutoresizingMaskIntoConstraints="NO" id="WQl-Ri-zEh">
+                                <rect key="frame" x="251" y="44" width="15" height="15"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="0mx-Wq-g5q"/>
-                                    <constraint firstAttribute="height" constant="20" id="rTG-wE-Lvd"/>
+                                    <constraint firstAttribute="width" constant="15" id="0mx-Wq-g5q"/>
+                                    <constraint firstAttribute="height" constant="15" id="rTG-wE-Lvd"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Storm Trooper" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fxa-eO-yrB" userLabel="Character">
@@ -106,6 +106,7 @@
                             <constraint firstItem="yno-Fv-dC4" firstAttribute="top" secondItem="C0n-0J-VSh" secondAttribute="top" constant="5" id="8Tr-tI-Xdv"/>
                             <constraint firstItem="dfq-Lv-aei" firstAttribute="top" secondItem="YGA-Ro-s0O" secondAttribute="bottom" priority="250" id="KQN-Fg-KCn"/>
                             <constraint firstAttribute="bottom" secondItem="Fxa-eO-yrB" secondAttribute="bottom" id="l0n-qE-7h3"/>
+                            <constraint firstItem="WQl-Ri-zEh" firstAttribute="centerY" secondItem="dfq-Lv-aei" secondAttribute="centerY" id="vjd-cZ-ddN"/>
                             <constraint firstItem="YGA-Ro-s0O" firstAttribute="top" secondItem="C0n-0J-VSh" secondAttribute="top" constant="2" id="z2Y-Nx-qjn"/>
                         </constraints>
                     </view>
@@ -157,6 +158,7 @@
                         <exclude reference="W6t-2G-CKf"/>
                         <exclude reference="0Nw-n7-Jtb"/>
                         <exclude reference="iQ9-Rq-2lS"/>
+                        <exclude reference="RZs-kB-WGB"/>
                         <exclude reference="CZj-al-Pkd"/>
                         <exclude reference="ILr-nf-ZQQ"/>
                         <exclude reference="tN9-u1-7ew"/>
@@ -184,7 +186,7 @@
     </objects>
     <resources>
         <image name="Box" width="24" height="24"/>
-        <image name="Mic" width="512" height="512"/>
-        <image name="Playstation" width="128" height="128"/>
+        <image name="NoMic" width="512" height="512"/>
+        <image name="Playstation" width="24" height="24"/>
     </resources>
 </document>

@@ -59,6 +59,33 @@ class PostTableViewCell: UITableViewCell {
             self.platformImageTopConstraint.active = true
         }
         
+        if self.post.mic {
+            self.micImage.image = UIImage(named: "Mic")
+        } else {
+            self.micImage.image = UIImage(named: "NoMic")
+        }
+        
+        let platform = self.post.platform
+        var platformImageName = "PC_Other" // Default Image
+        
+        if platform == PC || platform == PC_STEAM {
+            platformImageName = "PC_Steam"
+        }
+        else if platform == PLAYSTATION_3 || platform == PS3 || platform == PS4 || platform == PLAYSTATION_4 {
+            platformImageName = "Playstation"
+        }
+        else if platform == XBOX_360 || platform == X360 {
+            platformImageName = "Xbox360"
+        }
+        else if platform == XBOX_ONE || platform == XONE {
+            platformImageName = "XboxOne"
+        }
+        else if platform == WIIU {
+            platformImageName = "WiiU"
+        }
+        
+        self.platformImage.image = UIImage(named: platformImageName)
+        
         let age = NSDate().timeIntervalSinceDate(self.post.createdAt)
         self.postAgeLabel.text = self.stringFromTimeInterval(age)
     }

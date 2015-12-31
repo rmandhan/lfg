@@ -61,16 +61,13 @@ class GameSelectionController: TableViewController {
     // MARK: UITableViewDataSource
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return gamesList.count
+        return self.gamesList.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let game = gamesList[indexPath.row]
+        let game = self.gamesList[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("GameTableViewCell") as! GameTableViewCell
-        cell.gameObjectId = game.objectId
         cell.gameName.text = game.fullName
-        cell.render()
         return cell
     }
     

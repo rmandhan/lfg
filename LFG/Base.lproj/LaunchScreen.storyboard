@@ -17,24 +17,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Looking for Gamers" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="rzK-v7-dcf">
-                                <rect key="frame" x="20" y="270" width="560" height="60"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXD-0U-Hch" userLabel="Container View">
+                                <rect key="frame" x="0.0" y="192" width="600" height="216"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Looking" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="rzK-v7-dcf">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="60"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="for" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="pK1-gY-8gH">
+                                        <rect key="frame" x="0.0" y="72" width="600" height="72"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="60"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gamers" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="kyB-s2-Jaw">
+                                        <rect key="frame" x="0.0" y="144" width="600" height="72"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="60"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="kyB-s2-Jaw" firstAttribute="width" secondItem="pK1-gY-8gH" secondAttribute="width" id="5aW-y4-RzU"/>
+                                    <constraint firstItem="kyB-s2-Jaw" firstAttribute="width" secondItem="sXD-0U-Hch" secondAttribute="width" id="5gJ-vu-9xa"/>
+                                    <constraint firstItem="rzK-v7-dcf" firstAttribute="centerX" secondItem="sXD-0U-Hch" secondAttribute="centerX" id="8Ij-3j-bdY"/>
+                                    <constraint firstItem="pK1-gY-8gH" firstAttribute="centerX" secondItem="sXD-0U-Hch" secondAttribute="centerX" id="ACB-gN-78I"/>
+                                    <constraint firstItem="rzK-v7-dcf" firstAttribute="width" secondItem="sXD-0U-Hch" secondAttribute="width" id="Cu3-ij-Hb2"/>
+                                    <constraint firstItem="kyB-s2-Jaw" firstAttribute="centerX" secondItem="sXD-0U-Hch" secondAttribute="centerX" id="DCl-go-qRT"/>
+                                    <constraint firstItem="pK1-gY-8gH" firstAttribute="top" secondItem="kyB-s2-Jaw" secondAttribute="bottom" id="G3J-85-2sx"/>
+                                    <constraint firstItem="pK1-gY-8gH" firstAttribute="width" secondItem="sXD-0U-Hch" secondAttribute="width" id="Sdt-FY-otg"/>
+                                    <constraint firstItem="rzK-v7-dcf" firstAttribute="top" secondItem="sXD-0U-Hch" secondAttribute="top" id="TLw-fg-hjH"/>
+                                    <constraint firstItem="pK1-gY-8gH" firstAttribute="top" secondItem="rzK-v7-dcf" secondAttribute="bottom" id="XVL-Da-yLF"/>
+                                    <constraint firstItem="kyB-s2-Jaw" firstAttribute="top" secondItem="pK1-gY-8gH" secondAttribute="bottom" id="dwP-1i-mMc"/>
+                                    <constraint firstItem="pK1-gY-8gH" firstAttribute="width" secondItem="kyB-s2-Jaw" secondAttribute="width" id="hZg-S3-5Pz"/>
+                                    <constraint firstItem="pK1-gY-8gH" firstAttribute="width" secondItem="rzK-v7-dcf" secondAttribute="width" id="uiF-Bk-XF5"/>
+                                    <constraint firstAttribute="bottom" secondItem="kyB-s2-Jaw" secondAttribute="bottom" id="yHk-MS-M8n"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="G3J-85-2sx"/>
+                                        <exclude reference="hZg-S3-5Pz"/>
+                                        <exclude reference="uiF-Bk-XF5"/>
+                                        <exclude reference="5aW-y4-RzU"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.1019607843" green="0.098039215690000001" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="rzK-v7-dcf" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1cF-nM-AkM"/>
-                            <constraint firstItem="rzK-v7-dcf" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="8HM-Yn-5Mq"/>
-                            <constraint firstItem="rzK-v7-dcf" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="EDQ-t0-Kqi"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="rzK-v7-dcf" secondAttribute="trailing" id="NsP-7R-fQR"/>
-                            <constraint firstItem="rzK-v7-dcf" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Xcm-mQ-GPO"/>
+                            <constraint firstItem="sXD-0U-Hch" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Fxf-Yi-8wa"/>
+                            <constraint firstItem="sXD-0U-Hch" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="G7O-dA-zzA"/>
+                            <constraint firstItem="sXD-0U-Hch" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="HF6-rq-uOo"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="sXD-0U-Hch" secondAttribute="trailing" constant="160" id="qFZ-ty-Lsl"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="8HM-Yn-5Mq"/>
+                                <exclude reference="qFZ-ty-Lsl"/>
                             </mask>
                         </variation>
                     </view>

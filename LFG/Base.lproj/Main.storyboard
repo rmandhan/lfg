@@ -250,7 +250,7 @@
                                             <constraint firstAttribute="width" constant="200" id="7Vg-PY-gAc"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <state key="normal" title="Yes!"/>
+                                        <state key="normal" title="Yeah 🙂"/>
                                         <connections>
                                             <action selector="proceedButtonTapped:" destination="qH4-XX-j0b" eventType="touchUpInside" id="73U-eq-ivq"/>
                                         </connections>

@@ -14,11 +14,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="87"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bO3-wA-FiS" userLabel="gameImage">
-                        <rect key="frame" x="0.0" y="8" width="320" height="72"/>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Call of Duty Black Ops III" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6s-jB-dKF" userLabel="gameName">
-                        <rect key="frame" x="0.0" y="8" width="320" height="72"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Call of Duty Black Ops III" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6s-jB-dKF" userLabel="gameName">
+                        <rect key="frame" x="0.0" y="8" width="320" height="71"/>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -28,16 +25,11 @@
                 <constraints>
                     <constraint firstItem="n6s-jB-dKF" firstAttribute="top" secondItem="PRb-Nm-uoy" secondAttribute="topMargin" id="4sl-AV-8RE"/>
                     <constraint firstAttribute="bottomMargin" secondItem="n6s-jB-dKF" secondAttribute="bottom" id="B3l-48-Ied"/>
-                    <constraint firstItem="bO3-wA-FiS" firstAttribute="leading" secondItem="PRb-Nm-uoy" secondAttribute="leadingMargin" constant="-8" id="Bv2-65-LJn"/>
                     <constraint firstItem="n6s-jB-dKF" firstAttribute="leading" secondItem="PRb-Nm-uoy" secondAttribute="leadingMargin" constant="-8" id="UeL-kv-Dgy"/>
                     <constraint firstAttribute="trailingMargin" secondItem="n6s-jB-dKF" secondAttribute="trailing" constant="-8" id="Z6b-NS-D0t"/>
-                    <constraint firstItem="bO3-wA-FiS" firstAttribute="top" secondItem="PRb-Nm-uoy" secondAttribute="topMargin" id="kKL-Qb-o98"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="bO3-wA-FiS" secondAttribute="bottom" id="me8-to-Pj1"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="bO3-wA-FiS" secondAttribute="trailing" constant="-8" id="miC-rY-1t1"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="gameImage" destination="bO3-wA-FiS" id="SMx-Si-7D3"/>
                 <outlet property="gameName" destination="n6s-jB-dKF" id="fC8-MZ-fZx"/>
             </connections>
         </tableViewCell>

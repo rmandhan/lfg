@@ -12,10 +12,6 @@
 import Foundation
 import CoreData
 
-// Maybe define in an enum?
-let BLACK_OPS_3 = "Call of Duty Black Ops III"
-let DESTINY = "Destiny"
-
 extension Game {
 
     @NSManaged var objectId: String
