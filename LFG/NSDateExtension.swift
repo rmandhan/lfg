@@ -13,7 +13,7 @@ extension NSDate {
     var isOlderThanFiveMinutes: Bool {
         
         // TODO: Change back to five minutes
-        let fiveMinutesAgo = NSDate(timeInterval: -60, sinceDate: NSDate())
+        let fiveMinutesAgo = NSDate(timeInterval: -300, sinceDate: NSDate())
         
         if self.compare(fiveMinutesAgo) == NSComparisonResult.OrderedAscending {
             return true
