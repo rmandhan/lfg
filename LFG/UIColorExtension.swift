@@ -18,4 +18,8 @@ extension UIColor {
             alpha: CGFloat(1.0)
         )
     }
+    
+    var appBlue: UIColor {
+        return UIColor(red: 18.0/255.0, green: 89.0/255.0, blue: 162.0/255.0, alpha: 1.0)
+    }
 }

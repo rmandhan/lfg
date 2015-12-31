@@ -10,56 +10,71 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
     
-    var game: Game?
-    var post: Post?
+    var game: Game!
+    var post: Post!
     
     @IBOutlet weak var gameTypeLabel: UILabel!
-    @IBOutlet weak var platformLabel: UILabel!
-    @IBOutlet weak var idLabel: UILabel!
-    @IBOutlet weak var micLabel: UILabel!
-    @IBOutlet weak var characterLabel: UILabel!
-    @IBOutlet weak var primaryLevel: UILabel!
-    @IBOutlet weak var secondaryLevel: UILabel!
+    @IBOutlet weak var postAgeLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var platformImage: UIImageView!
+    @IBOutlet weak var platformLabel: UILabel!
+    @IBOutlet weak var box1Image: UIImageView!
+    @IBOutlet weak var playerIdLabel: UILabel!
+    @IBOutlet weak var micImage: UIImageView!
+    @IBOutlet weak var characterLabel: UILabel!
+    @IBOutlet weak var box2Image: UIImageView!
+    @IBOutlet weak var primaryLevelLabel: UILabel!
+    @IBOutlet weak var box3Image: UIImageView!
+    @IBOutlet weak var secondaryLevelLabel: UILabel!
     
-    @IBOutlet weak var dividerViewGameType: UIView!
-    @IBOutlet weak var dividerViewPlatform: UIView!
-    @IBOutlet weak var dividerViewId: UIView!
-    @IBOutlet weak var dividerViewCharacter: UIView!
-    @IBOutlet weak var dividerViewLevel: UIView!
-    
-    @IBOutlet weak var descriptionHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var platformImageTopConstraint: NSLayoutConstraint!
     
     func render() {
-        if let postObject = self.post, gameObject = self.game {
-            self.gameTypeLabel.text = postObject.gameType
-            self.platformLabel.text = "Platform: " + postObject.platform
-            self.idLabel.text = "Id: " + postObject.playerId
-            self.characterLabel.text = "Character: " + postObject.character
-            self.primaryLevel.text = gameObject.primaryLevelName + ": " + postObject.primaryLevel.stringValue
-            
-            if postObject.mic == true {
-                self.micLabel.text = "Mic: " + "Yes"
-            } else {
-                self.micLabel.text = "Mic: " + "No"
-            }
-            
-            if gameObject.secondaryLevelMax != 0 {
-                self.secondaryLevel.text = gameObject.secondaryLevelName + ": " + postObject.secondaryLevel.stringValue
-            } else {
-                self.secondaryLevel.text = ""
-                self.dividerViewLevel.hidden = true
-            }
-            
-            if !postObject.desc.isEmpty {
-                self.descriptionLabel.text = "Description: " + postObject.desc
-            } else {
-                self.descriptionHeightConstraint.constant = 0
-            }
+        
+        self.gameTypeLabel.text = self.post.gameType
+        self.platformLabel.text = self.post.platform
+        self.playerIdLabel.text = self.post.playerId
+        self.characterLabel.text = self.post.character
+        self.primaryLevelLabel.text = self.game.primaryLevelName + ": " + self.post.primaryLevel.stringValue
+        
+        if self.game.secondaryLevelMax != 0 {
+            self.secondaryLevelLabel.text = self.game.secondaryLevelName + ": " + self.post.secondaryLevel.stringValue
+            self.secondaryLevelLabel.hidden = false
+            self.box3Image.hidden = false
         }
+        else {
+            self.secondaryLevelLabel.text = ""
+            self.secondaryLevelLabel.hidden = true
+            self.box3Image.hidden = true
+        }
+        
+        if self.post.desc.isEmpty {
+            self.descriptionLabel.text = ""
+            self.descriptionLabel.hidden = true
+            self.platformImageTopConstraint.active = false
+        }
+        else {
+            self.descriptionLabel.text = self.post.desc
+            self.descriptionLabel.hidden = false
+            self.platformImageTopConstraint.active = true
+        }
+        
+        let age = NSDate().timeIntervalSinceDate(self.post.createdAt)
+        self.postAgeLabel.text = self.stringFromTimeInterval(age)
     }
     
-    func cellSelected() {
-        print("Post Selected")
+    // MARK: Helper Methods
+    
+    func stringFromTimeInterval(interval: NSTimeInterval) -> String {
+        
+        let ti = NSInteger(interval)
+        let hours = (ti / 3600)
+        let minutes = (ti / 60) % 60
+        
+        if hours > 0 {
+            return "\(hours)h \(minutes)m"
+        }
+        
+        return "\(minutes)m"
     }
 }

@@ -34,7 +34,7 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
         
         self.tableView.tableFooterView = UIView()
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 63
+        self.tableView.estimatedRowHeight = 84
         
         self.refreshControl?.addTarget(self, action: "refreshTriggered", forControlEvents: UIControlEvents.ValueChanged)
         

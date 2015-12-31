@@ -75,12 +75,9 @@ class GameSelectionController: TableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         selectedPath = indexPath
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! GameTableViewCell
-        cell.cellSelected()
+        UserDefaultsManager.sharedInstance.setCurrentGameId(self.gamesList[indexPath.row].objectId)
         self.performSegueWithIdentifier("showPostsView", sender: self)
     }
     

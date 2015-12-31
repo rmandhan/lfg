@@ -39,8 +39,4 @@ class GameTableViewCell: UITableViewCell {
     func renderDefault() {
         
     }
-    
-    func cellSelected() {
-        UserDefaultsManager.sharedInstance.setCurrentGameId(self.gameObjectId)
-    }
 }
