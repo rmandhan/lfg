@@ -21,7 +21,7 @@ class HelpViewController: TableViewController {
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -40,6 +40,9 @@ class HelpViewController: TableViewController {
         }
         else if section == 2 {
             title = "How to delete a post"
+        }
+        else if section == 3 {
+            title = "Why is my post getting deleted?"
         }
         
         return title
@@ -64,6 +67,10 @@ class HelpViewController: TableViewController {
         }
         else if indexPath.section == 2 {
             cell?.textLabel?.text = "1. Tap on your post \n2. The delete button should come up at the bottom \n3. Now, just tap \"Delete\""
+        }
+        else if indexPath.section == 3 {
+            cell?.textLabel?.text = "When you make a new post, your last post automatically gets deleted regardless of what game it was for\n"
+            cell?.detailTextLabel?.text = "You can only have one post at a time"
         }
         
         cell?.textLabel?.numberOfLines = 0

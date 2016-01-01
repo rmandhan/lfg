@@ -421,6 +421,10 @@ class ObjectManager {
                 }
             }
         })
+        
+        // TODO: Improve on this by adding "postedAt" column to Posts on Parse
+        // Make a random call to delete duplicate posts by the user
+        self.deleteDuplicatePosts()
     }
     
     // Uploads Post data to Parse
@@ -508,7 +512,7 @@ class ObjectManager {
         
     }
     
-    // Deletes previous posts on Parse by the user
+    // Deletes previous posts on Parse by the user relative to the current time
     func deleteUsersLastPost() {
         
         if let deviceId = UIDevice.currentDevice().identifierForVendor?.UUIDString {
@@ -516,17 +520,16 @@ class ObjectManager {
             let query = PFQuery(className: "Post")
             query.whereKey("deviceId", equalTo: deviceId)
             query.whereKey("createdAt", lessThan: NSDate())
-
+            
             query.findObjectsInBackgroundWithBlock() {
                 (objects: [PFObject]?, error: NSError?) -> Void in
                 if let posts = objects {
                     for post in posts {
-                        post.deleteEventually()
+                        post.deleteInBackground()
                     }
                 }
             }
         }
-        
     }
     
     // Deletes post with given objecId
@@ -547,6 +550,29 @@ class ObjectManager {
                 handler(success: success)
             }
         })
+    }
+    
+    // If uesr has more than one post, then deletes the older ones
+    func deleteDuplicatePosts() {
+        
+        if let deviceId = UIDevice.currentDevice().identifierForVendor?.UUIDString {
+            
+            let query = PFQuery(className: "Post")
+            query.whereKey("deviceId", equalTo: deviceId)
+            query.addDescendingOrder("createdAt")
+            
+            query.findObjectsInBackgroundWithBlock() {
+                (objects: [PFObject]?, error: NSError?) -> Void in
+                
+                if let posts = objects where posts.count > 1 {
+                    for var i = 1; i < posts.count; i++ {
+                        print("Will delete duplicate post in background")
+                        posts[i].deleteInBackground()
+                    }
+                }
+            }
+            
+        }
     }
     
     // MARK: Helper Methods
