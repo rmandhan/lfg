@@ -46,9 +46,8 @@ class AddNewPostViewController: TableViewController, UITextFieldDelegate, UIText
         if self.game.secondaryLevelMax.integerValue > 0 { self.rowContent.append("Secondary Level") }
         self.rowContent.append("Description")
         
-        post = PseudoPost(character: "", platform: "", desc: "", gameType: "", mic: false, playerId: "", primaryLevel: 0, secondaryLevel: 0, gameId: self.game.objectId)
-        
-        loadPostPresets()
+        self.initializePost()
+        self.loadPostPresets()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -60,7 +59,21 @@ class AddNewPostViewController: TableViewController, UITextFieldDelegate, UIText
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        //        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func initializePost() {
+        self.post = PseudoPost(character: "", platform: "", desc: "", gameType: "", mic: false, playerId: "", primaryLevel: 0, secondaryLevel: 0, gameId: self.game.objectId)
+        
+        if self.game.hasOnlyOnePlatform {
+            self.post.platform = self.game.firstPlatform()
+        }
+        if self.game.hasOnlyOneCharacter {
+            self.post.character = self.game.firstCharacter()
+        }
+        if self.game.hasOnlyOneGameType {
+            self.post.gameType = self.game.firstGameType()
+        }
     }
     
     func loadPostPresets() {
@@ -96,37 +109,28 @@ class AddNewPostViewController: TableViewController, UITextFieldDelegate, UIText
         if content == "Platform" {
             
             cell = self.createDisclosureTypeCell(withIdentifier: content)
+            cell.detailTextLabel?.text = post.platform
             
             if self.game.hasOnlyOnePlatform {
                 cell.userInteractionEnabled = false
-                cell.detailTextLabel?.text = self.game.firstPlatform()
-            }
-            else {
-                cell.detailTextLabel?.text = post.platform
             }
         }
         else if content == "Game Type" {
             
             cell = self.createDisclosureTypeCell(withIdentifier: content)
+            cell.detailTextLabel?.text = post.gameType
             
             if self.game.hasOnlyOneGameType {
                 cell.userInteractionEnabled = false
-                cell.detailTextLabel?.text = self.game.firstGameType()
-            }
-            else {
-                cell.detailTextLabel?.text = post.gameType
             }
         }
         else if content == "Character" {
             
             cell = self.createDisclosureTypeCell(withIdentifier: content)
+            cell.detailTextLabel?.text = post.character
             
             if self.game.hasOnlyOneCharacter {
                 cell.userInteractionEnabled = false
-                cell.detailTextLabel?.text = self.game.firstCharacter()
-            }
-            else {
-                cell.detailTextLabel?.text = post.character
             }
         }
         else if content == "Player Id" {

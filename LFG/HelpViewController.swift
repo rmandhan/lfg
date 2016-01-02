@@ -42,7 +42,7 @@ class HelpViewController: TableViewController {
             title = "How to delete a post"
         }
         else if section == 3 {
-            title = "Why is my post getting deleted?"
+            title = "Why is my post disappearing?"
         }
         
         return title
@@ -69,7 +69,7 @@ class HelpViewController: TableViewController {
             cell?.textLabel?.text = "1. Tap on your post \n2. The delete button should come up at the bottom \n3. Now, just tap \"Delete\""
         }
         else if indexPath.section == 3 {
-            cell?.textLabel?.text = "When you make a new post, your last post automatically gets deleted regardless of what game it was for\n"
+            cell?.textLabel?.text = "There are 2 possible reasons:\n\n 1. When you make a new post, your last post automatically gets deleted regardless of what game it was for\n 2. Posts automatically disappear after a certain ammount of time. Typically, a post \"expires\" after 2-3 hours. It may be different for each game.\n"
             cell?.detailTextLabel?.text = "You can only have one post at a time"
         }
         
