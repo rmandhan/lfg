@@ -10,8 +10,6 @@ import UIKit
 
 class GameSelectionController: TableViewController {
     
-//    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    
     var gamesList = [Game]()
     var selectedPath = NSIndexPath()
     
@@ -32,11 +30,10 @@ class GameSelectionController: TableViewController {
         
         let gamesWereDownloaded = UserDefaultsManager.sharedInstance.getGamesDownloadedState()
         
-        if self.gamesList.count == 0 {
-//            self.loadingIndicator.startAnimating()
-        }
-        
         if !gamesWereDownloaded || self.gamesList.count == 0  {
+            
+            self.loadingIndicator.startAnimating()
+            
             ObjectManager.sharedInstance.downloadGames(withPredicate: nil, completionHandler: {
                 (success: Bool) -> Void in
                 if success {
@@ -45,7 +42,7 @@ class GameSelectionController: TableViewController {
                     self.tableView.reloadData()
                     
                     dispatch_async(dispatch_get_main_queue(), {
-//                        self.loadingIndicator.stopAnimating()
+                        self.loadingIndicator.stopAnimating()
                     })
                 }
             })

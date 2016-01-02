@@ -18,7 +18,7 @@ class DonateViewController: ViewController {
     }
     
     @IBAction func proceedButtonTapped(sender: AnyObject) {
-        UIApplication.sharedApplication().openURL(NSURL(string:"https://www.paypal.me/LookingForGamersiOS")!)
+        UIApplication.sharedApplication().openURL(NSURL(string:"https://www.paypal.me/LookingForGamers")!)
     }
     
 }

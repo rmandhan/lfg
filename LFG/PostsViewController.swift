@@ -10,7 +10,6 @@ import UIKit
 
 class PostsViewController: TableViewController, UIPopoverPresentationControllerDelegate, AddPostDelegate, FilterPostsDelegate {
     
-//    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet var panelBarButton: UIBarButtonItem!
     @IBOutlet var filterBarButton: UIBarButtonItem!
     @IBOutlet var addBarButton: UIBarButtonItem!
@@ -38,16 +37,11 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
         
         self.refreshControl?.addTarget(self, action: "refreshTriggered", forControlEvents: UIControlEvents.ValueChanged)
         
-        loadPosts()
+        self.loadPosts()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-//        if self.allPosts.count == 0 {
-//            self.loadingIndicator.startAnimating()
-//        }
-        
         fetchNewPosts(forceDownload: false)
     }
     
@@ -61,6 +55,10 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
     }
     
     func fetchNewPosts(forceDownload forceDownload: Bool) {
+        
+        if self.allPosts.count == 0 {
+            self.loadingIndicator.startAnimating()
+        }
         
         if let currentGame = self.game {
             
@@ -79,12 +77,14 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
                     }
                     
                     dispatch_async(dispatch_get_main_queue(), {
-//                        self.loadingIndicator.stopAnimating()
+                        self.loadingIndicator.stopAnimating()
                     })
                 })
             }
             else {
-//                self.loadingIndicator.stopAnimating()
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.loadingIndicator.stopAnimating()
+                })
             }
             
             self.refreshControl?.endRefreshing()

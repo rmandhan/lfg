@@ -272,12 +272,21 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="It costs $99 USD per year to keep this app in the App Store" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eie-Yg-g2k">
+                                <rect key="frame" x="0.0" y="580" width="600" height="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="SZA-nX-o9i" firstAttribute="width" secondItem="nxv-dR-SiG" secondAttribute="width" id="6dK-P3-zFC"/>
+                            <constraint firstItem="51G-s1-5RQ" firstAttribute="top" secondItem="Eie-Yg-g2k" secondAttribute="bottom" constant="8" id="BBs-Cb-jGy"/>
+                            <constraint firstItem="Eie-Yg-g2k" firstAttribute="width" secondItem="nxv-dR-SiG" secondAttribute="width" id="YEA-SP-5yN"/>
                             <constraint firstItem="SZA-nX-o9i" firstAttribute="centerX" secondItem="nxv-dR-SiG" secondAttribute="centerX" id="kB7-CN-fP3"/>
                             <constraint firstItem="SZA-nX-o9i" firstAttribute="centerY" secondItem="nxv-dR-SiG" secondAttribute="centerY" id="kOA-kY-lHz"/>
+                            <constraint firstItem="Eie-Yg-g2k" firstAttribute="centerX" secondItem="nxv-dR-SiG" secondAttribute="centerX" id="y6M-WX-G6c"/>
                         </constraints>
                     </view>
                     <connections>
