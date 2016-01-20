@@ -165,7 +165,8 @@ class PostsViewController: TableViewController, UIPopoverPresentationControllerD
     // MARK: AddPostDelegate
     
     func userSubmittedPost() {
-        self.fetchNewPosts(forceDownload: false)
+        // TODO: This is not the best solution. Improve this in the future.
+        self.fetchNewPosts(forceDownload: true)
     }
     
     // MARK: FilterPostsDelegate
